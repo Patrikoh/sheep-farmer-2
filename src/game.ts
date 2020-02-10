@@ -10,8 +10,8 @@ export default class Sheepherder extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("tiles", "assets/tilesets/tuxmon-sample-32px-extruded.png");
-        this.load.tilemapTiledJSON("map", "assets/tilesets/tuxemon-town.json");
+        this.load.image("tiles", "assets/tilesets/sheepfarmer-tiles.png");
+        this.load.tilemapTiledJSON("map", "assets/tilesets/sheep-farm.json");
 
         this.load.atlas("atlas", "assets/atlas/atlas.png", "assets/atlas/atlas.json");
     }
@@ -21,7 +21,7 @@ export default class Sheepherder extends Phaser.Scene {
 
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
         // Phaser's cache (i.e. the name you used in preload)
-        const tileset = map.addTilesetImage("tuxmon-sample-32px-extruded", "tiles");
+        const tileset = map.addTilesetImage("sheepfarmer-tiles", "tiles");
 
         // Parameters: layer name (or index) from Tiled, tileset, x, y
         const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
@@ -35,7 +35,7 @@ export default class Sheepherder extends Phaser.Scene {
         const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point");
 
         player = this.physics.add
-            .sprite(spawnPoint.x, spawnPoint.y, "atlas", "misa-front")
+            .sprite(100, 100, "atlas", "misa-front")
             .setSize(30, 40)
             .setOffset(0, 24);
 
