@@ -10,6 +10,50 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.addAnimations(scene);
     }
 
+    update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+        const speed = 175;
+        const prevVelocity = this.body.velocity.clone();
+
+        // Stop any previous movement from the last frame
+        this.setVelocity(0);
+
+        // Horizontal movement
+        if (cursors.left.isDown) {
+            this.setVelocityX(-speed);
+        } else if (cursors.right.isDown) {
+            this.setVelocityX(speed);
+        }
+
+        // Vertical movement
+        if (cursors.up.isDown) {
+            this.setVelocityY(-speed);
+        } else if (cursors.down.isDown) {
+            this.setVelocityY(speed);
+        }
+
+        // Normalize and scale the velocity so that player can't move faster along a diagonal
+        this.body.velocity.normalize().scale(speed);
+
+        // Update the animation last and give left/right animations precedence over up/down animations
+        if (cursors.left.isDown) {
+            this.anims.play("misa-left-walk", true);
+        } else if (cursors.right.isDown) {
+            this.anims.play("misa-right-walk", true);
+        } else if (cursors.up.isDown) {
+            this.anims.play("misa-back-walk", true);
+        } else if (cursors.down.isDown) {
+            this.anims.play("misa-front-walk", true);
+        } else {
+            this.anims.stop();
+
+            // If we were moving, pick and idle frame to use
+            if (prevVelocity.x < 0) this.setTexture("atlas", "misa-left");
+            else if (prevVelocity.x > 0) this.setTexture("atlas", "misa-right");
+            else if (prevVelocity.y < 0) this.setTexture("atlas", "misa-back");
+            else if (prevVelocity.y > 0) this.setTexture("atlas", "misa-front");
+        }
+    }
+
     addAnimations(scene: Phaser.Scene) {
         const anims = scene.anims;
         anims.create({
