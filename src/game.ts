@@ -4,8 +4,9 @@ import MainScene from './MainScene';
 const config = {
     type: Phaser.AUTO,
     backgroundColor: '#125555',
-    width: 1024,
-    height: 800,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    parent: "gameDiv",
     physics: {
         default: "arcade",
         arcade: {
