@@ -28,6 +28,7 @@ export default class MainScene extends Phaser.Scene {
         const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
         const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
 
+        worldLayer.setCollisionByProperty({ collides: true });
         aboveLayer.setDepth(10);
 
         // Object layers in Tiled let you embed extra info into a map - like a spawn point or custom
@@ -41,6 +42,8 @@ export default class MainScene extends Phaser.Scene {
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         cursors = this.input.keyboard.createCursorKeys();
+
+        this.physics.add.collider(player, worldLayer);
     }
 
     update(time, delta) {
