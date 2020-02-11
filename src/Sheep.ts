@@ -5,7 +5,7 @@ enum SheepStates {
 }
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene: Phaser.Scene, x:number, y:number) {
+    constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, "atlas");
 
         scene.add.existing(this);
@@ -13,68 +13,62 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setActive(true);
         this.setCollideWorldBounds(true);
 
-        this.setSize(32,32);
+        this.setSize(32, 32);
         this.setOffset(0, 32);
     }
 
     update(followPosition: Phaser.Math.Vector2) {
         const speed = 100;
-        const distance = 100;
+        const distance = 200;
         const prevVelocity = this.body.velocity.clone();
-
-        const moveLeft = followPosition.x  + distance < this.body.position.x;
-        const moveRight = followPosition.x - distance > this.body.position.x; 
-        const moveUp = followPosition.y + distance < this.body.position.y;
-        const moveDown = followPosition.y - distance > this.body.position.y;
-        if (moveLeft || moveRight || moveUp || moveDown) {
-            this.setState(SheepStates.MovingToPlayer);
-        } else {
-            this.setState(SheepStates.RandomWalking);
-        }  
 
         // Stop any previous movement from the last frame
         this.setVelocity(0);
 
-        // switch (this.state) {
-        //     case SheepStates.MovingToPlayer:
-                
-        //         break;
-        
-        //     default:
-        //         break;
-        // }
+        const moveLeft = followPosition.x + distance < this.body.position.x;
+        const moveRight = followPosition.x - distance > this.body.position.x;
+        const moveUp = followPosition.y + distance < this.body.position.y;
+        const moveDown = followPosition.y - distance > this.body.position.y;
+        const shouldMoveToPlayer = moveLeft || moveRight || moveUp || moveDown;
 
-        if (this.state === SheepStates.MovingToPlayer) {
-            if (moveLeft) {
-                this.setVelocityX(-speed);
-            } else if (moveRight) {
-                this.setVelocityX(speed);
-            }
-    
-            if (moveUp) {
-                this.setVelocityY(-speed);
-            } else if (moveDown) {
-                this.setVelocityY(speed);
-            }
-        } 
-        else {
-            if (this.state === SheepStates.RandomWalking) {
-                if (Phaser.Math.FloatBetween(0,1) > 0.95) {
-                    this.setState(SheepStates.StandingStill);
+        if (shouldMoveToPlayer && this.state !== SheepStates.MovingToPlayer) {
+            this.setState(SheepStates.MovingToPlayer);
+        } else if (!shouldMoveToPlayer && this.state === SheepStates.MovingToPlayer) {
+            this.setState(SheepStates.StandingStill);
+        }
+        
+        switch (this.state) {
+            case SheepStates.MovingToPlayer:
+                console.log('MovingToPlayer');
+                if (moveLeft) {
+                    this.setVelocityX(-speed);
+                } else if (moveRight) {
+                    this.setVelocityX(speed);
                 }
-            } else {
-                if (Phaser.Math.FloatBetween(0,1) > 0.95) {
+                if (moveUp) {
+                    this.setVelocityY(-speed);
+                } else if (moveDown) {
+                    this.setVelocityY(speed);
+                }
+                break;
+            case SheepStates.StandingStill:
+                console.log('StandingStill');
+                if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
                     this.setState(SheepStates.RandomWalking);
                 }
-            }
-
-            if (this.state === SheepStates.RandomWalking) {
+                break;
+            case SheepStates.RandomWalking:
+                console.log('RandomWalking');
+                if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
+                    this.setState(SheepStates.StandingStill);
+                }
                 if (prevVelocity.x === 0) {
                     this.setVelocity(Phaser.Math.Between(-speed, speed), Phaser.Math.Between(-speed, speed));
                 } else {
                     this.setVelocity(prevVelocity.x, prevVelocity.y);
                 }
-            }
+            default:
+                break;
         }
 
         // Normalize and scale the velocity so that Sheep can't move faster along a diagonal
