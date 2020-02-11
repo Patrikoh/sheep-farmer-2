@@ -1,6 +1,8 @@
 import Player from './Player';
+import Sheep from './Sheep';
 
 let player: Player;
+let sheep: Sheep;
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
 export default class MainScene extends Phaser.Scene {
@@ -30,11 +32,8 @@ export default class MainScene extends Phaser.Scene {
         worldLayer.setCollisionByProperty({ collides: true });
         aboveLayer.setDepth(10);
 
-        // Object layers in Tiled let you embed extra info into a map - like a spawn point or custom
-        // collision shapes. In the tmx file, there's an object layer with a point named "Spawn Point"
-        const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point");
-
         player = new Player(this);
+        sheep = new Sheep(this);
 
         const camera = this.cameras.main;
         camera.startFollow(player);
@@ -47,5 +46,6 @@ export default class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         player.update(cursors);
+        sheep.update(player.body.position);
     }
 }
