@@ -1,4 +1,5 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
+    
     constructor(scene: Phaser.Scene) {
         super(scene, 200, 200, "player");
 
@@ -53,6 +54,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle.png");
             else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle.png");
         }
+    }
+
+    addCollider(scene: Phaser.Scene, object) {
+        scene.physics.add.collider(this, object);
     }
 
     addAnimations(scene: Phaser.Scene) {
