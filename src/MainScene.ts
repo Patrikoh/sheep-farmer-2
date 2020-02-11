@@ -40,7 +40,7 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.height = worldLayer.height;
 
         player = new Player(this);
-        herd = new SheepHerd(this, 3);
+        herd = new SheepHerd(this, 5);
 
         const camera = this.cameras.main;
         camera.startFollow(player);

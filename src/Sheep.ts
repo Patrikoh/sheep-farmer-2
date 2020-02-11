@@ -1,3 +1,9 @@
+enum SheepStates {
+    MovingToPlayer,
+    RandomWalking,
+    StandingStill
+}
+
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x:number, y:number) {
         super(scene, x, y, "atlas");
@@ -21,15 +27,24 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         const moveUp = followPosition.y + distance < this.body.position.y;
         const moveDown = followPosition.y - distance > this.body.position.y;
         if (moveLeft || moveRight || moveUp || moveDown) {
-            this.setState('movingToPlayer');
+            this.setState(SheepStates.MovingToPlayer);
         } else {
-            this.setState('randomWalking');
+            this.setState(SheepStates.RandomWalking);
         }  
 
         // Stop any previous movement from the last frame
         this.setVelocity(0);
 
-        if (this.state === 'movingToPlayer') {
+        // switch (this.state) {
+        //     case SheepStates.MovingToPlayer:
+                
+        //         break;
+        
+        //     default:
+        //         break;
+        // }
+
+        if (this.state === SheepStates.MovingToPlayer) {
             if (moveLeft) {
                 this.setVelocityX(-speed);
             } else if (moveRight) {
@@ -43,17 +58,17 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             }
         } 
         else {
-            if (this.state === 'randomWalking') {
+            if (this.state === SheepStates.RandomWalking) {
                 if (Phaser.Math.FloatBetween(0,1) > 0.95) {
-                    this.setState('standingStill');
+                    this.setState(SheepStates.StandingStill);
                 }
             } else {
                 if (Phaser.Math.FloatBetween(0,1) > 0.95) {
-                    this.setState('randomWalking');
+                    this.setState(SheepStates.RandomWalking);
                 }
             }
 
-            if (this.state === 'randomWalking') {
+            if (this.state === SheepStates.RandomWalking) {
                 if (prevVelocity.x === 0) {
                     this.setVelocity(Phaser.Math.Between(-speed, speed), Phaser.Math.Between(-speed, speed));
                 } else {
