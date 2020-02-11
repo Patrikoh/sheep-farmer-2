@@ -7,13 +7,13 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setActive(true);
         this.setCollideWorldBounds(true);
 
-        this.setSize(32,40);
-        this.setOffset(0, 22);
+        this.setSize(32,26);
+        this.setOffset(0, 0);
     }
 
     update(followPosition: Phaser.Math.Vector2) {
-        const speed = 75;
-        const distance = 100;
+        const speed = 60;
+        const distance = 50;
         const prevVelocity = this.body.velocity.clone();
 
         const moveLeft = followPosition.x  + distance < this.body.position.x;
