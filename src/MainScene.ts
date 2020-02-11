@@ -1,8 +1,8 @@
 import Player from './Player';
-import Sheep from './Sheep';
+import SheepHerd from './SheepHerd';
 
 let player: Player;
-let sheep: Sheep;
+let herd: SheepHerd;
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
 export default class MainScene extends Phaser.Scene {
@@ -40,7 +40,7 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.height = worldLayer.height;
 
         player = new Player(this);
-        sheep = new Sheep(this);
+        herd = new SheepHerd(this, 5);
 
         const camera = this.cameras.main;
         camera.startFollow(player);
@@ -48,11 +48,13 @@ export default class MainScene extends Phaser.Scene {
 
         cursors = this.input.keyboard.createCursorKeys();
 
-        this.physics.add.collider(player, worldLayer);
+        player.addCollider(this, worldLayer);
+        herd.addCollider(this, worldLayer);
+        herd.addCollider(this, player);
     }
 
     update(time, delta) {
         player.update(cursors);
-        sheep.update(player.body.position);
+        herd.update(player.body.position);
     }
 }
