@@ -6,6 +6,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         this.setActive(true);
         this.setCollideWorldBounds(true);
+
+        this.setSize(32,40);
+        this.setOffset(0, 22);
     }
 
     update(followPosition: Phaser.Math.Vector2) {
