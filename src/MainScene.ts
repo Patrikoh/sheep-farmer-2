@@ -1,6 +1,8 @@
 import Player from './Player';
+import Sheep from './Sheep';
 
 let player: Player;
+let sheep: Sheep;
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
 export default class MainScene extends Phaser.Scene {
@@ -10,9 +12,11 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
+        // Scene
         this.load.image("tiles", "assets/tilesets/sheepfarmer-tiles.png");
         this.load.tilemapTiledJSON("map", "assets/tilesets/sheep-farm.json");
 
+        // Sprites
         this.load.atlas("atlas", "assets/atlas/atlas.png", "assets/atlas/atlas.json");
     }
 
@@ -36,6 +40,7 @@ export default class MainScene extends Phaser.Scene {
         const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point");
 
         player = new Player(this);
+        sheep = new Sheep(this);
 
         const camera = this.cameras.main;
         camera.startFollow(player);
@@ -48,5 +53,6 @@ export default class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         player.update(cursors);
+        sheep.update(player.body.position);
     }
 }
