@@ -1,4 +1,5 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
+    
     constructor(scene: Phaser.Scene) {
         super(scene, 200, 200, "atlas");
 
@@ -55,6 +56,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             else if (prevVelocity.y < 0) this.setTexture("atlas", "misa-back");
             else if (prevVelocity.y > 0) this.setTexture("atlas", "misa-front");
         }
+    }
+
+    addCollider(scene: Phaser.Scene, object) {
+        scene.physics.add.collider(this, object);
     }
 
     addAnimations(scene: Phaser.Scene) {
