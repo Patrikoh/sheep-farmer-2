@@ -6258,6 +6258,19 @@
                         }]
                 }],
          "tilewidth":32
+        }, 
+        {
+         "columns":19,
+         "firstgid":729,
+         "image":"player-sheet.png",
+         "imageheight":32,
+         "imagewidth":608,
+         "margin":0,
+         "name":"player-sheet",
+         "spacing":0,
+         "tilecount":19,
+         "tileheight":32,
+         "tilewidth":32
         }],
  "tilewidth":32,
  "type":"map",

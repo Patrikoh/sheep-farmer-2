@@ -3417,6 +3417,9 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="729" name="player-sheet" tilewidth="32" tileheight="32" tilecount="19" columns="19">
+  <image source="player-sheet.png" width="608" height="32"/>
+ </tileset>
  <layer id="1" name="Below Player" width="40" height="40">
   <data encoding="csv">
 126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,126,
