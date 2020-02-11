@@ -35,6 +35,10 @@ export default class MainScene extends Phaser.Scene {
         worldLayer.setCollisionByProperty({ collides: true });
         aboveLayer.setDepth(10);
 
+        // Makes it possible to walk on the whole map
+        this.physics.world.bounds.width = worldLayer.width;
+        this.physics.world.bounds.height = worldLayer.height;
+
         player = new Player(this);
         sheep = new Sheep(this);
 
