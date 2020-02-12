@@ -13,8 +13,12 @@ export default class SheepHerd {
     }
 
     update(position: Phaser.Math.Vector2) {
-        herd.forEach(sheep => {
-            sheep.update(position)
+        herd.forEach((sheep, i) => {
+            if (i === 0) {
+                sheep.update(position)
+            } else {
+                sheep.update(herd[i - 1].body.position)
+            }
         });
     }
 

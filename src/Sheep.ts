@@ -36,7 +36,6 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
         switch (this.state) {
             case SheepStates.MovingToPlayer:
-                console.log('MovingToPlayer');
                 if (moveLeft) {
                     this.setVelocityX(-speed);
                 } else if (moveRight) {
@@ -49,13 +48,11 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             case SheepStates.StandingStill:
-                console.log('StandingStill');
                 if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
                     this.setState(SheepStates.RandomWalking);
                 }
                 break;
             case SheepStates.RandomWalking:
-                console.log('RandomWalking');
                 if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
                     this.setState(SheepStates.StandingStill);
                 }
