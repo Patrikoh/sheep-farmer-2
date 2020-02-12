@@ -17,6 +17,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
         const speed = 100;
+        const runspeed = 200;
         const prevVelocity = this.body.velocity.clone();
 
         // Stop any previous movement from the last frame
@@ -38,6 +39,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         this.body.velocity.normalize().scale(speed);
+        if (cursors.shift.isDown)
+        {
+            this.body.velocity.normalize().scale(runspeed);
+        }
 
         // Update the animation last and give left/right animations precedence over up/down animations
         if (cursors.left.isDown) {
