@@ -83,10 +83,10 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         } else {
             this.anims.stop();
 
-            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle.png");
-            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle.png");
-            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle.png");
-            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle.png");
+            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle-0");
+            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle-0");
+            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle-0");
+            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle-0");
         }
     }
 
