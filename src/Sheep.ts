@@ -66,13 +66,13 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         // Normalize and scale the velocity so that Sheep can't move faster along a diagonal
         this.body.velocity.normalize().scale(speed);
 
-        if (moveLeft) {
+        if (this.body.velocity.x < 0) {
             this.anims.play("player-left-walk", true);
-        } else if (moveRight) {
+        } else if (this.body.velocity.x > 0) {
             this.anims.play("player-right-walk", true);
-        } else if (moveUp) {
+        } else if (this.body.velocity.y < 0) {
             this.anims.play("player-up-walk", true);
-        } else if (moveDown) {
+        } else if (this.body.velocity.y > 0) {
             this.anims.play("player-down-walk", true);
         } else {
             this.anims.stop();
