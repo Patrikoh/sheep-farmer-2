@@ -1,7 +1,7 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     constructor(scene: Phaser.Scene) {
-        super(scene, 200, 200, "atlas");
+        super(scene, 200, 200, "player");
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -9,13 +9,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true);
 
         this.setSize(32,32);
-        this.setOffset(0, 32);
 
         this.addAnimations(scene);
     }
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-        const speed = 175;
+        const speed = 100;
         const prevVelocity = this.body.velocity.clone();
 
         // Stop any previous movement from the last frame
@@ -40,21 +39,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         // Update the animation last and give left/right animations precedence over up/down animations
         if (cursors.left.isDown) {
-            this.anims.play("misa-left-walk", true);
+            this.anims.play("player-left-walk", true);
         } else if (cursors.right.isDown) {
-            this.anims.play("misa-right-walk", true);
+            this.anims.play("player-right-walk", true);
         } else if (cursors.up.isDown) {
-            this.anims.play("misa-back-walk", true);
+            this.anims.play("player-up-walk", true);
         } else if (cursors.down.isDown) {
-            this.anims.play("misa-front-walk", true);
+            this.anims.play("player-down-walk", true);
         } else {
             this.anims.stop();
-
             // If we were moving, pick and idle frame to use
-            if (prevVelocity.x < 0) this.setTexture("atlas", "misa-left");
-            else if (prevVelocity.x > 0) this.setTexture("atlas", "misa-right");
-            else if (prevVelocity.y < 0) this.setTexture("atlas", "misa-back");
-            else if (prevVelocity.y > 0) this.setTexture("atlas", "misa-front");
+            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle.png");
+            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle.png");
+            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle.png");
+            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle.png");
         }
     }
 
@@ -65,47 +63,51 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     addAnimations(scene: Phaser.Scene) {
         const anims = scene.anims;
         anims.create({
-            key: "misa-left-walk",
-            frames: anims.generateFrameNames("atlas", {
-                prefix: "misa-left-walk.",
-                start: 0,
-                end: 3,
-                zeroPad: 3
+            key: "player-down-walk",
+            frames: anims.generateFrameNames("player", {
+                prefix: "player-down-walk-",
+                suffix:  ".png",
+                start: 1,
+                end: 16,
+                zeroPad: 2,
             }),
-            frameRate: 10,
+            frameRate: 7,
             repeat: -1
         });
         anims.create({
-            key: "misa-right-walk",
-            frames: anims.generateFrameNames("atlas", {
-                prefix: "misa-right-walk.",
-                start: 0,
-                end: 3,
-                zeroPad: 3
+            key: "player-right-walk",
+            frames: anims.generateFrameNames("player", {
+                prefix: "player-right-walk-",
+                suffix:  ".png",
+                start: 1,
+                end: 16,
+                zeroPad: 2,
             }),
-            frameRate: 10,
+            frameRate: 7,
             repeat: -1
         });
         anims.create({
-            key: "misa-front-walk",
-            frames: anims.generateFrameNames("atlas", {
-                prefix: "misa-front-walk.",
-                start: 0,
-                end: 3,
-                zeroPad: 3
+            key: "player-left-walk",
+            frames: anims.generateFrameNames("player", {
+                prefix: "player-left-walk-",
+                suffix:  ".png",
+                start: 1,
+                end: 16,
+                zeroPad: 2,
             }),
-            frameRate: 10,
+            frameRate: 7,
             repeat: -1
         });
         anims.create({
-            key: "misa-back-walk",
-            frames: anims.generateFrameNames("atlas", {
-                prefix: "misa-back-walk.",
-                start: 0,
-                end: 3,
-                zeroPad: 3
+            key: "player-up-walk",
+            frames: anims.generateFrameNames("player", {
+                prefix: "player-up-walk-",
+                suffix:  ".png",
+                start: 1,
+                end: 16,
+                zeroPad: 2,
             }),
-            frameRate: 10,
+            frameRate: 7,
             repeat: -1
         });
     }

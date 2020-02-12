@@ -6,20 +6,17 @@ enum SheepStates {
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "atlas");
+        super(scene, x, y, "player");
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.setActive(true);
         this.setCollideWorldBounds(true);
-
-        this.setSize(32, 32);
-        this.setOffset(0, 32);
     }
 
     update(followPosition: Phaser.Math.Vector2) {
-        const speed = 100;
-        const distance = 200;
+        const speed = 60;
+        const distance = 50;
         const prevVelocity = this.body.velocity.clone();
 
         // Stop any previous movement from the last frame
@@ -36,7 +33,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         } else if (!shouldMoveToPlayer && this.state === SheepStates.MovingToPlayer) {
             this.setState(SheepStates.StandingStill);
         }
-        
+
         switch (this.state) {
             case SheepStates.MovingToPlayer:
                 console.log('MovingToPlayer');
@@ -76,21 +73,20 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
         // Update the animation last and give left/right animations precedence over up/down animations
         if (moveLeft) {
-            this.anims.play("misa-left-walk", true);
+            this.anims.play("player-left-walk", true);
         } else if (moveRight) {
-            this.anims.play("misa-right-walk", true);
+            this.anims.play("player-right-walk", true);
         } else if (moveUp) {
-            this.anims.play("misa-back-walk", true);
+            this.anims.play("player-up-walk", true);
         } else if (moveDown) {
-            this.anims.play("misa-front-walk", true);
+            this.anims.play("player-down-walk", true);
         } else {
             this.anims.stop();
 
-            // If we were moving, pick and idle frame to use
-            if (prevVelocity.x < 0) this.setTexture("atlas", "misa-left");
-            else if (prevVelocity.x > 0) this.setTexture("atlas", "misa-right");
-            else if (prevVelocity.y < 0) this.setTexture("atlas", "misa-back");
-            else if (prevVelocity.y > 0) this.setTexture("atlas", "misa-front");
+            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle.png");
+            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle.png");
+            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle.png");
+            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle.png");
         }
     }
 

@@ -12,12 +12,9 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        // Scene
         this.load.image("tiles", "assets/tilesets/sheepfarmer-tiles.png");
         this.load.tilemapTiledJSON("map", "assets/tilesets/sheep-farm.json");
-
-        // Sprites
-        this.load.atlas("atlas", "assets/atlas/atlas.png", "assets/atlas/atlas.json");
+        this.load.atlas("player", "assets/atlas/player/player.png", "assets/atlas/player/player.json");
     }
 
     create() {
