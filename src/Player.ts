@@ -1,5 +1,5 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-    
+
     constructor(scene: Phaser.Scene) {
         super(scene, 200, 200, "player");
 
@@ -8,7 +8,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setActive(true);
         this.setCollideWorldBounds(true);
 
-        this.setSize(32,32);
+        this.setImmovable();
+
+        this.setSize(32, 32);
 
         this.addAnimations(scene);
     }
