@@ -51,10 +51,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         } else {
             this.anims.stop();
             // If we were moving, pick and idle frame to use
-            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle.png");
-            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle.png");
-            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle.png");
-            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle.png");
+            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle-0");
+            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle-0");
+            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle-0");
+            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle-0");
         }
     }
 
@@ -68,10 +68,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-down-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-down-walk-",
-                suffix: ".png",
                 start: 1,
-                end: 16,
-                zeroPad: 2,
+                end: 12
             }),
             frameRate: 7,
             repeat: -1
@@ -80,10 +78,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-right-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-right-walk-",
-                suffix: ".png",
                 start: 1,
-                end: 16,
-                zeroPad: 2,
+                end: 12
             }),
             frameRate: 7,
             repeat: -1
@@ -92,10 +88,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-left-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-left-walk-",
-                suffix: ".png",
                 start: 1,
-                end: 16,
-                zeroPad: 2,
+                end: 12
             }),
             frameRate: 7,
             repeat: -1
@@ -104,10 +98,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-up-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-up-walk-",
-                suffix: ".png",
                 start: 1,
-                end: 16,
-                zeroPad: 2,
+                end: 12
             }),
             frameRate: 7,
             repeat: -1
