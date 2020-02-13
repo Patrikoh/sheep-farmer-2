@@ -1,5 +1,7 @@
 import Player from './Player';
 import SheepHerd from './SheepHerd';
+import Grass from './Grass';
+import Sheep from './Sheep';
 
 let player: Player;
 let herd: SheepHerd;
@@ -39,6 +41,11 @@ export default class MainScene extends Phaser.Scene {
 
         player = new Player(this);
         herd = new SheepHerd(this, 5);
+
+        for (let index = 0; index < 50; index++) {
+            let grass = new Grass(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
+            grass.addCollider(this, herd.getGroup());
+        }
 
         const camera = this.cameras.main;
         camera.startFollow(player);
