@@ -1,5 +1,4 @@
 import Sheep from "./Sheep";
-import SheepHerd from "./SheepHerd";
 
 export default class Grass extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {

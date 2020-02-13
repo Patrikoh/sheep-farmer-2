@@ -1,7 +1,6 @@
 import Player from './Player';
 import SheepHerd from './SheepHerd';
 import Grass from './Grass';
-import Sheep from './Sheep';
 
 let player: Player;
 let herd: SheepHerd;
