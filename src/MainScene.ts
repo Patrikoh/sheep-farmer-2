@@ -1,10 +1,10 @@
 import Player from './Player';
 import SheepHerd from './SheepHerd';
 import Grass from './Grass';
-import Sheep from './Sheep';
 
 let player: Player;
 let herd: SheepHerd;
+let grasses: Array<Grass>;
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
 export default class MainScene extends Phaser.Scene {
@@ -23,11 +23,8 @@ export default class MainScene extends Phaser.Scene {
     create() {
         const map = this.make.tilemap({ key: "map" });
 
-        // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
-        // Phaser's cache (i.e. the name you used in preload)
         const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
 
-        // Parameters: layer name (or index) from Tiled, tileset, x, y
         const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
         const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
         const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
@@ -42,9 +39,11 @@ export default class MainScene extends Phaser.Scene {
         player = new Player(this);
         herd = new SheepHerd(this, 5);
 
+        grasses = [];
         for (let index = 0; index < 50; index++) {
             let grass = new Grass(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
             grass.addCollider(this, herd.getGroup());
+            grasses.push(grass);
         }
 
         const camera = this.cameras.main;
@@ -60,6 +59,6 @@ export default class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         player.update(cursors);
-        herd.update(player.body.position);
+        herd.update(this, player.body.position, grasses);
     }
 }
