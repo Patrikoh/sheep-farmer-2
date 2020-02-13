@@ -1,5 +1,8 @@
+import Grass from "./Grass";
+
 enum SheepStates {
     MovingToFollowPosition,
+    MovingToGrassPosition,
     RandomWalking,
     StandingStill
 }
@@ -14,12 +17,15 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true);
     }
 
-    update(followPosition: Phaser.Math.Vector2) {
+    update(scene: Phaser.Scene, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
         const speed = 60;
         const distance = 100;
+        const searchForGrassDistance = 70;
         const prevVelocity = this.body.velocity.clone();
 
         this.setVelocity(0);
+
+        var closestGrass: Grass = scene.physics.closest(this, grasses.filter(g => g.active)) as Grass;
 
         const moveLeft = followPosition.x + distance < this.body.position.x;
         const moveRight = followPosition.x - distance > this.body.position.x;
@@ -28,8 +34,21 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         const shouldMoveToFollowPosition = moveLeft || moveRight || moveUp || moveDown;
 
         switch (this.state) {
+            case SheepStates.StandingStill:
+                if (shouldMoveToFollowPosition) {
+                    this.setState(SheepStates.MovingToFollowPosition);
+                } else if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
+                    this.setState(SheepStates.RandomWalking);
+                }
+                break;
+            case SheepStates.MovingToGrassPosition:
+                this.setVelocityX(closestGrass.body.position.x - this.body.position.x);
+                this.setVelocityY(closestGrass.body.position.y - this.body.position.y);
+                break;
             case SheepStates.MovingToFollowPosition:
-                if (!shouldMoveToFollowPosition) {
+                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
+                    this.setState(SheepStates.MovingToGrassPosition);
+                } else if (!shouldMoveToFollowPosition) {
                     this.setState(SheepStates.StandingStill);
                 } else {
                     if (moveLeft) {
@@ -44,15 +63,10 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                     }
                 }
                 break;
-            case SheepStates.StandingStill:
-                if (shouldMoveToFollowPosition) {
-                    this.setState(SheepStates.MovingToFollowPosition);
-                } else if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
-                    this.setState(SheepStates.RandomWalking);
-                }
-                break;
             case SheepStates.RandomWalking:
-                if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
+                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
+                    this.setState(SheepStates.MovingToGrassPosition);
+                } else if (Phaser.Math.FloatBetween(0, 1) > 0.99) {
                     this.setState(SheepStates.StandingStill);
                 } else if (prevVelocity.x === 0 && prevVelocity.y === 0) {
                     this.setVelocity(Phaser.Math.Between(-speed, speed), Phaser.Math.Between(-speed, speed));
@@ -89,6 +103,6 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     }
 
     onEat() {
-        this.setScale(this.scaleX * 1.2, this.scaleY * 1.2);
+        // this.setScale(this.scaleX * 1.2, this.scaleY * 1.2);
     }
 }
