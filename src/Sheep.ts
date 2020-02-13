@@ -88,7 +88,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.collider(this, object);
     }
 
-    eat() {
+    onEat() {
         this.setScale(this.scaleX * 1.2, this.scaleY * 1.2);
     }
 }

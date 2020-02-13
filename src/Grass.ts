@@ -16,7 +16,7 @@ export default class Grass extends Phaser.Physics.Arcade.Sprite {
 
     onCollision(collider: Grass, secondCollider) {
         if (secondCollider instanceof Sheep) {
-            secondCollider.eat();
+            secondCollider.onEat();
         }
         collider.getEaten();
     }
