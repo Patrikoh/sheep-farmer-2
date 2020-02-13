@@ -12,7 +12,6 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         this.setActive(true);
         this.setCollideWorldBounds(true);
-        this.addAnimations(scene);
     }
 
     update(followPosition: Phaser.Math.Vector2) {
@@ -83,50 +82,6 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             else if (prevVelocity.y < 0) this.setTexture("sheep", "sheep-up-idle-0");
             else if (prevVelocity.y > 0) this.setTexture("sheep", "sheep-down-idle-0");
         }
-    }
-
-    addAnimations(scene: Phaser.Scene) {
-        const anims = scene.anims;
-        anims.create({
-            key: "sheep-down-walk",
-            frames: anims.generateFrameNames("sheep", {
-                prefix: "sheep-down-walk-",
-                start: 0,
-                end: 11
-            }),
-            frameRate: 7,
-            repeat: -1
-        });
-        anims.create({
-            key: "sheep-right-walk",
-            frames: anims.generateFrameNames("sheep", {
-                prefix: "sheep-right-walk-",
-                start: 0,
-                end: 11
-            }),
-            frameRate: 7,
-            repeat: -1
-        });
-        anims.create({
-            key: "sheep-left-walk",
-            frames: anims.generateFrameNames("sheep", {
-                prefix: "sheep-left-walk-",
-                start: 0,
-                end: 11
-            }),
-            frameRate: 7,
-            repeat: -1
-        });
-        anims.create({
-            key: "sheep-up-walk",
-            frames: anims.generateFrameNames("sheep", {
-                prefix: "sheep-up-walk-",
-                start: 0,
-                end: 11
-            }),
-            frameRate: 7,
-            repeat: -1
-        });
     }
 
     addCollider(scene: Phaser.Scene, object) {
