@@ -10,7 +10,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.setImmovable();
 
-        this.setSize(32, 32);
+        this.setSize(24, 30);
 
         this.addAnimations(scene);
     }
