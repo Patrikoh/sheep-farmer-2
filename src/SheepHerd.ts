@@ -31,4 +31,6 @@ export default class SheepHerd {
     addCollider(scene: Phaser.Scene, object) {
         scene.physics.add.collider(herd, object);
     }
+
+    getGroup() { return herd };
 }
