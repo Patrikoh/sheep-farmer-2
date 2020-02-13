@@ -6,7 +6,7 @@ enum SheepStates {
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "player");
+        super(scene, x, y, "sheep");
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -67,20 +67,20 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.body.velocity.normalize().scale(speed);
 
         if (this.body.velocity.x < 0) {
-            this.anims.play("player-left-walk", true);
+            this.anims.play("sheep-left-walk", true);
         } else if (this.body.velocity.x > 0) {
-            this.anims.play("player-right-walk", true);
+            this.anims.play("sheep-right-walk", true);
         } else if (this.body.velocity.y < 0) {
-            this.anims.play("player-up-walk", true);
+            this.anims.play("sheep-up-walk", true);
         } else if (this.body.velocity.y > 0) {
-            this.anims.play("player-down-walk", true);
+            this.anims.play("sheep-down-walk", true);
         } else {
             this.anims.stop();
 
-            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle-0");
-            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle-0");
-            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle-0");
-            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle-0");
+            if (prevVelocity.x < 0) this.setTexture("sheep", "sheep-left-idle-0");
+            else if (prevVelocity.x > 0) this.setTexture("sheep", "sheep-right-idle-0");
+            else if (prevVelocity.y < 0) this.setTexture("sheep", "sheep-up-idle-0");
+            else if (prevVelocity.y > 0) this.setTexture("sheep", "sheep-down-idle-0");
         }
     }
 

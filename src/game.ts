@@ -2,10 +2,10 @@ import 'phaser';
 import MainScene from './MainScene';
 
 const config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     backgroundColor: '#000000',
-    width: 600,
-    height: 600,
+    width: 500,
+    height: 350,
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
@@ -16,7 +16,7 @@ const config = {
         default: "arcade",
         arcade: {
             debug: false,
-            gravity: { y: 0 } // Top down game, so no gravity
+            gravity: { y: 0 }
         }
     },
     scene: MainScene

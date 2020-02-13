@@ -10,7 +10,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.setImmovable();
 
-        this.setSize(32, 32);
+        this.setSize(24, 30);
 
         this.addAnimations(scene);
     }
@@ -73,8 +73,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-down-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-down-walk-",
-                start: 1,
-                end: 12
+                start: 0,
+                end: 11
             }),
             frameRate: 7,
             repeat: -1
@@ -83,8 +83,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-right-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-right-walk-",
-                start: 1,
-                end: 12
+                start: 0,
+                end: 11
             }),
             frameRate: 7,
             repeat: -1
@@ -93,8 +93,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-left-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-left-walk-",
-                start: 1,
-                end: 12
+                start: 0,
+                end: 11
             }),
             frameRate: 7,
             repeat: -1
@@ -103,8 +103,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             key: "player-up-walk",
             frames: anims.generateFrameNames("player", {
                 prefix: "player-up-walk-",
-                start: 1,
-                end: 12
+                start: 0,
+                end: 11
             }),
             frameRate: 7,
             repeat: -1

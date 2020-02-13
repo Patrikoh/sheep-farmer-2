@@ -6,6 +6,8 @@ export default class SheepHerd {
     constructor(scene: Phaser.Scene, numberOfSheep: integer) {
         herd = scene.physics.add.group();
 
+        this.addAnimations(scene);
+
         for (let index = 0; index < numberOfSheep; index++) {
             herd.add(new Sheep(scene, 10 + index * 100, 10 + index * 100));
         }
@@ -30,6 +32,50 @@ export default class SheepHerd {
 
     addCollider(scene: Phaser.Scene, object) {
         scene.physics.add.collider(herd, object);
+    }
+
+    addAnimations(scene: Phaser.Scene) {
+        const anims = scene.anims;
+        anims.create({
+            key: "sheep-down-walk",
+            frames: anims.generateFrameNames("sheep", {
+                prefix: "sheep-down-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "sheep-right-walk",
+            frames: anims.generateFrameNames("sheep", {
+                prefix: "sheep-right-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "sheep-left-walk",
+            frames: anims.generateFrameNames("sheep", {
+                prefix: "sheep-left-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "sheep-up-walk",
+            frames: anims.generateFrameNames("sheep", {
+                prefix: "sheep-up-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
     }
 
     getGroup() { return herd };

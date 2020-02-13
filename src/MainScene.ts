@@ -14,9 +14,10 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("tiles", "assets/tilesets/sheepfarmer-tiles.png");
-        this.load.tilemapTiledJSON("map", "assets/tilesets/sheep-farm.json");
+        this.load.image("tiles", "assets/maps/sheep-farmer-tiles.png");
+        this.load.tilemapTiledJSON("map", "assets/maps/sheep-farm.json");
         this.load.atlas("player", "assets/atlas/player/player.png", "assets/atlas/player/player.json");
+        this.load.atlas("sheep", "assets/atlas/sheep/sheep.png", "assets/atlas/sheep/sheep.json");
     }
 
     create() {
@@ -24,7 +25,7 @@ export default class MainScene extends Phaser.Scene {
 
         // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
         // Phaser's cache (i.e. the name you used in preload)
-        const tileset = map.addTilesetImage("sheepfarmer-tiles", "tiles");
+        const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
 
         // Parameters: layer name (or index) from Tiled, tileset, x, y
         const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
