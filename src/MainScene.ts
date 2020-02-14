@@ -58,8 +58,8 @@ export default class MainScene extends Phaser.Scene {
         herd.addCollider(this, player);
     }
 
-    update(time, delta) {
+    update(time) {
         player.update(cursors);
-        herd.update(this, player.body.position, grasses);
+        herd.update(this, time, player.body.position, grasses);
     }
 }

@@ -20,14 +20,14 @@ export default class SheepHerd {
         herd.getChildren().forEach((s: Sheep) => s.setCollideWorldBounds(true));
     }
 
-    update(scene: Phaser.Scene, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
+    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
         let herdChildren = herd.getChildren();
         herdChildren.forEach((sheep: Sheep, i) => {
             let herdMedianX = herdChildren.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.x + a), 0) / herdChildren.length;
             let herdMedianY = herdChildren.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.y + a), 0) / herdChildren.length;
             let positionX = (followPosition.x + herdMedianX) / 2;
             let positionY = (followPosition.y + herdMedianY) / 2;
-            sheep.update(scene, new Phaser.Math.Vector2(positionX, positionY), grasses);
+            sheep.update(scene, time, new Phaser.Math.Vector2(positionX, positionY), grasses);
         });
     }
 
