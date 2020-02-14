@@ -2,7 +2,7 @@ import Sheep from "./Sheep";
 
 export default class Grass extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "player");
+        super(scene, x, y, "grass");
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
