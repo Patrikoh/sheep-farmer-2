@@ -5,7 +5,12 @@ enum SheepStates {
     MovingToGrassPosition,
     RandomWalking,
     StandingStill
-}
+};
+const DataFields = {
+    stopStandingStillTime: 'startedStandingStillTime',
+    stopRandomWalkingTime: 'stopRandomWalkingTime',
+    earliestStopMovingToFollowPositionTime: 'earliestStopMovingToFollowPositionTime'
+};
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -28,16 +33,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         switch (this.state) {
             case SheepStates.StandingStill: {
                 if (this.getFollowPositionDecision(followPosition, followDistance).shouldMove) {
-                    this.setState(SheepStates.MovingToFollowPosition);
-                    this.setData({
-                        earliestStopMovingToFollowPositionTime: time + Phaser.Math.Between(2000, 3000)
-                    });
-                } else if (Phaser.Math.FloatBetween(0, 1) > 0.997) {
-                    // TODO Lägg till så att fåren står stilla på samma sätt som de går random nu, med en tid.
-                    this.setState(SheepStates.RandomWalking);
-                    this.setData({
-                        stopRandomWalkingTime: time + Phaser.Math.Between(2000, 3500)
-                    });
+                    this.setMoveToFollowPositionState(time);
+                } else if (this.getData(DataFields.stopStandingStillTime) <= time) {
+                    this.setRandomWalkState(time);
                 }
                 break;
             }
@@ -47,7 +45,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                     this.setVelocityX(closestGrass.body.position.x - this.body.position.x);
                     this.setVelocityY(closestGrass.body.position.y - this.body.position.y);
                 } else {
-                    this.setState(SheepStates.StandingStill);
+                    this.setStandStillState(time);
                 }
                 break;
             }
@@ -57,8 +55,8 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
                     this.setState(SheepStates.MovingToGrassPosition);
                 } else if (!followPositionDecision.shouldMove) {
-                    if (this.getData('earliestStopMovingToFollowPositionTime') <= time) {
-                        this.setState(SheepStates.StandingStill);
+                    if (this.getData(DataFields.earliestStopMovingToFollowPositionTime) <= time) {
+                        this.setStandStillState(time);
                     } else {
                         this.setVelocity(prevVelocity.x, prevVelocity.y);
                     }
@@ -79,9 +77,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             case SheepStates.RandomWalking: {
                 const closestGrass = this.getClosestGrass(scene, grasses)
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
-                    this.setState(SheepStates.MovingToGrassPosition);
-                } else if (this.getData('stopRandomWalkingTime') <= time) {
-                    this.setState(SheepStates.StandingStill);
+                    this.setMovingToGrassPositionState();
+                } else if (this.getData(DataFields.stopRandomWalkingTime) <= time) {
+                    this.setStandStillState(time);
                 } else if (prevVelocity.x === 0 && prevVelocity.y === 0) {
                     this.setVelocity(Phaser.Math.Between(-speed, speed), Phaser.Math.Between(-speed, speed));
                 } else {
@@ -137,5 +135,24 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             moveDown,
             shouldMove: moveLeft || moveRight || moveUp || moveDown
         };
+    }
+
+    setStandStillState(time: number) {
+        this.setState(SheepStates.StandingStill);
+        this.setData(DataFields.stopStandingStillTime, time + Phaser.Math.Between(2000, 3500));
+    };
+
+    setRandomWalkState(time: number) {
+        this.setState(SheepStates.RandomWalking);
+        this.setData(DataFields.stopRandomWalkingTime, time + Phaser.Math.Between(2000, 3500));
+    }
+
+    setMoveToFollowPositionState(time: number) {
+        this.setState(SheepStates.MovingToFollowPosition);
+        this.setData(DataFields.earliestStopMovingToFollowPositionTime, time + Phaser.Math.Between(2000, 3000));
+    }
+
+    setMovingToGrassPositionState() {
+        this.setState(SheepStates.MovingToGrassPosition);
     }
 }
