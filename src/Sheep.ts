@@ -1,4 +1,5 @@
 import Grass from "./Grass";
+import { Data } from "phaser";
 
 enum MovementTypes {
     MovingToFollowPosition,
@@ -7,22 +8,17 @@ enum MovementTypes {
     StandingStill,
     WalkAway
 };
-const DataFields = {
-    movementState: 'movementState',
-    standStill: 'standStill',
-    stopRandomWalkingTime: 'stopRandomWalkingTime',
-    earliestStopMovingToFollowPositionTime: 'earliestStopMovingToFollowPositionTime',
-    walkAway: 'walkAway'
-};
-
 interface MovementState {
-    movement: MovementTypes,
-    stopTime: number,
-    position: {
+    movementType: MovementTypes,
+    stopTime?: number,
+    position?: {
         x: number,
         y: number
     }
-}
+};
+const DataFields = {
+    movementState: 'movementState',
+};
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -36,16 +32,18 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
     update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
         const speed = 60;
-        const followDistance = 100;
+        const followDistance = 80;
         const searchForGrassDistance = 60;
         const prevVelocity = this.body.velocity.clone();
+        let movementState: MovementState = this.getData(DataFields.movementState);
+
+        if (!movementState) movementState = { movementType: MovementTypes.StandingStill, stopTime: 0 };
 
         this.setVelocity(0);
 
-        switch (this.state) {
+        switch (movementState.movementType) {
             case MovementTypes.StandingStill: {
-                let { stopTime } = this.getData(DataFields.standStill);
-                if (time > stopTime) {
+                if (time > movementState.stopTime) {
                     this.setRandomWalkState(time);
                 } else if (this.getFollowPositionDecision(followPosition, followDistance).shouldMove) {
                     this.setMoveToFollowPositionState(time);
@@ -66,9 +64,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 const closestGrass = this.getClosestGrass(scene, grasses);
                 const followPositionDecision = this.getFollowPositionDecision(followPosition, followDistance);
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
-                    this.setState(MovementTypes.MovingToGrassPosition);
+                    this.setMovingToGrassPositionState();
                 } else if (!followPositionDecision.shouldMove) {
-                    if (this.getData(DataFields.earliestStopMovingToFollowPositionTime) <= time) {
+                    if (time > movementState.stopTime) {
                         this.setStandStillState(time);
                     } else {
                         this.setVelocity(prevVelocity.x, prevVelocity.y);
@@ -88,11 +86,10 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 break;
             }
             case MovementTypes.WalkAway: {
-                let { position, stopTime } = this.getData(DataFields.movementState);
-                if (time > stopTime) {
+                if (time > movementState.stopTime) {
                     this.setStandStillState(time);
                 } else {
-                    this.setVelocity(this.body.position.x - position.x, this.body.position.y - position.y);
+                    this.setVelocity(this.body.position.x - movementState.position.x, this.body.position.y - movementState.position.y);
                 }
                 break;
             }
@@ -100,7 +97,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 const closestGrass = this.getClosestGrass(scene, grasses)
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
                     this.setMovingToGrassPositionState();
-                } else if (this.getData(DataFields.stopRandomWalkingTime) <= time) {
+                } else if (time > movementState.stopTime) {
                     this.setStandStillState(time);
                 } else if (prevVelocity.x === 0 && prevVelocity.y === 0) {
                     this.setVelocity(Phaser.Math.Between(-speed, speed), Phaser.Math.Between(-speed, speed));
@@ -115,22 +112,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         // Normalize and scale the velocity so that Sheep can't move faster along a diagonal
         this.body.velocity.normalize().scale(speed);
 
-        if (this.body.velocity.x < 0) {
-            this.anims.play("sheep-left-walk", true);
-        } else if (this.body.velocity.x > 0) {
-            this.anims.play("sheep-right-walk", true);
-        } else if (this.body.velocity.y < 0) {
-            this.anims.play("sheep-up-walk", true);
-        } else if (this.body.velocity.y > 0) {
-            this.anims.play("sheep-down-walk", true);
-        } else {
-            this.anims.stop();
-
-            if (prevVelocity.x < 0) this.setTexture("sheep", "sheep-left-idle-0");
-            else if (prevVelocity.x > 0) this.setTexture("sheep", "sheep-right-idle-0");
-            else if (prevVelocity.y < 0) this.setTexture("sheep", "sheep-up-idle-0");
-            else if (prevVelocity.y > 0) this.setTexture("sheep", "sheep-down-idle-0");
-        }
+        this.setAnimation(prevVelocity);
     }
 
     addCollider(scene: Phaser.Scene, object) {
@@ -164,33 +146,61 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     }
 
     setStandStillState(time: number) {
-        this.setState(MovementTypes.StandingStill);
-        this.setData(DataFields.standStill, {
+        let movementState: MovementState = {
+            movementType: MovementTypes.StandingStill,
             stopTime: time + Phaser.Math.Between(4000, 6000),
-        });
+        }
+        this.setData(DataFields.movementState, movementState);
     };
 
     setRandomWalkState(time: number) {
-        this.setState(MovementTypes.RandomWalking);
-        this.setData(DataFields.stopRandomWalkingTime, time + Phaser.Math.Between(2000, 3500));
+        let movementState: MovementState = {
+            movementType: MovementTypes.RandomWalking,
+            stopTime: time + Phaser.Math.Between(2000, 3500),
+        }
+        this.setData(DataFields.movementState, movementState);
     }
 
     setMoveToFollowPositionState(time: number) {
-        this.setState(MovementTypes.MovingToFollowPosition);
-        this.setData(DataFields.earliestStopMovingToFollowPositionTime, time + Phaser.Math.Between(2000, 3000));
+        let movementState: MovementState = {
+            movementType: MovementTypes.MovingToFollowPosition,
+            stopTime: time + Phaser.Math.Between(2000, 3000),
+        }
+        this.setData(DataFields.movementState, movementState);
     }
 
     setWalkAwayState(time: number, x: number, y: number) {
-        this.setState(MovementTypes.WalkAway);
         let movementState: MovementState = {
-            movement: MovementTypes.WalkAway,
-            stopTime: time + Phaser.Math.Between(500, 1000),
+            movementType: MovementTypes.WalkAway,
+            stopTime: time + Phaser.Math.Between(200, 500),
             position: { x, y }
         }
         this.setData(DataFields.movementState, movementState);
     }
 
     setMovingToGrassPositionState() {
-        this.setState(MovementTypes.MovingToGrassPosition);
+        let movementState: MovementState = {
+            movementType: MovementTypes.MovingToGrassPosition
+        }
+        this.setData(DataFields.movementState, movementState);
+    }
+
+    setAnimation(prevVelocity: Phaser.Math.Vector2) {
+        if (this.body.velocity.x < 0) {
+            this.anims.play("sheep-left-walk", true);
+        } else if (this.body.velocity.x > 0) {
+            this.anims.play("sheep-right-walk", true);
+        } else if (this.body.velocity.y < 0) {
+            this.anims.play("sheep-up-walk", true);
+        } else if (this.body.velocity.y > 0) {
+            this.anims.play("sheep-down-walk", true);
+        } else {
+            this.anims.stop();
+
+            if (prevVelocity.x < 0) this.setTexture("sheep", "sheep-left-idle-0");
+            else if (prevVelocity.x > 0) this.setTexture("sheep", "sheep-right-idle-0");
+            else if (prevVelocity.y < 0) this.setTexture("sheep", "sheep-up-idle-0");
+            else if (prevVelocity.y > 0) this.setTexture("sheep", "sheep-down-idle-0");
+        }
     }
 }
