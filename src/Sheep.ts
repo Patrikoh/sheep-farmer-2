@@ -4,12 +4,14 @@ enum SheepStates {
     MovingToFollowPosition,
     MovingToGrassPosition,
     RandomWalking,
-    StandingStill
+    StandingStill,
+    WalkAway
 };
 const DataFields = {
     stopStandingStillTime: 'startedStandingStillTime',
     stopRandomWalkingTime: 'stopRandomWalkingTime',
-    earliestStopMovingToFollowPositionTime: 'earliestStopMovingToFollowPositionTime'
+    earliestStopMovingToFollowPositionTime: 'earliestStopMovingToFollowPositionTime',
+    walkAway: 'walkAway'
 };
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
@@ -74,6 +76,15 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             }
+            case SheepStates.WalkAway: {
+                let { position, stopTime } = this.getData(DataFields.walkAway);
+                if (time > stopTime) {
+                    this.setStandStillState(time);
+                } else {
+                    this.setVelocity(this.body.position.x - position.x, this.body.position.y - position.y);
+                }
+                break;
+            }
             case SheepStates.RandomWalking: {
                 const closestGrass = this.getClosestGrass(scene, grasses)
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
@@ -115,6 +126,10 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.collider(this, object);
     }
 
+    onSheepCollision(time: number, x: number, y: number) {
+        this.setWalkAwayState(time, x, y);
+    }
+
     onEat() {
         this.setScale(this.scaleX * 1.1, this.scaleY * 1.1);
     }
@@ -150,6 +165,14 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     setMoveToFollowPositionState(time: number) {
         this.setState(SheepStates.MovingToFollowPosition);
         this.setData(DataFields.earliestStopMovingToFollowPositionTime, time + Phaser.Math.Between(2000, 3000));
+    }
+
+    setWalkAwayState(time: number, x: number, y: number) {
+        this.setState(SheepStates.WalkAway);
+        this.setData(DataFields.walkAway, {
+            stopTime: time + Phaser.Math.Between(500, 1000),
+            position: { x, y }
+        });
     }
 
     setMovingToGrassPositionState() {

@@ -13,7 +13,11 @@ export default class SheepHerd {
             herd.add(new Sheep(scene, 10 + index * 100, 10 + index * 100));
         }
 
-        scene.physics.add.collider(herd, herd);
+        scene.physics.add.collider(herd, herd,
+            (s1: Sheep, s2: Sheep) => {
+                s1.onSheepCollision(scene.time.now, s2.body.position.x, s2.body.position.y);
+                s2.onSheepCollision(scene.time.now, s1.body.position.x, s1.body.position.y);
+            }, null, this);
 
         // This is needed due to a bug in Phaser: 
         // https://www.html5gamedevs.com/topic/38972-solved-issue-with-world-bounds-collision/?do=findComment&comment=222837
