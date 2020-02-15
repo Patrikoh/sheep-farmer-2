@@ -16,7 +16,6 @@ export default class SheepHerd {
         scene.physics.add.collider(herd, herd,
             (s1: Sheep, s2: Sheep) => {
                 s1.onSheepCollision(scene.time.now, s2.body.position.x, s2.body.position.y);
-                s2.onSheepCollision(scene.time.now, s1.body.position.x, s1.body.position.y);
             }, null, this);
 
         // This is needed due to a bug in Phaser: 
