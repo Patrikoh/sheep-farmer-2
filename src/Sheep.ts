@@ -32,7 +32,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
     update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
         const speed = 60;
-        const followDistance = 80;
+        const followDistance = 100;
         const searchForGrassDistance = 60;
         const prevVelocity = this.body.velocity.clone();
         let movementState: MovementState = this.getData(DataFields.movementState);
@@ -45,8 +45,8 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             case MovementTypes.StandingStill: {
                 if (time > movementState.stopTime) {
                     this.setRandomWalkState(time);
-                } else if (this.getFollowPositionDecision(followPosition, followDistance).shouldMove) {
-                    this.setMoveToFollowPositionState(time);
+                } else if (followPosition.distance(this.body.position) > followDistance) {
+                    this.setMoveToFollowPositionState(time, followPosition);
                 }
                 break;
             }
@@ -62,26 +62,16 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             }
             case MovementTypes.MovingToFollowPosition: {
                 const closestGrass = this.getClosestGrass(scene, grasses);
-                const followPositionDecision = this.getFollowPositionDecision(followPosition, followDistance);
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
                     this.setMovingToGrassPositionState();
-                } else if (!followPositionDecision.shouldMove) {
+                } else if (followPosition.distance(this.body.position) < followDistance) {
                     if (time > movementState.stopTime) {
                         this.setStandStillState(time);
                     } else {
                         this.setVelocity(prevVelocity.x, prevVelocity.y);
                     }
                 } else {
-                    if (followPositionDecision.moveLeft) {
-                        this.setVelocityX(-speed);
-                    } else if (followPositionDecision.moveRight) {
-                        this.setVelocityX(speed);
-                    }
-                    if (followPositionDecision.moveUp) {
-                        this.setVelocityY(-speed);
-                    } else if (followPositionDecision.moveDown) {
-                        this.setVelocityY(speed);
-                    }
+                    this.setVelocity(followPosition.x - this.body.x, followPosition.y - this.body.y);
                 }
                 break;
             }
@@ -131,20 +121,6 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         return scene.physics.closest(this, grasses.filter(g => g.active)) as Grass;
     }
 
-    getFollowPositionDecision(followPosition: Phaser.Math.Vector2, distance: number) {
-        const moveLeft = followPosition.x + distance < this.body.position.x;
-        const moveRight = followPosition.x - distance > this.body.position.x;
-        const moveUp = followPosition.y + distance < this.body.position.y;
-        const moveDown = followPosition.y - distance > this.body.position.y;
-        return {
-            moveLeft,
-            moveRight,
-            moveUp,
-            moveDown,
-            shouldMove: moveLeft || moveRight || moveUp || moveDown
-        };
-    }
-
     setStandStillState(time: number) {
         let movementState: MovementState = {
             movementType: MovementTypes.StandingStill,
@@ -161,10 +137,11 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setData(DataFields.movementState, movementState);
     }
 
-    setMoveToFollowPositionState(time: number) {
+    setMoveToFollowPositionState(time: number, followPosition: Phaser.Math.Vector2) {
         let movementState: MovementState = {
             movementType: MovementTypes.MovingToFollowPosition,
             stopTime: time + Phaser.Math.Between(2000, 3000),
+            position: { x: followPosition.x, y: followPosition.y }
         }
         this.setData(DataFields.movementState, movementState);
     }
