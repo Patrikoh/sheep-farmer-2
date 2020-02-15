@@ -8,7 +8,7 @@ enum SheepStates {
     WalkAway
 };
 const DataFields = {
-    stopStandingStillTime: 'startedStandingStillTime',
+    standStill: 'standStill',
     stopRandomWalkingTime: 'stopRandomWalkingTime',
     earliestStopMovingToFollowPositionTime: 'earliestStopMovingToFollowPositionTime',
     walkAway: 'walkAway'
@@ -34,10 +34,11 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
         switch (this.state) {
             case SheepStates.StandingStill: {
-                if (this.getFollowPositionDecision(followPosition, followDistance).shouldMove) {
-                    this.setMoveToFollowPositionState(time);
-                } else if (this.getData(DataFields.stopStandingStillTime) <= time) {
+                let { stopTime } = this.getData(DataFields.standStill);
+                if (time > stopTime) {
                     this.setRandomWalkState(time);
+                } else if (this.getFollowPositionDecision(followPosition, followDistance).shouldMove) {
+                    this.setMoveToFollowPositionState(time);
                 }
                 break;
             }
@@ -154,7 +155,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
     setStandStillState(time: number) {
         this.setState(SheepStates.StandingStill);
-        this.setData(DataFields.stopStandingStillTime, time + Phaser.Math.Between(2000, 3500));
+        this.setData(DataFields.standStill, {
+            stopTime: time + Phaser.Math.Between(4000, 6000),
+        });
     };
 
     setRandomWalkState(time: number) {
