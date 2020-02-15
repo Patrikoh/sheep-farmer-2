@@ -1,6 +1,6 @@
 import Grass from "./Grass";
 
-enum SheepStates {
+enum MovementTypes {
     MovingToFollowPosition,
     MovingToGrassPosition,
     RandomWalking,
@@ -8,11 +8,21 @@ enum SheepStates {
     WalkAway
 };
 const DataFields = {
+    movementState: 'movementState',
     standStill: 'standStill',
     stopRandomWalkingTime: 'stopRandomWalkingTime',
     earliestStopMovingToFollowPositionTime: 'earliestStopMovingToFollowPositionTime',
     walkAway: 'walkAway'
 };
+
+interface MovementState {
+    movement: MovementTypes,
+    stopTime: number,
+    position: {
+        x: number,
+        y: number
+    }
+}
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -33,7 +43,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(0);
 
         switch (this.state) {
-            case SheepStates.StandingStill: {
+            case MovementTypes.StandingStill: {
                 let { stopTime } = this.getData(DataFields.standStill);
                 if (time > stopTime) {
                     this.setRandomWalkState(time);
@@ -42,7 +52,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             }
-            case SheepStates.MovingToGrassPosition: {
+            case MovementTypes.MovingToGrassPosition: {
                 const closestGrass = this.getClosestGrass(scene, grasses)
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
                     this.setVelocityX(closestGrass.body.position.x - this.body.position.x);
@@ -52,11 +62,11 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             }
-            case SheepStates.MovingToFollowPosition: {
+            case MovementTypes.MovingToFollowPosition: {
                 const closestGrass = this.getClosestGrass(scene, grasses);
                 const followPositionDecision = this.getFollowPositionDecision(followPosition, followDistance);
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
-                    this.setState(SheepStates.MovingToGrassPosition);
+                    this.setState(MovementTypes.MovingToGrassPosition);
                 } else if (!followPositionDecision.shouldMove) {
                     if (this.getData(DataFields.earliestStopMovingToFollowPositionTime) <= time) {
                         this.setStandStillState(time);
@@ -77,8 +87,8 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             }
-            case SheepStates.WalkAway: {
-                let { position, stopTime } = this.getData(DataFields.walkAway);
+            case MovementTypes.WalkAway: {
+                let { position, stopTime } = this.getData(DataFields.movementState);
                 if (time > stopTime) {
                     this.setStandStillState(time);
                 } else {
@@ -86,7 +96,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 }
                 break;
             }
-            case SheepStates.RandomWalking: {
+            case MovementTypes.RandomWalking: {
                 const closestGrass = this.getClosestGrass(scene, grasses)
                 if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
                     this.setMovingToGrassPositionState();
@@ -154,31 +164,33 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     }
 
     setStandStillState(time: number) {
-        this.setState(SheepStates.StandingStill);
+        this.setState(MovementTypes.StandingStill);
         this.setData(DataFields.standStill, {
             stopTime: time + Phaser.Math.Between(4000, 6000),
         });
     };
 
     setRandomWalkState(time: number) {
-        this.setState(SheepStates.RandomWalking);
+        this.setState(MovementTypes.RandomWalking);
         this.setData(DataFields.stopRandomWalkingTime, time + Phaser.Math.Between(2000, 3500));
     }
 
     setMoveToFollowPositionState(time: number) {
-        this.setState(SheepStates.MovingToFollowPosition);
+        this.setState(MovementTypes.MovingToFollowPosition);
         this.setData(DataFields.earliestStopMovingToFollowPositionTime, time + Phaser.Math.Between(2000, 3000));
     }
 
     setWalkAwayState(time: number, x: number, y: number) {
-        this.setState(SheepStates.WalkAway);
-        this.setData(DataFields.walkAway, {
+        this.setState(MovementTypes.WalkAway);
+        let movementState: MovementState = {
+            movement: MovementTypes.WalkAway,
             stopTime: time + Phaser.Math.Between(500, 1000),
             position: { x, y }
-        });
+        }
+        this.setData(DataFields.movementState, movementState);
     }
 
     setMovingToGrassPositionState() {
-        this.setState(SheepStates.MovingToGrassPosition);
+        this.setState(MovementTypes.MovingToGrassPosition);
     }
 }
