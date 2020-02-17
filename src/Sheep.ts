@@ -16,8 +16,12 @@ interface MovementState {
         y: number
     }
 };
+interface HealthState {
+    life: number
+};
 const DataFields = {
     movementState: 'movementState',
+    healthState: 'healthState',
 };
 
 export default class Sheep extends Phaser.Physics.Arcade.Sprite {
@@ -28,6 +32,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         this.setActive(true);
         this.setCollideWorldBounds(true);
+
+        this.setStandStillState(0);
+        this.setHealthState(100);
     }
 
     update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
@@ -160,6 +167,17 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             movementType: MovementTypes.MovingToGrassPosition
         }
         this.setData(DataFields.movementState, movementState);
+    }
+
+    private setHealthState(life: number) {
+        let healthState: HealthState = { life };
+        this.setData(DataFields.healthState, healthState);
+    }
+
+    public changeLife(lifeDiff: number) {
+        let previousHealth = this.getData(DataFields.healthState);
+        let healthState: HealthState = { life: previousHealth + lifeDiff };
+        this.setData(DataFields.healthState, healthState);
     }
 
     setAnimation(prevVelocity: Phaser.Math.Vector2) {
