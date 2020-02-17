@@ -1,5 +1,5 @@
 import Sheep from './Sheep';
-import Grass from './Grass';
+import Pickup from './pickups/Pickup';
 
 let herd: Phaser.Physics.Arcade.Group;
 
@@ -23,7 +23,7 @@ export default class SheepHerd {
         herd.getChildren().forEach((s: Sheep) => s.setCollideWorldBounds(true));
     }
 
-    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
+    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Pickup>) {
         let herdChildren = herd.getChildren();
         herdChildren.forEach((sheep: Sheep, i) => {
             let herdMedianX = herdChildren.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.x + a), 0) / herdChildren.length;

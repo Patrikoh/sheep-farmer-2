@@ -1,10 +1,12 @@
 import Player from './Player';
 import SheepHerd from './SheepHerd';
-import Grass from './Grass';
+import Pickup from './pickups/Pickup';
+import HealthMushroom from './pickups/HealthMushroom';
+import PoisonMushroom from './pickups/PoisonMushroom';
 
 let player: Player;
 let herd: SheepHerd;
-let grasses: Array<Grass>;
+let pickups: Array<Pickup>;
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
 export default class MainScene extends Phaser.Scene {
@@ -22,7 +24,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
-        const map = this.make.tilemap({ key: "map" });
+        const map = this.make.tilemap({key: "map"});
 
         const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
 
@@ -30,7 +32,7 @@ export default class MainScene extends Phaser.Scene {
         const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
         const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
 
-        worldLayer.setCollisionByProperty({ collides: true });
+        worldLayer.setCollisionByProperty({collides: true});
         aboveLayer.setDepth(10);
 
         // Makes it possible to walk on the whole map
@@ -40,11 +42,17 @@ export default class MainScene extends Phaser.Scene {
         player = new Player(this);
         herd = new SheepHerd(this, 5);
 
-        grasses = [];
+        pickups = [];
         for (let index = 0; index < 50; index++) {
-            let grass = new Grass(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
-            grass.addCollider(this, herd.getGroup());
-            grasses.push(grass);
+            let mushroom;
+            let mushroomIsPoison = index % 3 === 0;
+            if(mushroomIsPoison) {
+                mushroom = new PoisonMushroom(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
+            } else {
+                mushroom = new HealthMushroom(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
+            }
+            mushroom.addCollider(this, herd.getGroup());
+            pickups.push(mushroom);
         }
 
         const camera = this.cameras.main;
@@ -60,6 +68,6 @@ export default class MainScene extends Phaser.Scene {
 
     update(time: number) {
         player.update(cursors);
-        herd.update(this, time, player.body.position, grasses);
+        herd.update(this, time, player.body.position, pickups);
     }
 }
