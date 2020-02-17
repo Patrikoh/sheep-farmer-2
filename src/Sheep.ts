@@ -175,8 +175,8 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
     }
 
     public changeLife(lifeDiff: number) {
-        let previousHealth = this.getData(DataFields.healthState);
-        let healthState: HealthState = { life: previousHealth + lifeDiff };
+        let previousHealth: HealthState = this.getData(DataFields.healthState);
+        let healthState: HealthState = { life: previousHealth.life + lifeDiff };
         this.setData(DataFields.healthState, healthState);
     }
 

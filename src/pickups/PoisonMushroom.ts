@@ -1,7 +1,7 @@
 import Pickup from './Pickup';
 import Sheep from "../Sheep";
 
-const HEALTH_GAIN = -5;
+const LIFE_GAIN = -5;
 
 export default class PoisonMushroom extends Pickup {
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -11,6 +11,7 @@ export default class PoisonMushroom extends Pickup {
 
     onCollision(self: PoisonMushroom, other) {
         if (other instanceof Sheep) {
+            other.changeLife(LIFE_GAIN);
         }
         self.remove();
     }
