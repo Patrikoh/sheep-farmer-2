@@ -44,8 +44,6 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         const prevVelocity = this.body.velocity.clone();
         let movementState: MovementState = this.getData(DataFields.movementState);
 
-        console.log(this.getData(DataFields.healthState));
-
         if (!movementState) movementState = { movementType: MovementTypes.StandingStill, stopTime: 0 };
 
         this.setVelocity(0);
