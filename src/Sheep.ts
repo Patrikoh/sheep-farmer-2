@@ -1,5 +1,4 @@
 import Pickup from "./pickups/Pickup";
-import { Data } from "phaser";
 
 enum MovementTypes {
     MovingToFollowPosition,
@@ -17,6 +16,7 @@ interface MovementState {
     }
 };
 interface HealthState {
+    maxLife: number,
     life: number
 };
 const DataFields = {
@@ -34,7 +34,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true);
 
         this.setStandStillState(0);
-        this.setHealthState(100);
+        this.setHealthState(100, 100);
     }
 
     update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Pickup>) {
@@ -124,11 +124,20 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setScale(this.scaleX * 1.1, this.scaleY * 1.1);
     }
 
-    getClosestGrass(scene: Phaser.Scene, grasses: Array<Pickup>) {
+    changeLife(lifeDiff: number) {
+        let previousHealth: HealthState = this.getData(DataFields.healthState);
+        let healthState: HealthState = {
+            ...previousHealth,
+            life: Math.min(previousHealth.life + lifeDiff, previousHealth.maxLife)
+        };
+        this.setData(DataFields.healthState, healthState);
+    }
+
+    private getClosestGrass(scene: Phaser.Scene, grasses: Array<Pickup>) {
         return scene.physics.closest(this, grasses.filter(g => g.active)) as Pickup;
     }
 
-    setStandStillState(time: number) {
+    private setStandStillState(time: number) {
         let movementState: MovementState = {
             movementType: MovementTypes.StandingStill,
             stopTime: time + Phaser.Math.Between(4000, 6000),
@@ -136,7 +145,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setData(DataFields.movementState, movementState);
     };
 
-    setRandomWalkState(time: number) {
+    private setRandomWalkState(time: number) {
         let movementState: MovementState = {
             movementType: MovementTypes.RandomWalking,
             stopTime: time + Phaser.Math.Between(2000, 3500),
@@ -144,7 +153,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setData(DataFields.movementState, movementState);
     }
 
-    setMoveToFollowPositionState(time: number, followPosition: Phaser.Math.Vector2) {
+    private setMoveToFollowPositionState(time: number, followPosition: Phaser.Math.Vector2) {
         let movementState: MovementState = {
             movementType: MovementTypes.MovingToFollowPosition,
             stopTime: time + Phaser.Math.Between(2000, 3000),
@@ -153,7 +162,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setData(DataFields.movementState, movementState);
     }
 
-    setWalkAwayState(time: number, x: number, y: number) {
+    private setWalkAwayState(time: number, x: number, y: number) {
         let movementState: MovementState = {
             movementType: MovementTypes.WalkAway,
             stopTime: time + Phaser.Math.Between(200, 500),
@@ -162,25 +171,19 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setData(DataFields.movementState, movementState);
     }
 
-    setMovingToGrassPositionState() {
+    private setMovingToGrassPositionState() {
         let movementState: MovementState = {
             movementType: MovementTypes.MovingToGrassPosition
         }
         this.setData(DataFields.movementState, movementState);
     }
 
-    private setHealthState(life: number) {
-        let healthState: HealthState = { life };
+    private setHealthState(maxLife: number, life: number) {
+        let healthState: HealthState = { maxLife, life };
         this.setData(DataFields.healthState, healthState);
     }
 
-    public changeLife(lifeDiff: number) {
-        let previousHealth: HealthState = this.getData(DataFields.healthState);
-        let healthState: HealthState = { life: previousHealth.life + lifeDiff };
-        this.setData(DataFields.healthState, healthState);
-    }
-
-    setAnimation(prevVelocity: Phaser.Math.Vector2) {
+    private setAnimation(prevVelocity: Phaser.Math.Vector2) {
         if (this.body.velocity.x < 0) {
             this.anims.play("sheep-left-walk", true);
         } else if (this.body.velocity.x > 0) {

@@ -1,7 +1,7 @@
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
-    constructor(scene: Phaser.Scene) {
-        super(scene, 200, 200, "player");
+    constructor(scene: Phaser.Scene, x: number, y: number) {
+        super(scene, x, y, "player");
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -39,8 +39,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         // Normalize and scale the velocity so that player can't move faster along a diagonal
         this.body.velocity.normalize().scale(speed);
-        if (cursors.shift.isDown)
-        {
+        if (cursors.shift.isDown) {
             this.body.velocity.normalize().scale(runspeed);
         }
 
