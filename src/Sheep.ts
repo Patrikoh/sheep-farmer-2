@@ -126,11 +126,17 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
     changeLife(lifeDiff: number) {
         let previousHealth: HealthState = this.getData(DataFields.healthState);
-        let healthState: HealthState = {
-            ...previousHealth,
-            life: Math.min(previousHealth.life + lifeDiff, previousHealth.maxLife)
-        };
-        this.setData(DataFields.healthState, healthState);
+        let life = Math.min(previousHealth.life + lifeDiff, previousHealth.maxLife);
+        if (life <= 0) {
+            this.killSheep();
+        } else {
+            let healthState: HealthState = { ...previousHealth, life };
+            this.setData(DataFields.healthState, healthState);
+        }
+    }
+
+    private killSheep() {
+        this.destroy();
     }
 
     private getClosestGrass(scene: Phaser.Scene, grasses: Array<Pickup>) {
