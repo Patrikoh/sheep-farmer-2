@@ -1,11 +1,13 @@
 import Player from './Player';
 import SheepHerd from './SheepHerd';
+import SheepPanel from './SheepPanel';
 import Pickup from './pickups/Pickup';
 import HealthMushroom from './pickups/HealthMushroom';
 import PoisonMushroom from './pickups/PoisonMushroom';
 
 let player: Player;
 let herd: SheepHerd;
+let sheepPanel: SheepPanel;
 let pickups: Array<Pickup>;
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -21,6 +23,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.atlas("player", "assets/atlas/player/player.png", "assets/atlas/player/player.json");
         this.load.atlas("sheep", "assets/atlas/sheep/sheep.png", "assets/atlas/sheep/sheep.json");
         this.load.atlas("pickups", "assets/atlas/pickups/pickups.png", "assets/atlas/pickups/pickups.json");
+        this.load.atlas("panels", "assets/atlas/panels/sheep-panel.png", "assets/atlas/panels/sheep-panel.json");
     }
 
     create() {
@@ -41,6 +44,7 @@ export default class MainScene extends Phaser.Scene {
 
         player = new Player(this);
         herd = new SheepHerd(this, 5);
+        sheepPanel = new SheepPanel(this, herd);
 
         pickups = [];
         for (let index = 0; index < 50; index++) {
