@@ -1,5 +1,4 @@
 import Grass from "./Grass";
-import { Data } from "phaser";
 
 enum MovementTypes {
     MovingToFollowPosition,
@@ -17,6 +16,7 @@ interface MovementState {
     }
 };
 interface HealthState {
+    maxLife: number,
     life: number
 };
 const DataFields = {
@@ -34,7 +34,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true);
 
         this.setStandStillState(0);
-        this.setHealthState(100);
+        this.setHealthState(100, 100);
     }
 
     update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
@@ -43,6 +43,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         const searchForGrassDistance = 60;
         const prevVelocity = this.body.velocity.clone();
         let movementState: MovementState = this.getData(DataFields.movementState);
+
+        console.log(this.getData(DataFields.healthState));
+
 
         if (!movementState) movementState = { movementType: MovementTypes.StandingStill, stopTime: 0 };
 
@@ -169,14 +172,14 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setData(DataFields.movementState, movementState);
     }
 
-    private setHealthState(life: number) {
-        let healthState: HealthState = { life };
+    private setHealthState(maxLife: number, life: number) {
+        let healthState: HealthState = { maxLife, life };
         this.setData(DataFields.healthState, healthState);
     }
 
     public changeLife(lifeDiff: number) {
         let previousHealth = this.getData(DataFields.healthState);
-        let healthState: HealthState = { life: previousHealth + lifeDiff };
+        let healthState: HealthState = { ...previousHealth, life: previousHealth + lifeDiff };
         this.setData(DataFields.healthState, healthState);
     }
 
