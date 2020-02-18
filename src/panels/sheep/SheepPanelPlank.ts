@@ -1,8 +1,11 @@
+import Sheep from "../../Sheep";
+
 export enum Type {
     top,
     bottom,
     middle
 }
+
 
 export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number, type: Type) {
@@ -18,5 +21,9 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
                 this.setTexture("panels", "sheep-panel-plank-top-0");
                 break;
         }
+    }
+
+    update(sheep: Sheep) {
+        this.tex
     }
 }
