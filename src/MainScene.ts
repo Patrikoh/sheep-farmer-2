@@ -1,6 +1,6 @@
 import Player from './Player';
 import SheepHerd from './SheepHerd';
-import SheepPanel from './SheepPanel';
+import SheepPanel from './panels/sheep/SheepPanel';
 import Pickup from './pickups/Pickup';
 import HealthMushroom from './pickups/HealthMushroom';
 import PoisonMushroom from './pickups/PoisonMushroom';
