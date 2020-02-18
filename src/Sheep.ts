@@ -1,4 +1,4 @@
-import Grass from "./Grass";
+import Pickup from "./pickups/Pickup";
 
 enum MovementTypes {
     MovingToFollowPosition,
@@ -37,7 +37,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setHealthState(100, 100);
     }
 
-    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Grass>) {
+    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Pickup>) {
         const speed = 60;
         const followDistance = 100;
         const searchForGrassDistance = 60;
@@ -127,8 +127,8 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setScale(this.scaleX * 1.1, this.scaleY * 1.1);
     }
 
-    getClosestGrass(scene: Phaser.Scene, grasses: Array<Grass>) {
-        return scene.physics.closest(this, grasses.filter(g => g.active)) as Grass;
+    getClosestGrass(scene: Phaser.Scene, grasses: Array<Pickup>) {
+        return scene.physics.closest(this, grasses.filter(g => g.active)) as Pickup;
     }
 
     setStandStillState(time: number) {
