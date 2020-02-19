@@ -6,11 +6,12 @@ export enum Type {
     middle
 }
 
-let sheepStatusText: Phaser.GameObjects.Text;
 
 export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
+    private sheepStatusText: Phaser.GameObjects.BitmapText;
     constructor(scene: Phaser.Scene, x: number, y: number, type: Type) {
         super(scene, x, y, "panels");
+
         switch (type) {
             case Type.bottom:
                 this.setTexture("panels", "sheep-panel-plank-bottom-0");
@@ -23,16 +24,13 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
                 break;
         }
 
-        sheepStatusText = scene.add.text(x,y,"test",{
-            fontSize: '12px',
-            fill: "#000"
-        });
+        this.sheepStatusText = scene.add.bitmapText(x - 40,y - 8, "gem", "", 10);
 
-        sheepStatusText.setDepth(1001);
-        sheepStatusText.setScrollFactor(0);
+        this.sheepStatusText.setDepth(1001);
+        this.sheepStatusText.setScrollFactor(0);
     }
 
     update(sheep: Sheep) {
-
+      this.sheepStatusText.setText(sheep.getName());
     }
 }

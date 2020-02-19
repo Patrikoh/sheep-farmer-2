@@ -58,9 +58,6 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
 
         this.setVelocity(0);
 
-        console.log(this.getData(DataFields.name));
-
-
         switch (movementState.movementType) {
             case MovementTypes.StandingStill: {
                 if (time > movementState.stopTime) {
@@ -146,6 +143,14 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
             let healthState: HealthState = { ...previousHealth, life };
             this.setData(DataFields.healthState, healthState);
         }
+    }
+
+    getHealth() {
+        return this.getData(DataFields.healthState);
+    }
+
+    getName() {
+        return this.getData(DataFields.name);
     }
 
     private kill() {
