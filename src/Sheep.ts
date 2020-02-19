@@ -1,3 +1,4 @@
+import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator';
 import Pickup from "./pickups/Pickup";
 
 enum MovementTypes {
@@ -20,6 +21,7 @@ interface HealthState {
     life: number
 };
 const DataFields = {
+    name: 'name',
     movementState: 'movementState',
     healthState: 'healthState',
 };
@@ -33,6 +35,14 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setActive(true);
         this.setCollideWorldBounds(true);
 
+        this.setData(DataFields.name,
+            uniqueNamesGenerator({
+                dictionaries: [adjectives, names],
+                separator: ' ',
+                length: 2,
+                style: 'capital'
+            })
+        );
         this.setStandStillState(0);
         this.setHealthState(100, 100);
     }
@@ -47,6 +57,9 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         if (!movementState) movementState = { movementType: MovementTypes.StandingStill, stopTime: 0 };
 
         this.setVelocity(0);
+
+        console.log(this.getData(DataFields.name));
+
 
         switch (movementState.movementType) {
             case MovementTypes.StandingStill: {
