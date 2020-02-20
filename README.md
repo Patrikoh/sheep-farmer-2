@@ -26,12 +26,9 @@ by default).
 
 Use [Map Editor]https://www.mapeditor.org/
 
-## Configuring Rollup
+## Fonts
 
-* Edit the file `rollup.config.dev.js` to edit the development build.
-* Edit the file `rollup.config.dist.js` to edit the distribution build.
-
-You will find lots of comments inside the rollup config files to help you do this.
-
-Note that due to the build process involved, it can take around 20 seconds to build the initial bundle. Times will vary based on CPU and local drive speeds. The development config does not minify the code in order to save build time, but it does generate source maps. If you do not require these, disable them in the config to speed it up further.
+Download ttf fonts.
+Use https://github.com/andryblack/fontbuilder/downloads
+Export png with sparrow format.
 
