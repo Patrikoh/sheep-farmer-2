@@ -26,7 +26,7 @@ export default class SheepPanel {
     }
 
     update(herd: SheepHerd) {
-        planks.getChildren().forEach((plank: SheepPanelPlank, i) =>  plank.update(herd.getSheep()[i]));
+        planks.getChildren().forEach((plank: SheepPanelPlank, i) =>  plank.update(herd.getSheep().filter(s => s.active)[i]));
     }
 
 }

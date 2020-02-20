@@ -1,4 +1,5 @@
 import Sheep from "../../Sheep";
+import LifeBar from "../LifeBar";
 
 export enum Type {
     top,
@@ -6,9 +7,9 @@ export enum Type {
     middle
 }
 
-
 export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
     private sheepStatusText: Phaser.GameObjects.BitmapText;
+    private lifeBar: LifeBar;
     constructor(scene: Phaser.Scene, x: number, y: number, type: Type) {
         super(scene, x, y, "panels");
 
@@ -24,6 +25,7 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
                 break;
         }
 
+        this.lifeBar = new LifeBar(scene, x - 48, y + 8);
         this.sheepStatusText = scene.add.bitmapText(x - 40,y - 8, "gem", "", 10);
 
         this.sheepStatusText.setDepth(1001);
@@ -31,6 +33,8 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
     }
 
     update(sheep: Sheep) {
-      this.sheepStatusText.setText(sheep.getName());
+        const {maxLife, life} = sheep.getHealth();
+        this.lifeBar.update(maxLife, life);
+        this.sheepStatusText.setText(sheep.getName());
     }
 }

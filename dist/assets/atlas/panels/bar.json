@@ -1,0 +1,35 @@
+{ "frames": {
+   "bar-life-0": {
+    "frame": { "x": 0, "y": 0, "w": 1, "h": 6 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 6 },
+    "sourceSize": { "w": 1, "h": 6 },
+    "duration": 100
+   },
+   "bar-life-1": {
+    "frame": { "x": 1, "y": 0, "w": 1, "h": 6 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1, "h": 6 },
+    "sourceSize": { "w": 1, "h": 6 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.16.3-x64",
+  "image": "bar.png",
+  "format": "RGBA8888",
+  "size": { "w": 2, "h": 6 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "life", "from": 0, "to": 1, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
