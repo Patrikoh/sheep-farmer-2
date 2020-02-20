@@ -24,11 +24,13 @@ export default class MainScene extends Phaser.Scene {
         this.load.atlas("sheep", "assets/atlas/sheep/sheep.png", "assets/atlas/sheep/sheep.json");
         this.load.atlas("pickups", "assets/atlas/pickups/pickups.png", "assets/atlas/pickups/pickups.json");
         this.load.atlas("panels", "assets/atlas/panels/sheep-panel.png", "assets/atlas/panels/sheep-panel.json");
+        this.load.bitmapFont('pixelFont', 'assets/fonts/pixelFont.png', 'assets/fonts/pixelFont.fnt');
+        this.load.atlas("bar", "assets/atlas/panels/bar.png", "assets/atlas/panels/bar.json");
     }
 
     create() {
-        const map = this.make.tilemap({ key: "map" });
 
+        const map = this.make.tilemap({ key: "map" });
         const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
 
         const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
@@ -73,5 +75,6 @@ export default class MainScene extends Phaser.Scene {
     update(time: number) {
         player.update(cursors);
         herd.update(this, time, player.body.position, pickups);
+        sheepPanel.update(herd);
     }
 }

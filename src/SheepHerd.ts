@@ -83,4 +83,6 @@ export default class SheepHerd {
     }
 
     getGroup() { return herd };
+
+    getSheep() { return herd.getChildren() as Array<Sheep> }
 }
