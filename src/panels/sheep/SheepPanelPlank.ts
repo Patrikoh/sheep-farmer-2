@@ -26,7 +26,7 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
                 break;
         }
 
-        this.sheepStatusText = scene.add.bitmapText(x, y, "pixelFont", "");
+        this.sheepStatusText = scene.add.bitmapText(x - 52, y - 8, "pixelFont", "");
         this.lifeBar = new LifeBar(scene, x - 48, y + 8);
 
         this.sheepStatusText.setDepth(1001);
