@@ -1,4 +1,4 @@
-import Sheep from "../Sheep";
+import depthIndex from '../depthIndex.json';
 
 export default abstract class Pickup extends Phaser.Physics.Arcade.Sprite {
     protected constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -7,6 +7,7 @@ export default abstract class Pickup extends Phaser.Physics.Arcade.Sprite {
         scene.physics.add.existing(this);
         this.setActive(true);
         this.setImmovable();
+        this.setDepth(depthIndex.WORLD + 1);
     }
 
     addCollider(scene: Phaser.Scene, object) {
@@ -17,5 +18,5 @@ export default abstract class Pickup extends Phaser.Physics.Arcade.Sprite {
         this.destroy();
     }
 
-    abstract onCollision(self: Pickup, other)
+    abstract onCollision(self: Pickup, other: Phaser.GameObjects.GameObject): void;
 }
