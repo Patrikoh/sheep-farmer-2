@@ -2,7 +2,7 @@ import 'phaser';
 import MainScene from './MainScene';
 
 const config = {
-    type: Phaser.CANVAS,
+    type: Phaser.WEBGL,
     backgroundColor: '#000000',
     width: 600,
     height: 400,

@@ -1,36 +1,51 @@
 import SheepHerd from "../../SheepHerd";
 import Sheep from "../../Sheep";
-import SheepPanelPlank, { Type } from "./SheepPanelPlank";
+import SheepPanelPlank from "./SheepPanelPlank";
 
-let planks: Phaser.GameObjects.Group;
+
 
 export default class SheepPanel {
+    private planks: Phaser.GameObjects.Group;
+    private topSegment: Phaser.GameObjects.Sprite;
+    private bottomSegment: Phaser.GameObjects.Sprite;
 
     constructor(scene: Phaser.Scene, herd: SheepHerd) {
-        let topSegment = new Phaser.GameObjects.Sprite(scene, 64, 0, "panels");
-        topSegment.setTexture("panels", "sheep-panel-plank-top-0");
-        topSegment.setScrollFactor(0);
-        topSegment.setDepth(1000);
-        scene.add.existing(topSegment);
+        this.initializePanel(scene, herd);
+    }
 
-        let bottomSegment = new Phaser.GameObjects.Sprite(scene, 64, 32 * herd.getSheep().length + 32, "panels");
-        bottomSegment.setTexture("panels", "sheep-panel-plank-bottom-0");
-        bottomSegment.setScrollFactor(0);
-        bottomSegment.setDepth(1000);
-        scene.add.existing(bottomSegment);
+    update(scene: Phaser.Scene, herd: SheepHerd) {
+        if (herd.getSheep().length !== this.planks.getChildren().length) {
+            this.setCorrectNumberOfPlanks(herd.getSheep().length);
+        } else {
+            this.planks.getChildren().forEach((plank: SheepPanelPlank, i) => plank.update(herd.getSheep()[i]));
+        }
+    }
 
-        planks = new Phaser.GameObjects.Group(scene);
+    private setCorrectNumberOfPlanks(length: number) {
+        this.planks.getChildren().filter((_p, i) => i >= length).forEach((p: SheepPanelPlank) => p.remove());
+        this.bottomSegment.setPosition(64, 32 * (length + 1));
+    }
+
+    private initializePanel(scene: Phaser.Scene, herd: SheepHerd) {
+        this.topSegment = new Phaser.GameObjects.Sprite(scene, 64, 0, "panels");
+        this.topSegment.setTexture("panels", "sheep-panel-top-0");
+        this.topSegment.setScrollFactor(0);
+        this.topSegment.setDepth(1000);
+        scene.add.existing(this.topSegment);
+
+        this.bottomSegment = new Phaser.GameObjects.Sprite(scene, 64, 32 * herd.getSheep().length + 32, "panels");
+        this.bottomSegment.setTexture("panels", "sheep-panel-bottom-0");
+        this.bottomSegment.setScrollFactor(0);
+        this.bottomSegment.setDepth(1000);
+        scene.add.existing(this.bottomSegment);
+
+        this.planks = new Phaser.GameObjects.Group(scene);
         herd.getSheep().forEach((sheep: Sheep, i) => {
-            let plank = new SheepPanelPlank(scene, 64, 32 * i + 32, Type.middle);
+            let plank = new SheepPanelPlank(scene, 64, 32 * i + 32);
             plank.setDepth(1000);
             scene.add.existing(plank);
             plank.setScrollFactor(0);
-            planks.add(plank);
+            this.planks.add(plank);
         });
     }
-
-    update(herd: SheepHerd) {
-        planks.getChildren().forEach((plank: SheepPanelPlank, i) =>  plank.update(herd.getSheep()[i]));
-    }
-
 }
