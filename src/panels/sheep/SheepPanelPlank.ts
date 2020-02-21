@@ -1,12 +1,6 @@
 import Sheep from "../../Sheep";
 import LifeBar from "../LifeBar";
 
-export enum Type {
-    top,
-    bottom,
-    middle
-}
-
 export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
     private sheepStatusText: Phaser.GameObjects.BitmapText;
     private lifeBar: LifeBar;
