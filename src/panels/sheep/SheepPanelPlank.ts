@@ -8,7 +8,6 @@ export enum Type {
 }
 
 export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
-
     private sheepStatusText: Phaser.GameObjects.BitmapText;
     private lifeBar: LifeBar;
     constructor(scene: Phaser.Scene, x: number, y: number, type: Type) {
@@ -37,5 +36,11 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
         const { maxLife, life } = sheep.getHealth();
         this.lifeBar.update(maxLife, life);
         this.sheepStatusText.setText(sheep.getName());
+    }
+
+    remove() {
+        this.sheepStatusText.destroy(true);
+        this.lifeBar.remove();
+        this.destroy(true);
     }
 }
