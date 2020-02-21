@@ -1,6 +1,6 @@
 import SheepHerd from "../../SheepHerd";
 import Sheep from "../../Sheep";
-import SheepPanelPlank, { Type } from "./SheepPanelPlank";
+import SheepPanelPlank from "./SheepPanelPlank";
 
 
 
@@ -28,20 +28,20 @@ export default class SheepPanel {
 
     private initializePanel(scene: Phaser.Scene, herd: SheepHerd) {
         this.topSegment = new Phaser.GameObjects.Sprite(scene, 64, 0, "panels");
-        this.topSegment.setTexture("panels", "sheep-panel-plank-top-0");
+        this.topSegment.setTexture("panels", "sheep-panel-top-0");
         this.topSegment.setScrollFactor(0);
         this.topSegment.setDepth(1000);
         scene.add.existing(this.topSegment);
 
         this.bottomSegment = new Phaser.GameObjects.Sprite(scene, 64, 32 * herd.getSheep().length + 32, "panels");
-        this.bottomSegment.setTexture("panels", "sheep-panel-plank-bottom-0");
+        this.bottomSegment.setTexture("panels", "sheep-panel-bottom-0");
         this.bottomSegment.setScrollFactor(0);
         this.bottomSegment.setDepth(1000);
         scene.add.existing(this.bottomSegment);
 
         this.planks = new Phaser.GameObjects.Group(scene);
         herd.getSheep().forEach((sheep: Sheep, i) => {
-            let plank = new SheepPanelPlank(scene, 64, 32 * i + 32, Type.middle);
+            let plank = new SheepPanelPlank(scene, 64, 32 * i + 32);
             plank.setDepth(1000);
             scene.add.existing(plank);
             plank.setScrollFactor(0);
