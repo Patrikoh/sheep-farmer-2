@@ -1,12 +1,14 @@
 import SheepHerd from "../../SheepHerd";
 import Sheep from "../../Sheep";
 import SheepPanelPlank from "./SheepPanelPlank";
+import Toggle from "../Toggle";
 import depthIndex from '../../depthIndex.json';
 
 export default class SheepPanel {
     private planks: Phaser.GameObjects.Group;
     private topSegment: Phaser.GameObjects.Sprite;
     private bottomSegment: Phaser.GameObjects.Sprite;
+    private toggle: Toggle;
 
     constructor(scene: Phaser.Scene, herd: SheepHerd) {
         this.initializePanel(scene, herd);
@@ -23,17 +25,16 @@ export default class SheepPanel {
     private setCorrectNumberOfPlanks(length: number) {
         this.planks.getChildren().filter((_p, i) => i >= length).forEach((p: SheepPanelPlank) => p.remove());
         this.bottomSegment.setPosition(64, 32 * (length + 1));
+        this.toggle.setPosition(190, 16 * length + 16)
     }
 
     private initializePanel(scene: Phaser.Scene, herd: SheepHerd) {
-        this.topSegment = new Phaser.GameObjects.Sprite(scene, 64, 0, "panels");
-        this.topSegment.setTexture("panels", "sheep-panel-top-0");
+        this.topSegment = new Phaser.GameObjects.Sprite(scene, 64, 0, "panels", "sheep-panel-top-0");
         this.topSegment.setScrollFactor(0);
         this.topSegment.setDepth(depthIndex.UI);
         scene.add.existing(this.topSegment);
 
-        this.bottomSegment = new Phaser.GameObjects.Sprite(scene, 64, 32 * herd.getSheep().length + 32, "panels");
-        this.bottomSegment.setTexture("panels", "sheep-panel-bottom-0");
+        this.bottomSegment = new Phaser.GameObjects.Sprite(scene, 64, 32 * herd.getSheep().length + 32, "panels", "sheep-panel-bottom-0");
         this.bottomSegment.setScrollFactor(0);
         this.bottomSegment.setDepth(depthIndex.UI);
         scene.add.existing(this.bottomSegment);
@@ -46,5 +47,10 @@ export default class SheepPanel {
             plank.setScrollFactor(0);
             this.planks.add(plank);
         });
+
+        this.toggle = new Toggle(scene, 190,  16 * herd.getSheep().length + 16);
+        this.toggle.setDepth(depthIndex.UI + 2);
+        this.toggle.setScrollFactor(0);
+        scene.add.existing(this.toggle);
     }
 }
