@@ -1,5 +1,6 @@
 import Sheep from "../../Sheep";
 import LifeBar from "../LifeBar";
+import depthIndex from '../../depthIndex.json';
 
 export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
     private sheepStatusText: Phaser.GameObjects.BitmapText;
@@ -9,7 +10,7 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
         this.setTexture("panels", "sheep-panel-middle-0");
         this.sheepStatusText = scene.add.bitmapText(x - 54, y - 8, "pixelFont", "");
         this.lifeBar = new LifeBar(scene, x - 54, y + 8);
-        this.sheepStatusText.setDepth(1001);
+        this.sheepStatusText.setDepth(depthIndex.UI + 1);
         this.sheepStatusText.setScrollFactor(0);
     }
 

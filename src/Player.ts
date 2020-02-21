@@ -1,3 +1,5 @@
+import depthIndex from './depthIndex.json';
+
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -8,6 +10,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setCollideWorldBounds(true);
         this.setImmovable();
         this.setSize(24, 30);
+        this.setDepth(depthIndex.PLAYER);
+
         this.addAnimations(scene);
     }
 

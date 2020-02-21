@@ -9,7 +9,7 @@ export default class PoisonMushroom extends Pickup {
         this.setTexture("pickups", "pickups-mushroom-bad-0");
     }
 
-    onCollision(self: PoisonMushroom, other) {
+    onCollision(self: PoisonMushroom, other: Phaser.GameObjects.GameObject) {
         if (other instanceof Sheep) {
             other.changeLife(LIFE_GAIN);
         }

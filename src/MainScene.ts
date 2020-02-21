@@ -4,6 +4,7 @@ import SheepPanel from './panels/sheep/SheepPanel';
 import Pickup from './pickups/Pickup';
 import HealthMushroom from './pickups/HealthMushroom';
 import PoisonMushroom from './pickups/PoisonMushroom';
+import depthIndex from './depthIndex.json';
 
 let player: Player;
 let herd: SheepHerd;
@@ -38,7 +39,7 @@ export default class MainScene extends Phaser.Scene {
         const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
 
         worldLayer.setCollisionByProperty({ collides: true });
-        aboveLayer.setDepth(10);
+        aboveLayer.setDepth(depthIndex.WORLD);
 
         // Makes it possible to walk on the whole map
         this.physics.world.bounds.width = worldLayer.width;

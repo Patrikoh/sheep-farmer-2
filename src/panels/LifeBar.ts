@@ -1,3 +1,4 @@
+import depthIndex from '../depthIndex.json';
 
 export default class LifeBar {
     private bar: Array<Phaser.GameObjects.Sprite> = [];
@@ -5,7 +6,7 @@ export default class LifeBar {
         let length = 100;
         for (let i = 0; i < length; i++) {
             const barSegment = new Phaser.GameObjects.Sprite(scene, x + i, y, "bar");
-            barSegment.setDepth(1001);
+            barSegment.setDepth(depthIndex.UI + 1);
             barSegment.setScrollFactor(0);
             scene.add.existing(barSegment);
             this.bar.push(barSegment);
