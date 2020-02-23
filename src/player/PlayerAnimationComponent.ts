@@ -1,6 +1,7 @@
 import Player from "./Player";
+import AnimationComponent from "../components/AnimationComponent";
 
-export default class AnimationComponent {
+export default class PlayerAnimationComponent implements AnimationComponent {
     update(player: Player, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
         const prevVelocity = player.sprite.body.velocity.clone();
 

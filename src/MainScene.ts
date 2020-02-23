@@ -5,7 +5,7 @@ import Pickup from './pickups/Pickup';
 import HealthMushroom from './pickups/HealthMushroom';
 import PoisonMushroom from './pickups/PoisonMushroom';
 import depthIndex from './depthIndex.json';
-import Wolf from './Wolf';
+import Wolf from './wolf/Wolf';
 
 let player: Player;
 let herd: SheepHerd;

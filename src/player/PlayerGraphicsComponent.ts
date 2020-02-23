@@ -1,7 +1,8 @@
 import Player from "./Player";
+import GraphicsComponent from "../components/GraphicsComponent";
 import depthIndex from '../depthIndex.json';
 
-export default class GrahicsComponent {
+export default class PlayerGraphicsComponent implements GraphicsComponent {
     constructor(player: Player, scene: Phaser.Scene, x: number, y: number) {
         player.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "player");
         scene.add.existing(player.sprite);
