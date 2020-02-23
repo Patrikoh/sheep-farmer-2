@@ -2,7 +2,7 @@ import Wolf from "./Wolf";
 import AnimationComponent from "../components/AnimationComponent";
 
 export default class WolfAnimationComponent implements AnimationComponent {
-    update(wolf: Wolf, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update(wolf: Wolf) {
         const prevVelocity = wolf.sprite.body.velocity.clone();
 
         if (wolf.sprite.body.velocity.x < 0) {

@@ -17,7 +17,7 @@ export default class Player {
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, world: World) {
         this.inputComponent.update(this, world, cursors);
-        this.animationComponent.update(this, cursors);
+        this.animationComponent.update(this);
     }
 
     addCollider(scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
