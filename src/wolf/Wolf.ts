@@ -4,13 +4,8 @@ import GraphicsComponent from './WolfGraphicsComponent';
 import SheepHerd from '../SheepHerd';
 import Sheep from '../Sheep';
 import World from '../World';
+import { MovementTypes } from './MovementTypes';
 
-export enum MovementTypes {
-    MovingToSheepPosition,
-    RandomWalking,
-    StandingStill,
-    WalkAway
-};
 interface MovementState {
     movementType: MovementTypes,
     stopTime?: number,
@@ -32,15 +27,12 @@ export default class Wolf {
     healthState: HealthState;
 
     sprite: Phaser.Physics.Arcade.Sprite;
-    scene: Phaser.Scene;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        this.inputComponent = new InputComponent();
+        this.inputComponent = new InputComponent(this);
         this.animationComponent = new AnimationComponent();
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
 
-        this.scene = scene;
-        this.setStandStillState(0);
         this.setHealthState(100);
     }
 
@@ -51,34 +43,6 @@ export default class Wolf {
 
     addCollider(scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
         this.grahipcsComponent.addCollider(this, scene, object);
-    }
-
-    setStandStillState(time: number) {
-        this.movementState = {
-            movementType: MovementTypes.StandingStill,
-            stopTime: time + Phaser.Math.Between(1000, 2000),
-        };
-    };
-
-    setRandomWalkState(time: number) {
-        this.movementState = {
-            movementType: MovementTypes.RandomWalking,
-            stopTime: time + Phaser.Math.Between(4000, 6000),
-        };
-    }
-
-    setWalkAwayState(time: number, x: number, y: number) {
-        this.movementState = {
-            movementType: MovementTypes.WalkAway,
-            stopTime: time + Phaser.Math.Between(200, 500),
-            position: { x, y }
-        };
-    }
-
-    setMovingToSheepPositionState() {
-        this.movementState = {
-            movementType: MovementTypes.MovingToSheepPosition
-        };
     }
 
     setHealthState(life: number) {

@@ -1,10 +1,15 @@
-import Wolf, { MovementTypes } from "./Wolf";
+import Wolf from "./Wolf";
+import { MovementTypes } from './MovementTypes';
 import InputComponent from "../components/InputComponent";
 import World from "../World";
 
 export default class WolfInputComponent implements InputComponent {
     private speed = 80;
     private searchForSheepDistance = 100;
+
+    constructor(wolf: Wolf) {
+        this.setStandStillState(wolf, 0);
+    }
 
     update(wolf: Wolf, world: World, _cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
         const prevVelocity = wolf.sprite.body.velocity.clone();
@@ -18,7 +23,7 @@ export default class WolfInputComponent implements InputComponent {
         switch (wolf.movementState.movementType) {
             case MovementTypes.StandingStill: {
                 if (time > wolf.movementState.stopTime) {
-                    wolf.setRandomWalkState(time);
+                    this.setRandomWalkState(wolf, time);
                 }
                 break;
             }
@@ -31,13 +36,13 @@ export default class WolfInputComponent implements InputComponent {
                     wolf.sprite.setVelocityX(closestSheep.body.position.x - wolf.sprite.body.position.x);
                     wolf.sprite.setVelocityY(closestSheep.body.position.y - wolf.sprite.body.position.y);
                 } else {
-                    wolf.setStandStillState(time);
+                    this.setStandStillState(wolf, time);
                 }
                 break;
             }
             case MovementTypes.WalkAway: {
                 if (time > wolf.movementState.stopTime) {
-                    wolf.setStandStillState(time);
+                    this.setStandStillState(wolf, time);
                 } else {
                     wolf.sprite.setVelocity(wolf.sprite.body.position.x - wolf.movementState.position.x, wolf.sprite.body.position.y - wolf.movementState.position.y);
                 }
@@ -49,9 +54,9 @@ export default class WolfInputComponent implements InputComponent {
                     closestSheep &&
                     Phaser.Math.Distance.BetweenPoints(wolf.sprite.getCenter(), closestSheep.getCenter()) < this.searchForSheepDistance;
                 if (shouldMoveToSheep) {
-                    wolf.setMovingToSheepPositionState();
+                    this.setMovingToSheepPositionState(wolf);
                 } else if (time > wolf.movementState.stopTime) {
-                    wolf.setStandStillState(time);
+                    this.setStandStillState(wolf, time);
                 } else if (prevVelocity.x === 0 && prevVelocity.y === 0) {
                     wolf.sprite.setVelocity(Phaser.Math.Between(-this.speed, this.speed), Phaser.Math.Between(-this.speed, this.speed));
                 } else {
@@ -64,5 +69,33 @@ export default class WolfInputComponent implements InputComponent {
 
         // Normalize and scale the velocity so that Sheep can't move faster along a diagonal
         wolf.sprite.body.velocity.normalize().scale(this.speed);
+    }
+
+    setStandStillState(wolf: Wolf, time: number) {
+        wolf.movementState = {
+            movementType: MovementTypes.StandingStill,
+            stopTime: time + Phaser.Math.Between(1000, 2000),
+        };
+    };
+
+    setRandomWalkState(wolf: Wolf, time: number) {
+        wolf.movementState = {
+            movementType: MovementTypes.RandomWalking,
+            stopTime: time + Phaser.Math.Between(4000, 6000),
+        };
+    }
+
+    setWalkAwayState(wolf: Wolf, time: number, x: number, y: number) {
+        wolf.movementState = {
+            movementType: MovementTypes.WalkAway,
+            stopTime: time + Phaser.Math.Between(200, 500),
+            position: { x, y }
+        };
+    }
+
+    setMovingToSheepPositionState(wolf: Wolf) {
+        wolf.movementState = {
+            movementType: MovementTypes.MovingToSheepPosition
+        };
     }
 }
