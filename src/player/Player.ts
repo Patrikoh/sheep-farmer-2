@@ -1,15 +1,15 @@
-import PlayerInputComponent from './PlayerInputComponent';
+import InputComponent from './PlayerInputComponent';
 import AnimationComponent from './PlayerAnimationComponent';
 import GraphicsComponent from './PlayerGraphicsComponent';
 
 export default class Player {
-    private inputComponent: PlayerInputComponent;
+    private inputComponent: InputComponent;
     private animationComponent: AnimationComponent;
     private grahipcsComponent: GraphicsComponent;
     sprite: Phaser.Physics.Arcade.Sprite;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        this.inputComponent = new PlayerInputComponent();
+        this.inputComponent = new InputComponent();
         this.animationComponent = new AnimationComponent();
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
     }
