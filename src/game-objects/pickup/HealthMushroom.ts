@@ -1,5 +1,5 @@
 import Pickup from './Pickup';
-import Sheep from "../Sheep";
+import Sheep from "../../Sheep";
 
 const LIFE_GAIN = 5;
 

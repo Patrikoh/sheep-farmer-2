@@ -1,7 +1,7 @@
 import InputComponent from './WolfInputComponent';
 import AnimationComponent from './WolfAnimationComponent';
 import GraphicsComponent from './WolfGraphicsComponent';
-import World from '../World';
+import World from '../../World';
 import { WolfMovementTypes } from './WolfMovementTypes';
 
 interface MovementState {

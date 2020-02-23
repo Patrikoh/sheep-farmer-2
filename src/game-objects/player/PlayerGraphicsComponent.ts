@@ -1,6 +1,6 @@
 import Player from "./Player";
-import GraphicsComponent from "../components/GraphicsComponent";
-import depthIndex from '../depthIndex.json';
+import GraphicsComponent from "../../components/GraphicsComponent";
+import depthIndex from '../../depthIndex.json';
 
 export default class PlayerGraphicsComponent implements GraphicsComponent {
     constructor(player: Player, scene: Phaser.Scene, x: number, y: number) {

@@ -1,6 +1,6 @@
 import Pickup from "./Pickup";
-import GraphicsComponent from "../components/GraphicsComponent";
-import depthIndex from '../depthIndex.json';
+import GraphicsComponent from "../../components/GraphicsComponent";
+import depthIndex from '../../depthIndex.json';
 
 export default class PickupGraphicsComponent implements GraphicsComponent {
     constructor(pickup: Pickup, scene: Phaser.Scene, x: number, y: number) {

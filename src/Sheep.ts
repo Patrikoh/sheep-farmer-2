@@ -1,5 +1,5 @@
 import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator';
-import Pickup from "./pickups/Pickup";
+import Pickup from "./game-objects/pickup/Pickup";
 import { GameObjects } from 'phaser';
 
 enum MovementTypes {

@@ -1,7 +1,7 @@
 import InputComponent from './PlayerInputComponent';
 import AnimationComponent from './PlayerAnimationComponent';
 import GraphicsComponent from './PlayerGraphicsComponent';
-import World from '../World';
+import World from '../../World';
 
 export default class Player {
     private inputComponent: InputComponent;

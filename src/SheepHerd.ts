@@ -1,5 +1,5 @@
 import Sheep from './Sheep';
-import Pickup from './pickups/Pickup';
+import Pickup from './game-objects/pickup/Pickup';
 
 let herd: Phaser.Physics.Arcade.Group;
 

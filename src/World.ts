@@ -1,9 +1,9 @@
-import Player from './player/Player';
-import Wolf from './wolf/Wolf';
+import Player from './game-objects/player/Player';
+import Wolf from './game-objects/wolf/Wolf';
 import SheepHerd from './SheepHerd';
-import Pickup from './pickups/Pickup';
-import PoisonMushroom from './pickups/PoisonMushroom';
-import HealthMushroom from './pickups/HealthMushroom';
+import Pickup from './game-objects/pickup/Pickup';
+import PoisonMushroom from './game-objects/pickup/PoisonMushroom';
+import HealthMushroom from './game-objects/pickup/HealthMushroom';
 
 export default class World {
     scene: Phaser.Scene;

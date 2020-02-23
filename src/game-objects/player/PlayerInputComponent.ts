@@ -1,6 +1,6 @@
 import Player from "./Player";
-import InputComponent from "../components/InputComponent";
-import World from "../World";
+import InputComponent from "../../components/InputComponent";
+import World from "../../World";
 
 export default class PlayerInputComponent implements InputComponent {
     private speed = 100;

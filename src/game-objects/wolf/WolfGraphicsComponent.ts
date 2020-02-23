@@ -1,7 +1,7 @@
-import GraphicsComponent from "../components/GraphicsComponent";
+import GraphicsComponent from "../../components/GraphicsComponent";
 import Wolf from "./Wolf";
 import { WolfMovementTypes } from './WolfMovementTypes';
-import Sheep from "../Sheep";
+import Sheep from "../../Sheep";
 
 const LIFE_GAIN = -10;
 

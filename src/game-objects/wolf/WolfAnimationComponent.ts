@@ -1,5 +1,5 @@
 import Wolf from "./Wolf";
-import AnimationComponent from "../components/AnimationComponent";
+import AnimationComponent from "../../components/AnimationComponent";
 
 export default class WolfAnimationComponent implements AnimationComponent {
     update(wolf: Wolf) {
