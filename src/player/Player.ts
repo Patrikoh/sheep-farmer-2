@@ -1,22 +1,17 @@
-import depthIndex from '../depthIndex.json';
 import InputComponent from './InputComponent';
-import AnimationComponent from './AnimationComponent.js';
+import AnimationComponent from './AnimationComponent';
+import GraphicsComponent from './GraphicsComponent';
 
 export default class Player {
-    private inputComponent: InputComponent = new InputComponent();
-    private animationComponent: AnimationComponent = new AnimationComponent();
+    private inputComponent: InputComponent;
+    private animationComponent: AnimationComponent;
+    private grahipcsComponent: GraphicsComponent;
     sprite: Phaser.Physics.Arcade.Sprite;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-
-        this.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "player");
-        scene.add.existing(this.sprite);
-        scene.physics.add.existing(this.sprite);
-        this.sprite.setActive(true);
-        this.sprite.setCollideWorldBounds(true);
-        this.sprite.setImmovable();
-        this.sprite.setSize(24, 30);
-        this.sprite.setDepth(depthIndex.PLAYER);
+        this.inputComponent = new InputComponent();
+        this.animationComponent = new AnimationComponent();
+        this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
     }
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
@@ -25,6 +20,6 @@ export default class Player {
     }
 
     addCollider(scene: Phaser.Scene, object) {
-        scene.physics.add.collider(this.sprite, object);
+        this.grahipcsComponent.addCollider(this, scene, object);
     }
 }
