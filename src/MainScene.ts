@@ -59,9 +59,9 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time: number) {
-        this.world.player.update(cursors);
+        this.world.player.update(cursors, this.world);
         this.world.herd.update(this, time, this.world.player.sprite.body.position, this.world.pickups);
-        this.world.wolf.update(cursors, this.world.herd, time);
+        this.world.wolf.update(cursors, this.world);
         sheepPanel.update(this, this.world.herd);
     }
 

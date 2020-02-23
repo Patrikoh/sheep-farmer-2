@@ -1,11 +1,12 @@
 import Player from "./Player";
 import InputComponent from "../components/InputComponent";
+import World from "../World";
 
 export default class PlayerInputComponent implements InputComponent {
     private speed = 100;
     private runspeed = 200;
 
-    update(player: Player, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update(player: Player, _world: World, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
         // Stop any previous movement from the last frame
         player.sprite.setVelocity(0);
 

@@ -3,6 +3,7 @@ import AnimationComponent from './WolfAnimationComponent';
 import GraphicsComponent from './WolfGraphicsComponent';
 import SheepHerd from '../SheepHerd';
 import Sheep from '../Sheep';
+import World from '../World';
 
 export enum MovementTypes {
     MovingToSheepPosition,
@@ -43,8 +44,8 @@ export default class Wolf {
         this.setHealthState(100);
     }
 
-    update(cursors, herd: SheepHerd, time: number) {
-        this.inputComponent.update(this, null, this.scene, herd, time);
+    update(cursors, world: World) {
+        this.inputComponent.update(this, world, cursors);
         this.animationComponent.update(this, cursors);
     }
 

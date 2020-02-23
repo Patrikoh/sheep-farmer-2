@@ -1,11 +1,5 @@
-import SheepHerd from "../SheepHerd";
+import World from "../World";
 
 export default abstract class InputComponent {
-    abstract update(
-        gameObject,
-        cursors?: Phaser.Types.Input.Keyboard.CursorKeys,
-        scene?: Phaser.Scene,
-        herd?: SheepHerd,
-        time?: number
-    ): void;
+    abstract update(gameObject, world: World, cursors: Phaser.Types.Input.Keyboard.CursorKeys): void;
 }
