@@ -12,9 +12,6 @@ interface MovementState {
         y: number
     }
 };
-interface HealthState {
-    life: number
-};
 
 export default class Wolf {
     private inputComponent: InputComponent;
@@ -22,15 +19,12 @@ export default class Wolf {
     private grahipcsComponent: GraphicsComponent;
 
     movementState: MovementState;
-    healthState: HealthState;
     sprite: Phaser.Physics.Arcade.Sprite;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         this.inputComponent = new InputComponent(this);
         this.animationComponent = new AnimationComponent();
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
-
-        this.setHealthState(100);
     }
 
     update(cursors, world: World) {
@@ -40,9 +34,5 @@ export default class Wolf {
 
     addCollider(scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
         this.grahipcsComponent.addCollider(this, scene, object);
-    }
-
-    setHealthState(life: number) {
-        this.healthState = { life };
     }
 }
