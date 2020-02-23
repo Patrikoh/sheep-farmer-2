@@ -1,6 +1,6 @@
 import GraphicsComponent from "../components/GraphicsComponent";
 import Wolf from "./Wolf";
-import { MovementTypes } from './MovementTypes';
+import { WolfMovementTypes } from './WolfMovementTypes';
 import Sheep from "../Sheep";
 
 const LIFE_GAIN = -10;
@@ -28,7 +28,7 @@ export default class WolfGraphicsComponent implements GraphicsComponent {
 
     setWalkAwayState(wolf: Wolf, time: number, x: number, y: number) {
         wolf.movementState = {
-            movementType: MovementTypes.WalkAway,
+            movementType: WolfMovementTypes.WalkAway,
             stopTime: time + Phaser.Math.Between(200, 500),
             position: { x, y }
         };

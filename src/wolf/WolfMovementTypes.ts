@@ -1,4 +1,4 @@
-export enum MovementTypes {
+export enum WolfMovementTypes {
     MovingToSheepPosition,
     RandomWalking,
     StandingStill,

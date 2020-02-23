@@ -1,13 +1,11 @@
 import InputComponent from './WolfInputComponent';
 import AnimationComponent from './WolfAnimationComponent';
 import GraphicsComponent from './WolfGraphicsComponent';
-import SheepHerd from '../SheepHerd';
-import Sheep from '../Sheep';
 import World from '../World';
-import { MovementTypes } from './MovementTypes';
+import { WolfMovementTypes } from './WolfMovementTypes';
 
 interface MovementState {
-    movementType: MovementTypes,
+    movementType: WolfMovementTypes,
     stopTime?: number,
     position?: {
         x: number,
@@ -25,7 +23,6 @@ export default class Wolf {
 
     movementState: MovementState;
     healthState: HealthState;
-
     sprite: Phaser.Physics.Arcade.Sprite;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
@@ -47,9 +44,5 @@ export default class Wolf {
 
     setHealthState(life: number) {
         this.healthState = { life };
-    }
-
-    getClosestSheep(scene: Phaser.Scene, herd: SheepHerd) {
-        return scene.physics.closest(this.sprite, herd.getSheep().filter(f => f.active)) as Sheep;
     }
 }
