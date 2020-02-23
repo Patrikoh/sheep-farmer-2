@@ -67,21 +67,21 @@ export default class MainScene extends Phaser.Scene {
         }
 
         const camera = this.cameras.main;
-        camera.startFollow(player);
+        camera.startFollow(player.getSprite());
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         cursors = this.input.keyboard.createCursorKeys();
 
         player.addCollider(this, worldLayer);
         herd.addCollider(this, worldLayer);
-        herd.addCollider(this, player);
+        herd.addCollider(this, player.getSprite());
         wolf.addCollider(this, worldLayer);
         wolf.addCollider(this, herd.getGroup());
     }
 
     update(time: number) {
         player.update(cursors);
-        herd.update(this, time, player.body.position, pickups);
+        herd.update(this, time, player.getPosition(), pickups);
         wolf.update(this, time, herd);
         sheepPanel.update(this, herd);
     }

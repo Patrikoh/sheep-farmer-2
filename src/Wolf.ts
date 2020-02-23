@@ -1,4 +1,3 @@
-import Pickup from "./pickups/Pickup";
 import SheepHerd from './SheepHerd';
 import Sheep from './Sheep';
 
