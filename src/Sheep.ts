@@ -1,5 +1,6 @@
 import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator';
 import Pickup from "./pickups/Pickup";
+import { GameObjects } from 'phaser';
 
 enum MovementTypes {
     MovingToFollowPosition,
@@ -47,7 +48,7 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.setHealthState(100, 100);
     }
 
-    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Pickup>) {
+    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, pickups: Array<Pickup>) {
         const speed = 60;
         const followDistance = 100;
         const searchForGrassDistance = 60;
@@ -68,18 +69,18 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 break;
             }
             case MovementTypes.MovingToGrassPosition: {
-                const closestGrass = this.getClosestGrass(scene, grasses)
-                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
-                    this.setVelocityX(closestGrass.body.position.x - this.body.position.x);
-                    this.setVelocityY(closestGrass.body.position.y - this.body.position.y);
+                const closestPickup = this.getClosestPickup(scene, pickups)
+                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
+                    this.setVelocityX(closestPickup.body.position.x - this.body.position.x);
+                    this.setVelocityY(closestPickup.body.position.y - this.body.position.y);
                 } else {
                     this.setStandStillState(time);
                 }
                 break;
             }
             case MovementTypes.MovingToFollowPosition: {
-                const closestGrass = this.getClosestGrass(scene, grasses);
-                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
+                const closestPickup = this.getClosestPickup(scene, pickups);
+                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
                     this.setMovingToGrassPositionState();
                 } else if (followPosition.distance(this.body.position) < followDistance) {
                     if (time > movementState.stopTime) {
@@ -101,8 +102,8 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
                 break;
             }
             case MovementTypes.RandomWalking: {
-                const closestGrass = this.getClosestGrass(scene, grasses)
-                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestGrass.getCenter()) < searchForGrassDistance) {
+                const closestPickup = this.getClosestPickup(scene, pickups)
+                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
                     this.setMovingToGrassPositionState();
                 } else if (time > movementState.stopTime) {
                     this.setStandStillState(time);
@@ -157,8 +158,11 @@ export default class Sheep extends Phaser.Physics.Arcade.Sprite {
         this.destroy();
     }
 
-    private getClosestGrass(scene: Phaser.Scene, grasses: Array<Pickup>) {
-        return scene.physics.closest(this, grasses.filter(g => g.active)) as Pickup;
+    private getClosestPickup(scene: Phaser.Scene, pickups: Array<Pickup>) {
+        let activePickups = pickups.filter(p => p.sprite.active);
+        let activeSprites = activePickups.map(p => p.sprite);
+        let closestSprite = scene.physics.closest(this, activeSprites);
+        return closestSprite as Phaser.Physics.Arcade.Sprite;
     }
 
     private setStandStillState(time: number) {

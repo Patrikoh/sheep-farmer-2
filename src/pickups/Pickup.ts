@@ -1,22 +1,21 @@
-import depthIndex from '../depthIndex.json';
+import GraphicsComponent from './PickupGraphicsComponent';
 
-export default abstract class Pickup extends Phaser.Physics.Arcade.Sprite {
+export default abstract class Pickup {
+    private graphicsComponent: GraphicsComponent;
+
+    sprite: Phaser.Physics.Arcade.Sprite;
+
     protected constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "pickups");
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
-        this.setActive(true);
-        this.setImmovable();
-        this.setDepth(depthIndex.WORLD + 1);
+        this.graphicsComponent = new GraphicsComponent(this, scene, x, y);
     }
 
-    addCollider(scene: Phaser.Scene, object) {
-        scene.physics.add.overlap(this, object, (c: Pickup, c2) => this.onCollision(c, c2), null, scene);
-    }
-
-    remove() {
-        this.destroy();
+    addCollider(scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
+        this.graphicsComponent.addCollider(this, scene, object);
     }
 
     abstract onCollision(self: Pickup, other: Phaser.GameObjects.GameObject): void;
+
+    remove() {
+        this.sprite.destroy();
+    }
 }
