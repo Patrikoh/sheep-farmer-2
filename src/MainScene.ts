@@ -2,12 +2,10 @@ import SheepPanel from './panels/sheep/SheepPanel';
 import depthIndex from './depthIndex.json';
 import World from './World';
 
-let sheepPanel: SheepPanel;
-
-let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
-
 export default class MainScene extends Phaser.Scene {
     private world: World;
+    private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    private sheepPanel: SheepPanel;
 
     constructor() {
         super('MainScene');
@@ -43,13 +41,13 @@ export default class MainScene extends Phaser.Scene {
 
         this.world = new World(this, map);
 
-        sheepPanel = new SheepPanel(this, this.world.herd);
+        this.sheepPanel = new SheepPanel(this, this.world.herd);
 
         const camera = this.cameras.main;
         camera.startFollow(this.world.player.sprite);
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-        cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.createCursorKeys();
 
         this.world.player.addCollider(this, worldLayer);
         this.world.herd.addCollider(this, worldLayer);
@@ -58,11 +56,9 @@ export default class MainScene extends Phaser.Scene {
         this.world.wolf.addCollider(this, this.world.herd.getGroup());
     }
 
-    update(time: number) {
-        this.world.player.update(cursors, this.world);
-        this.world.herd.update(this, time, this.world.player.sprite.body.position, this.world.pickups);
-        this.world.wolf.update(cursors, this.world);
-        sheepPanel.update(this, this.world.herd);
+    update() {
+        this.world.update(this.cursors);
+        this.sheepPanel.update(this, this.world.herd);
     }
 
     loadAllAnimations(scene: Phaser.Scene) {
