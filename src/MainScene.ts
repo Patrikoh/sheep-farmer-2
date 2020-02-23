@@ -1,20 +1,13 @@
-import Player from './player/Player';
-import SheepHerd from './SheepHerd';
 import SheepPanel from './panels/sheep/SheepPanel';
-import Pickup from './pickups/Pickup';
-import HealthMushroom from './pickups/HealthMushroom';
-import PoisonMushroom from './pickups/PoisonMushroom';
 import depthIndex from './depthIndex.json';
-import Wolf from './wolf/Wolf';
+import World from './World';
 
-let player: Player;
-let herd: SheepHerd;
-let wolf: Wolf;
 let sheepPanel: SheepPanel;
-let pickups: Array<Pickup>;
+
 let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
 export default class MainScene extends Phaser.Scene {
+    private world: World;
 
     constructor() {
         super('MainScene');
@@ -48,43 +41,28 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.width = worldLayer.width;
         this.physics.world.bounds.height = worldLayer.height;
 
-        player = new Player(this, 200, 100);
-        herd = new SheepHerd(this, 5);
-        wolf = new Wolf(this, 400, 200);
+        this.world = new World(this, map);
 
-        sheepPanel = new SheepPanel(this, herd);
-
-        pickups = [];
-        for (let index = 0; index < 50; index++) {
-            let mushroom: Pickup;
-            let mushroomIsPoison = index % 3 === 0;
-            if (mushroomIsPoison) {
-                mushroom = new PoisonMushroom(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
-            } else {
-                mushroom = new HealthMushroom(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
-            }
-            mushroom.addCollider(this, herd.getGroup());
-            pickups.push(mushroom);
-        }
+        sheepPanel = new SheepPanel(this, this.world.herd);
 
         const camera = this.cameras.main;
-        camera.startFollow(player.sprite);
+        camera.startFollow(this.world.player.sprite);
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         cursors = this.input.keyboard.createCursorKeys();
 
-        player.addCollider(this, worldLayer);
-        herd.addCollider(this, worldLayer);
-        herd.addCollider(this, player.sprite);
-        wolf.addCollider(this, worldLayer);
-        wolf.addCollider(this, herd.getGroup());
+        this.world.player.addCollider(this, worldLayer);
+        this.world.herd.addCollider(this, worldLayer);
+        this.world.herd.addCollider(this, this.world.player.sprite);
+        this.world.wolf.addCollider(this, worldLayer);
+        this.world.wolf.addCollider(this, this.world.herd.getGroup());
     }
 
     update(time: number) {
-        player.update(cursors);
-        herd.update(this, time, player.sprite.body.position, pickups);
-        wolf.update(cursors, herd, time);
-        sheepPanel.update(this, herd);
+        this.world.player.update(cursors);
+        this.world.herd.update(this, time, this.world.player.sprite.body.position, this.world.pickups);
+        this.world.wolf.update(cursors, this.world.herd, time);
+        sheepPanel.update(this, this.world.herd);
     }
 
     loadAllAnimations(scene: Phaser.Scene) {
