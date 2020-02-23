@@ -19,6 +19,7 @@ interface MovementState {
 interface HealthState {
     life: number
 };
+const LIFE_GAIN = -10;
 
 export default class Wolf extends Phaser.Physics.Arcade.Sprite {
     private movementState: MovementState;
@@ -37,9 +38,9 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
     }
 
     update(scene: Phaser.Scene, time, herd: SheepHerd) {
-        const speed = 60;
+        const speed = 80;
         const followDistance = 100;
-        const searchForSheepDistance = 60;
+        const searchForSheepDistance = 100;
         const prevVelocity = this.body.velocity.clone();
 
         if (!this.movementState) this.movementState = { movementType: MovementTypes.StandingStill, stopTime: 0 };
@@ -54,8 +55,11 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
                 break;
             }
             case MovementTypes.MovingToSheepPosition: {
-                const closestSheep = this.getClosestSheep(scene, herd)
-                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestSheep.getCenter()) < searchForSheepDistance) {
+                const closestSheep = this.getClosestSheep(scene, herd);
+                let shouldMoveToSheep =
+                    closestSheep &&
+                    Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestSheep.getCenter()) < searchForSheepDistance;
+                if (shouldMoveToSheep) {
                     this.setVelocityX(closestSheep.body.position.x - this.body.position.x);
                     this.setVelocityY(closestSheep.body.position.y - this.body.position.y);
                 } else {
@@ -72,8 +76,11 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
                 break;
             }
             case MovementTypes.RandomWalking: {
-                const closestSheep = this.getClosestSheep(scene, herd)
-                if (Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestSheep.getCenter()) < searchForSheepDistance) {
+                const closestSheep = this.getClosestSheep(scene, herd);
+                let shouldMoveToSheep =
+                    closestSheep &&
+                    Phaser.Math.Distance.BetweenPoints(this.getCenter(), closestSheep.getCenter()) < searchForSheepDistance;
+                if (shouldMoveToSheep) {
                     this.setMovingToSheepPositionState();
                 } else if (time > this.movementState.stopTime) {
                     this.setStandStillState(time);
@@ -94,11 +101,14 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
     }
 
     addCollider(scene: Phaser.Scene, object) {
-        scene.physics.add.collider(this, object);
+        scene.physics.add.collider(this, object, (c: Wolf, c2) => this.onCollision(c, c2, scene), null, scene);
     }
 
-    onSheepCollision(time: number, x: number, y: number) {
-        throw new Error("Method not implemented.");
+    onCollision(_self: Wolf, other: Phaser.GameObjects.GameObject, scene: Phaser.Scene) {
+        if (other instanceof Sheep) {
+            other.changeLife(LIFE_GAIN);
+            this.setWalkAwayState(scene.time.now, other.x, other.y);
+        }
     }
 
     changeLife(lifeDiff: number) {
@@ -122,14 +132,14 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
     private setStandStillState(time: number) {
         this.movementState = {
             movementType: MovementTypes.StandingStill,
-            stopTime: time + Phaser.Math.Between(4000, 6000),
+            stopTime: time + Phaser.Math.Between(1000, 2000),
         };
     };
 
     private setRandomWalkState(time: number) {
         this.movementState = {
             movementType: MovementTypes.RandomWalking,
-            stopTime: time + Phaser.Math.Between(2000, 3500),
+            stopTime: time + Phaser.Math.Between(4000, 6000),
         };
     }
 
