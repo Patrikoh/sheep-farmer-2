@@ -1,6 +1,7 @@
 import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator';
 import Pickup from "../pickup/Pickup";
 import AnimationComponent from './SheepAnimationComponent';
+import GraphicsComponent from './SheepGraphicsComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
 
 interface WolfMovementState {
@@ -16,15 +17,11 @@ interface HealthState {
     life: number
 };
 
-function uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-}
+
 
 export default class Sheep {
     private animationComponent: AnimationComponent;
+    private grahipcsComponent: GraphicsComponent;
 
     movementState: WolfMovementState;
     healthState: HealthState;
@@ -35,17 +32,7 @@ export default class Sheep {
     constructor(scene: Phaser.Scene, x: number, y: number) {
 
         this.animationComponent = new AnimationComponent();
-
-        this.id = uuidv4();
-        this.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "sheep");
-        this.sprite.setData('id', this.id);
-        this.sprite.type = 'sheep';
-        this.sprite.addListener('changeLife', (lifeDiff: number) => this.changeLife(lifeDiff));
-
-        scene.add.existing(this.sprite);
-        scene.physics.add.existing(this.sprite);
-        this.sprite.setActive(true);
-        this.sprite.setCollideWorldBounds(true);
+        this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
 
         this.name = uniqueNamesGenerator({
             dictionaries: [adjectives, names],
@@ -132,16 +119,8 @@ export default class Sheep {
         this.animationComponent.update(this);
     }
 
-    addCollider(scene: Phaser.Scene, object) {
-        scene.physics.add.collider(this.sprite, object);
-    }
-
-    onSheepCollision(time: number, x: number, y: number) {
-        this.setWalkAwayState(time, x, y);
-    }
-
-    onEat() {
-        this.sprite.setScale(this.sprite.scaleX * 1.1, this.sprite.scaleY * 1.1);
+    addCollider(scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
+        this.grahipcsComponent.addCollider(this, scene, object);
     }
 
     changeLife(lifeDiff: number) {
@@ -153,6 +132,10 @@ export default class Sheep {
             let healthState: HealthState = { ...previousHealth, life };
             this.healthState = healthState;
         }
+    }
+
+    onSheepCollision(time: number, x: number, y: number) {
+        this.setWalkAwayState(time, x, y);
     }
 
     getHealth() {
