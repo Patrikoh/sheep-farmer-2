@@ -35,7 +35,7 @@ export default class World {
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
         this.player.update(cursors, this);
-        this.herd.update(this.scene, this.scene.time.now, this.player.sprite.body.position, this.pickups);
+        this.herd.update(cursors, this);
         this.wolf.update(cursors, this);
     }
 }

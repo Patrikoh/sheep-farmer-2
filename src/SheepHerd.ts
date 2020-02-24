@@ -1,5 +1,5 @@
 import Sheep from './game-objects/sheep/Sheep';
-import Pickup from './game-objects/pickup/Pickup';
+import World from './World';
 
 export default class SheepHerd {
     sheepGroup: Phaser.Physics.Arcade.Group;
@@ -25,16 +25,10 @@ export default class SheepHerd {
         this.sheepGroup.getChildren().forEach((s: Phaser.Physics.Arcade.Sprite) => s.setCollideWorldBounds(true));
     }
 
-    update(scene: Phaser.Scene, time: number, followPosition: Phaser.Math.Vector2, pickups: Array<Pickup>) {
+    update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, world: World) {
         let sheepSprites = this.sheepGroup.getChildren();
         sheepSprites.forEach((sprite: Phaser.Physics.Arcade.Sprite, i) => {
-            let herdMedianX = sheepSprites.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.x + a), 0) / sheepSprites.length;
-            let herdMedianY = sheepSprites.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.y + a), 0) / sheepSprites.length;
-            let positionX = (followPosition.x + herdMedianX) / 2;
-            let positionY = (followPosition.y + herdMedianY) / 2;
-
-            //DENNA kommer inte att fungera, måste kalla på Sheeps update, inte dess sprite som detta är
-            this.getSheepFromSprite(sprite).update(scene, time, new Phaser.Math.Vector2(positionX, positionY), pickups);
+            this.getSheepFromSprite(sprite).update(world, cursors);
         });
     }
 
