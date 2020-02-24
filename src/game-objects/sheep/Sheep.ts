@@ -1,7 +1,6 @@
 import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator';
 import Pickup from "../pickup/Pickup";
 import { SheepMovementTypes } from './SheepMovementTypes';
-import { uuid } from 'uuidv4';
 
 interface WolfMovementState {
     movementType: SheepMovementTypes,
@@ -21,6 +20,13 @@ const DataFields = {
     healthState: 'healthState',
 };
 
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 export default class Sheep {
     movementState: WolfMovementState;
     healthState: HealthState;
@@ -29,11 +35,12 @@ export default class Sheep {
     id: string;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        //USE GUUUID!!
-        this.id = "" + x + y;
+        this.id = uuidv4();
         this.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "sheep");
         this.sprite.setData('id', this.id);
         this.sprite.type = 'sheep';
+
+        console.log(this.id);
 
         scene.add.existing(this.sprite);
         scene.physics.add.existing(this.sprite);
