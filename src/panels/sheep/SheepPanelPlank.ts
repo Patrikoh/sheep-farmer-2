@@ -1,4 +1,4 @@
-import Sheep from "../../Sheep";
+import Sheep from "../../game-objects/sheep/Sheep";
 import LifeBar from "../LifeBar";
 import depthIndex from '../../depthIndex.json';
 

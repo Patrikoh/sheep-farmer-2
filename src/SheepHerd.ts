@@ -1,42 +1,54 @@
-import Sheep from './Sheep';
+import Sheep from './game-objects/sheep/Sheep';
 import Pickup from './game-objects/pickup/Pickup';
 
-let herd: Phaser.Physics.Arcade.Group;
-
 export default class SheepHerd {
+    sheepGroup: Phaser.Physics.Arcade.Group;
+    sheepList: Array<Sheep>;
+
     constructor(scene: Phaser.Scene, numberOfSheep: integer) {
-        herd = scene.physics.add.group();
+        this.sheepGroup = scene.physics.add.group();
+        this.sheepList = [];
 
         for (let index = 0; index < numberOfSheep; index++) {
-            herd.add(new Sheep(scene, 10 + index * 100, 10 + index * 100));
+            let sheep = new Sheep(scene, 10 + index * 100, 10 + index * 100);
+            this.sheepGroup.add(sheep.sprite);
+            this.sheepList.push(sheep);
         }
 
-        scene.physics.add.collider(herd, herd,
-            (s1: Sheep, s2: Sheep) => {
-                s1.onSheepCollision(scene.time.now, s2.body.position.x, s2.body.position.y);
+        scene.physics.add.collider(this.sheepGroup, this.sheepGroup,
+            (s1: Phaser.Physics.Arcade.Sprite, s2: Phaser.Physics.Arcade.Sprite) => {
+                this.getSheepFromSprite(s1).onSheepCollision(scene.time.now, s2.body.position.x, s2.body.position.y);
             }, null, this);
 
         // This is needed due to a bug in Phaser: 
         // https://www.html5gamedevs.com/topic/38972-solved-issue-with-world-bounds-collision/?do=findComment&comment=222837
-        herd.getChildren().forEach((s: Sheep) => s.setCollideWorldBounds(true));
+        this.sheepGroup.getChildren().forEach((s: Phaser.Physics.Arcade.Sprite) => s.setCollideWorldBounds(true));
     }
 
-    update(scene: Phaser.Scene, time, followPosition: Phaser.Math.Vector2, grasses: Array<Pickup>) {
-        let herdChildren = herd.getChildren();
-        herdChildren.forEach((sheep: Sheep, i) => {
-            let herdMedianX = herdChildren.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.x + a), 0) / herdChildren.length;
-            let herdMedianY = herdChildren.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.y + a), 0) / herdChildren.length;
+    update(scene: Phaser.Scene, time: number, followPosition: Phaser.Math.Vector2, pickups: Array<Pickup>) {
+        let sheepSprites = this.sheepGroup.getChildren();
+        sheepSprites.forEach((sprite: Phaser.Physics.Arcade.Sprite, i) => {
+            let herdMedianX = sheepSprites.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.x + a), 0) / sheepSprites.length;
+            let herdMedianY = sheepSprites.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.y + a), 0) / sheepSprites.length;
             let positionX = (followPosition.x + herdMedianX) / 2;
             let positionY = (followPosition.y + herdMedianY) / 2;
-            sheep.update(scene, time, new Phaser.Math.Vector2(positionX, positionY), grasses);
+
+            //DENNA kommer inte att fungera, måste kalla på Sheeps update, inte dess sprite som detta är
+            this.getSheepFromSprite(sprite).update(scene, time, new Phaser.Math.Vector2(positionX, positionY), pickups);
         });
     }
 
     addCollider(scene: Phaser.Scene, object) {
-        scene.physics.add.collider(herd, object);
+        scene.physics.add.collider(this.sheepGroup, object);
     }
 
-    getGroup() { return herd };
+    getSheepFromSprite(sprite: Phaser.Physics.Arcade.Sprite) {
+        return this.sheepList.find(s => s.id == sprite.getData('id'));
+    }
 
-    getSheep() { return herd.getChildren() as Array<Sheep> }
+    getGroup() { return this.sheepGroup };
+
+    getSprites() { return this.sheepGroup.getChildren() };
+
+    getSheep() { return this.sheepList };
 }

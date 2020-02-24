@@ -1,5 +1,5 @@
 import SheepHerd from "../../SheepHerd";
-import Sheep from "../../Sheep";
+import Sheep from "../../game-objects/sheep/Sheep";
 import SheepPanelPlank from "./SheepPanelPlank";
 import Toggle from "../Toggle";
 import depthIndex from '../../depthIndex.json';
@@ -48,7 +48,7 @@ export default class SheepPanel {
             this.planks.add(plank);
         });
 
-        this.toggle = new Toggle(scene, 190,  16 * herd.getSheep().length + 16);
+        this.toggle = new Toggle(scene, 190, 16 * herd.getSheep().length + 16);
         this.toggle.setDepth(depthIndex.UI + 2);
         this.toggle.setScrollFactor(0);
         scene.add.existing(this.toggle);

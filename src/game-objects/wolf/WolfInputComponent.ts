@@ -3,7 +3,7 @@ import { WolfMovementTypes } from './WolfMovementTypes';
 import InputComponent from "../../components/InputComponent";
 import World from "../../World";
 import SheepHerd from '../../SheepHerd';
-import Sheep from '../../Sheep';
+import Sheep from '../sheep/Sheep';
 
 export default class WolfInputComponent implements InputComponent {
     private speed = 80;
@@ -74,7 +74,7 @@ export default class WolfInputComponent implements InputComponent {
     }
 
     getClosestSheep(wolf: Wolf, scene: Phaser.Scene, herd: SheepHerd) {
-        return scene.physics.closest(wolf.sprite, herd.getSheep().filter(f => f.active)) as Sheep;
+        return scene.physics.closest(wolf.sprite, herd.getGroup().getChildren().filter(f => f.active)) as Phaser.Physics.Arcade.Sprite;
     }
 
     setStandStillState(wolf: Wolf, time: number) {

@@ -4,7 +4,7 @@ import GraphicsComponent from './WolfGraphicsComponent';
 import World from '../../World';
 import { WolfMovementTypes } from './WolfMovementTypes';
 
-interface MovementState {
+interface WolfMovementState {
     movementType: WolfMovementTypes,
     stopTime?: number,
     position?: {
@@ -18,7 +18,7 @@ export default class Wolf {
     private animationComponent: AnimationComponent;
     private grahipcsComponent: GraphicsComponent;
 
-    movementState: MovementState;
+    movementState: WolfMovementState;
     sprite: Phaser.Physics.Arcade.Sprite;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {

@@ -1,7 +1,7 @@
 import GraphicsComponent from "../../components/GraphicsComponent";
 import Wolf from "./Wolf";
 import { WolfMovementTypes } from './WolfMovementTypes';
-import Sheep from "../../Sheep";
+import Sheep from "../sheep/Sheep";
 
 const LIFE_GAIN = -10;
 
@@ -19,10 +19,10 @@ export default class WolfGraphicsComponent implements GraphicsComponent {
     }
 
     onCollision(wolf: Wolf, wolfSprite: Phaser.Physics.Arcade.Sprite, other: Phaser.GameObjects.GameObject, scene: Phaser.Scene) {
-        if (other instanceof Sheep) {
+        if (other.type === 'sheep') {
             // TODO: Move this to Sheep?
-            other.changeLife(LIFE_GAIN);
-            this.setWalkAwayState(wolf, scene.time.now, other.x, other.y);
+            // other.changeLife(LIFE_GAIN);
+            // this.setWalkAwayState(wolf, scene.time.now, other.x, other.y);
         }
     }
 

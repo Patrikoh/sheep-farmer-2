@@ -18,7 +18,8 @@
     },
     "homepage": "https://sheepfarmer2.com",
     "dependencies": {
-        "unique-names-generator": "^4.2.0"
+        "unique-names-generator": "^4.2.0",
+        "uuidv4": "^6.0.2"
     },
     "devDependencies": {
         "@rollup/plugin-json": "^4.0.2",
