@@ -1,5 +1,6 @@
 import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator';
 import Pickup from "../pickup/Pickup";
+import AnimationComponent from './SheepAnimationComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
 
 interface WolfMovementState {
@@ -23,6 +24,8 @@ function uuidv4() {
 }
 
 export default class Sheep {
+    private animationComponent: AnimationComponent;
+
     movementState: WolfMovementState;
     healthState: HealthState;
     sprite: Phaser.Physics.Arcade.Sprite;
@@ -30,6 +33,9 @@ export default class Sheep {
     id: string;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
+
+        this.animationComponent = new AnimationComponent();
+
         this.id = uuidv4();
         this.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "sheep");
         this.sprite.setData('id', this.id);
@@ -123,7 +129,7 @@ export default class Sheep {
         // Normalize and scale the velocity so that Sheep can't move faster along a diagonal
         this.sprite.body.velocity.normalize().scale(speed);
 
-        this.setAnimation(prevVelocity);
+        this.animationComponent.update(this);
     }
 
     addCollider(scene: Phaser.Scene, object) {
@@ -207,24 +213,5 @@ export default class Sheep {
 
     private setHealthState(maxLife: number, life: number) {
         this.healthState = { maxLife, life };
-    }
-
-    private setAnimation(prevVelocity: Phaser.Math.Vector2) {
-        if (this.sprite.body.velocity.x < 0) {
-            this.sprite.anims.play("sheep-left-walk", true);
-        } else if (this.sprite.body.velocity.x > 0) {
-            this.sprite.anims.play("sheep-right-walk", true);
-        } else if (this.sprite.body.velocity.y < 0) {
-            this.sprite.anims.play("sheep-up-walk", true);
-        } else if (this.sprite.body.velocity.y > 0) {
-            this.sprite.anims.play("sheep-down-walk", true);
-        } else {
-            this.sprite.anims.stop();
-
-            if (prevVelocity.x < 0) this.sprite.setTexture("sheep", "sheep-left-idle-0");
-            else if (prevVelocity.x > 0) this.sprite.setTexture("sheep", "sheep-right-idle-0");
-            else if (prevVelocity.y < 0) this.sprite.setTexture("sheep", "sheep-up-idle-0");
-            else if (prevVelocity.y > 0) this.sprite.setTexture("sheep", "sheep-down-idle-0");
-        }
     }
 }
