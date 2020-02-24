@@ -2,7 +2,9 @@ import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator'
 import AnimationComponent from './SheepAnimationComponent';
 import GraphicsComponent from './SheepGraphicsComponent';
 import MoveComponent from './SheepMoveComponent';
+import HealthComponent from './SheepHealthComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
+import { SheepHealthState } from './SheepHealthState';
 import World from '../../World';
 
 interface SheepMovementState {
@@ -13,18 +15,16 @@ interface SheepMovementState {
         y: number
     }
 };
-interface HealthState {
-    maxLife: number,
-    life: number
-};
+
 
 export default class Sheep {
     private moveComponent: MoveComponent;
     private animationComponent: AnimationComponent;
     private grahipcsComponent: GraphicsComponent;
+    private healthComponent: HealthComponent;
 
     movementState: SheepMovementState;
-    healthState: HealthState;
+    healthState: SheepHealthState;
     sprite: Phaser.Physics.Arcade.Sprite;
     name: string;
     id: string;
@@ -34,6 +34,7 @@ export default class Sheep {
         this.moveComponent = new MoveComponent(this);
         this.animationComponent = new AnimationComponent();
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
+        this.healthComponent = new HealthComponent(this);
 
         this.name = uniqueNamesGenerator({
             dictionaries: [adjectives, names],
@@ -41,8 +42,6 @@ export default class Sheep {
             length: 2,
             style: 'capital'
         });
-
-        this.setHealthState(100, 100);
     }
 
     update(world: World, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
@@ -54,34 +53,11 @@ export default class Sheep {
         this.grahipcsComponent.addCollider(this, scene, object);
     }
 
-    changeLife(lifeDiff: number) {
-        let previousHealth = this.healthState;
-        let life = Math.min(previousHealth.life + lifeDiff, previousHealth.maxLife);
-        if (life <= 0) {
-            this.kill();
-        } else {
-            let healthState: HealthState = { ...previousHealth, life };
-            this.healthState = healthState;
-        }
-    }
-
     onSheepCollision(time: number, x: number, y: number) {
         this.moveComponent.setWalkAwayState(this, time, x, y);
     }
 
-    getHealth() {
-        return this.healthState;
-    }
-
-    getName() {
-        return this.name;
-    }
-
-    private kill() {
-        this.sprite.destroy();
-    }
-
-    private setHealthState(maxLife: number, life: number) {
-        this.healthState = { maxLife, life };
+    changeLife(lifeDiff: number) {
+        this.healthComponent.changeLife(this, lifeDiff);
     }
 }

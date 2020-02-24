@@ -10,9 +10,10 @@ export default class PoisonMushroom extends Pickup {
     }
 
     onCollision(self: PoisonMushroom, other: Phaser.GameObjects.GameObject) {
-        if (other instanceof Sheep) {
-            other.changeLife(LIFE_GAIN);
+        if (other.type === 'sheep') {
+            let sheepSprite = other as Phaser.Physics.Arcade.Sprite;
+            sheepSprite.emit('changeLife', LIFE_GAIN);
+            self.remove();
         }
-        self.remove();
     }
 }
