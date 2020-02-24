@@ -1,4 +1,4 @@
-import SheepHerd from "../../SheepHerd";
+import SheepHerd from "../../game-objects/SheepHerd";
 import Sheep from "../../game-objects/sheep/Sheep";
 import SheepPanelPlank from "./SheepPanelPlank";
 import Toggle from "../Toggle";

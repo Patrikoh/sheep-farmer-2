@@ -1,6 +1,6 @@
 import Player from './game-objects/player/Player';
 import Wolf from './game-objects/wolf/Wolf';
-import SheepHerd from './SheepHerd';
+import SheepHerd from './game-objects/SheepHerd';
 import Pickup from './game-objects/pickup/Pickup';
 import PoisonMushroom from './game-objects/pickup/PoisonMushroom';
 import HealthMushroom from './game-objects/pickup/HealthMushroom';

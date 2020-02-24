@@ -1,10 +1,10 @@
 import Sheep from "./Sheep";
 import { SheepMovementTypes } from './SheepMovementTypes';
-import InputComponent from "../../components/InputComponent";
+import MoveComponent from "../../components/MoveComponent";
 import World from "../../World";
 import Pickup from "../pickup/Pickup";
 
-export default class SheepInputComponent implements InputComponent {
+export default class SheepMoveComponent implements MoveComponent {
 
     constructor(sheep: Sheep) {
         this.setStandStillState(sheep, 0);

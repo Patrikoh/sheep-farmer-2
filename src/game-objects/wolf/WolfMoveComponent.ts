@@ -1,11 +1,10 @@
 import Wolf from "./Wolf";
 import { WolfMovementTypes } from './WolfMovementTypes';
-import InputComponent from "../../components/InputComponent";
+import MoveComponent from "../../components/MoveComponent";
 import World from "../../World";
-import SheepHerd from '../../SheepHerd';
-import Sheep from '../sheep/Sheep';
+import SheepHerd from '../SheepHerd';
 
-export default class WolfInputComponent implements InputComponent {
+export default class WolfMoveComponent implements MoveComponent {
     private speed = 80;
     private searchForSheepDistance = 100;
 

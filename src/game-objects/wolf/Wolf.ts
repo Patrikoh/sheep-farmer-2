@@ -1,4 +1,4 @@
-import InputComponent from './WolfInputComponent';
+import MoveComponent from './WolfMoveComponent';
 import AnimationComponent from './WolfAnimationComponent';
 import GraphicsComponent from './WolfGraphicsComponent';
 import World from '../../World';
@@ -14,7 +14,7 @@ interface WolfMovementState {
 };
 
 export default class Wolf {
-    private inputComponent: InputComponent;
+    private moveComponent: MoveComponent;
     private animationComponent: AnimationComponent;
     private grahipcsComponent: GraphicsComponent;
 
@@ -22,13 +22,13 @@ export default class Wolf {
     sprite: Phaser.Physics.Arcade.Sprite;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        this.inputComponent = new InputComponent(this);
+        this.moveComponent = new MoveComponent(this);
         this.animationComponent = new AnimationComponent();
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
     }
 
     update(cursors, world: World) {
-        this.inputComponent.update(this, world, cursors);
+        this.moveComponent.update(this, world, cursors);
         this.animationComponent.update(this);
     }
 

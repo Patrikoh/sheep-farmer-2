@@ -1,11 +1,11 @@
 import { uniqueNamesGenerator, adjectives, names } from 'unique-names-generator';
 import AnimationComponent from './SheepAnimationComponent';
 import GraphicsComponent from './SheepGraphicsComponent';
-import InputComponent from './SheepInputComponent';
+import MoveComponent from './SheepMoveComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
 import World from '../../World';
 
-interface WolfMovementState {
+interface SheepMovementState {
     movementType: SheepMovementTypes,
     stopTime?: number,
     position?: {
@@ -19,11 +19,11 @@ interface HealthState {
 };
 
 export default class Sheep {
-    private inputComponent: InputComponent;
+    private moveComponent: MoveComponent;
     private animationComponent: AnimationComponent;
     private grahipcsComponent: GraphicsComponent;
 
-    movementState: WolfMovementState;
+    movementState: SheepMovementState;
     healthState: HealthState;
     sprite: Phaser.Physics.Arcade.Sprite;
     name: string;
@@ -31,7 +31,7 @@ export default class Sheep {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
 
-        this.inputComponent = new InputComponent(this);
+        this.moveComponent = new MoveComponent(this);
         this.animationComponent = new AnimationComponent();
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
 
@@ -46,7 +46,7 @@ export default class Sheep {
     }
 
     update(world: World, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-        this.inputComponent.update(this, world, cursors);
+        this.moveComponent.update(this, world, cursors);
         this.animationComponent.update(this);
     }
 
@@ -66,7 +66,7 @@ export default class Sheep {
     }
 
     onSheepCollision(time: number, x: number, y: number) {
-        this.inputComponent.setWalkAwayState(this, time, x, y);
+        this.moveComponent.setWalkAwayState(this, time, x, y);
     }
 
     getHealth() {

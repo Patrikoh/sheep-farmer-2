@@ -1,5 +1,5 @@
-import Sheep from './game-objects/sheep/Sheep';
-import World from './World';
+import Sheep from './sheep/Sheep';
+import World from '../World';
 
 export default class SheepHerd {
     sheepGroup: Phaser.Physics.Arcade.Group;
