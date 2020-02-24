@@ -18,11 +18,11 @@ export default class WolfGraphicsComponent implements GraphicsComponent {
         scene.physics.add.collider(wolf.sprite, object, (c: Phaser.Physics.Arcade.Sprite, c2) => this.onCollision(wolf, c, c2, scene), null, scene);
     }
 
-    onCollision(wolf: Wolf, wolfSprite: Phaser.Physics.Arcade.Sprite, other: Phaser.GameObjects.GameObject, scene: Phaser.Scene) {
+    onCollision(wolf: Wolf, wolfSprite: Phaser.Physics.Arcade.Sprite, other, scene: Phaser.Scene) {
         if (other.type === 'sheep') {
-            // TODO: Move this to Sheep?
-            // other.changeLife(LIFE_GAIN);
-            // this.setWalkAwayState(wolf, scene.time.now, other.x, other.y);
+            let sheepSprite = other as Phaser.Physics.Arcade.Sprite;
+            sheepSprite.emit('changeLife', LIFE_GAIN);
+            this.setWalkAwayState(wolf, scene.time.now, sheepSprite.x, sheepSprite.y);
         }
     }
 

@@ -14,11 +14,6 @@ interface HealthState {
     maxLife: number,
     life: number
 };
-const DataFields = {
-    name: 'name',
-    movementState: 'movementState',
-    healthState: 'healthState',
-};
 
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -39,8 +34,7 @@ export default class Sheep {
         this.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "sheep");
         this.sprite.setData('id', this.id);
         this.sprite.type = 'sheep';
-
-        console.log(this.id);
+        this.sprite.addListener('changeLife', (lifeDiff: number) => this.changeLife(lifeDiff));
 
         scene.add.existing(this.sprite);
         scene.physics.add.existing(this.sprite);
