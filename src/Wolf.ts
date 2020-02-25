@@ -26,7 +26,7 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
     private healthState: HealthState;
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, "player");
+        super(scene, x, y, "wolf");
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -35,6 +35,8 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
 
         this.setStandStillState(0);
         this.setHealthState(100);
+
+        this.addAnimations(scene);
     }
 
     update(scene: Phaser.Scene, time, herd: SheepHerd) {
@@ -163,20 +165,64 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
 
     private setAnimation(prevVelocity: Phaser.Math.Vector2) {
         if (this.body.velocity.x < 0) {
-            this.anims.play("player-left-walk", true);
+            this.anims.play("wolf-left-walk", true);
         } else if (this.body.velocity.x > 0) {
-            this.anims.play("player-right-walk", true);
+            this.anims.play("wolf-right-walk", true);
         } else if (this.body.velocity.y < 0) {
-            this.anims.play("player-up-walk", true);
+            this.anims.play("wolf-up-walk", true);
         } else if (this.body.velocity.y > 0) {
-            this.anims.play("player-down-walk", true);
+            this.anims.play("wolf-down-walk", true);
         } else {
             this.anims.stop();
 
-            if (prevVelocity.x < 0) this.setTexture("player", "player-left-idle-0");
-            else if (prevVelocity.x > 0) this.setTexture("player", "player-right-idle-0");
-            else if (prevVelocity.y < 0) this.setTexture("player", "player-up-idle-0");
-            else if (prevVelocity.y > 0) this.setTexture("player", "player-down-idle-0");
+            if (prevVelocity.x < 0) this.setTexture("wolf", "wolf-left-idle-0");
+            else if (prevVelocity.x > 0) this.setTexture("wolf", "wolf-right-idle-0");
+            else if (prevVelocity.y < 0) this.setTexture("wolf", "wolf-up-idle-0");
+            else if (prevVelocity.y > 0) this.setTexture("wolf", "wolf-down-idle-0");
         }
+    }
+
+    addAnimations(scene: Phaser.Scene) {
+        const anims = scene.anims;
+        anims.create({
+            key: "wolf-down-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-down-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "wolf-right-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-right-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "wolf-left-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-left-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "wolf-up-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-up-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
     }
 }
