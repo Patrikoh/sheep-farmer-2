@@ -7,7 +7,7 @@ const LIFE_GAIN = -10;
 
 export default class WolfGraphicsComponent implements GraphicsComponent {
     constructor(wolf: Wolf, scene: Phaser.Scene, x: number, y: number) {
-        wolf.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "player");
+        wolf.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "wolf");
         scene.add.existing(wolf.sprite);
         scene.physics.add.existing(wolf.sprite);
         wolf.sprite.setActive(true);

@@ -16,6 +16,7 @@ export default class MainScene extends Phaser.Scene {
         this.load.tilemapTiledJSON("map", "assets/maps/sheep-farm.json");
         this.load.atlas("player", "assets/atlas/player/player.png", "assets/atlas/player/player.json");
         this.load.atlas("sheep", "assets/atlas/sheep/sheep.png", "assets/atlas/sheep/sheep.json");
+        this.load.atlas("wolf", "assets/atlas/wolf/wolf.png", "assets/atlas/wolf/wolf.json");
         this.load.atlas("pickups", "assets/atlas/pickups/pickups.png", "assets/atlas/pickups/pickups.json");
         this.load.atlas("panels", "assets/atlas/panels/sheep-panel.png", "assets/atlas/panels/sheep-panel.json");
         this.load.bitmapFont('pixelFont', 'assets/fonts/pixelFont.png', 'assets/fonts/pixelFont.fnt');
@@ -137,6 +138,47 @@ export default class MainScene extends Phaser.Scene {
             key: "sheep-up-walk",
             frames: scene.anims.generateFrameNames("sheep", {
                 prefix: "sheep-up-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+
+        scene.anims.create({
+            key: "wolf-down-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-down-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "wolf-right-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-right-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "wolf-left-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-left-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "wolf-up-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-up-walk-",
                 start: 0,
                 end: 11
             }),

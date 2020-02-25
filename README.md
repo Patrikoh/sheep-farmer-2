@@ -19,7 +19,7 @@ After cloning the repo, run `npm install` from your project directory. Then, you
 server by running `npm run watch`.
 
 After starting the development server with `npm run watch`, you can edit any files in the `src` folder
-and Rollup will automatically recompile and reload your server (available at `http://localhost:5000`
+and Rollup will automatically recompile and reload your server (available at `http://localhost:4000`
 by default).
 
 ## Sprites

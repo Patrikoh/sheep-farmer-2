@@ -6,20 +6,20 @@ export default class WolfAnimationComponent implements AnimationComponent {
         const prevVelocity = wolf.sprite.body.velocity.clone();
 
         if (wolf.sprite.body.velocity.x < 0) {
-            wolf.sprite.anims.play("player-left-walk", true);
+            wolf.sprite.anims.play("wolf-left-walk", true);
         } else if (wolf.sprite.body.velocity.x > 0) {
-            wolf.sprite.anims.play("player-right-walk", true);
+            wolf.sprite.anims.play("wolf-right-walk", true);
         } else if (wolf.sprite.body.velocity.y < 0) {
-            wolf.sprite.anims.play("player-up-walk", true);
+            wolf.sprite.anims.play("wolf-up-walk", true);
         } else if (wolf.sprite.body.velocity.y > 0) {
-            wolf.sprite.anims.play("player-down-walk", true);
+            wolf.sprite.anims.play("wolf-down-walk", true);
         } else {
             wolf.sprite.anims.stop();
 
-            if (prevVelocity.x < 0) wolf.sprite.setTexture("player", "player-left-idle-0");
-            else if (prevVelocity.x > 0) wolf.sprite.setTexture("player", "player-right-idle-0");
-            else if (prevVelocity.y < 0) wolf.sprite.setTexture("player", "player-up-idle-0");
-            else if (prevVelocity.y > 0) wolf.sprite.setTexture("player", "player-down-idle-0");
+            if (prevVelocity.x < 0) wolf.sprite.setTexture("wolf", "wolf-left-idle-0");
+            else if (prevVelocity.x > 0) wolf.sprite.setTexture("wolf", "wolf-right-idle-0");
+            else if (prevVelocity.y < 0) wolf.sprite.setTexture("wolf", "wolf-up-idle-0");
+            else if (prevVelocity.y > 0) wolf.sprite.setTexture("wolf", "wolf-down-idle-0");
         }
     }
 }
