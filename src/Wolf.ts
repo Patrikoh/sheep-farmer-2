@@ -35,6 +35,8 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
 
         this.setStandStillState(0);
         this.setHealthState(100);
+
+        this.addAnimations(scene);
     }
 
     update(scene: Phaser.Scene, time, herd: SheepHerd) {
@@ -178,5 +180,49 @@ export default class Wolf extends Phaser.Physics.Arcade.Sprite {
             else if (prevVelocity.y < 0) this.setTexture("wolf", "wolf-up-idle-0");
             else if (prevVelocity.y > 0) this.setTexture("wolf", "wolf-down-idle-0");
         }
+    }
+
+    addAnimations(scene: Phaser.Scene) {
+        const anims = scene.anims;
+        anims.create({
+            key: "wolf-down-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-down-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "wolf-right-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-right-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "wolf-left-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-left-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        anims.create({
+            key: "wolf-up-walk",
+            frames: anims.generateFrameNames("wolf", {
+                prefix: "wolf-up-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
     }
 }
