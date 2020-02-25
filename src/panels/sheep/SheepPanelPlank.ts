@@ -1,4 +1,4 @@
-import Sheep from "../../Sheep";
+import Sheep from "../../game-objects/sheep/Sheep";
 import LifeBar from "../LifeBar";
 import depthIndex from '../../depthIndex.json';
 
@@ -16,9 +16,9 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
 
     update(sheep: Sheep) {
         if (sheep) {
-            const { maxLife, life } = sheep.getHealth();
+            const { maxLife, life } = sheep.healthState;
             this.lifeBar.update(maxLife, life);
-            this.sheepStatusText.setText(sheep.getName());
+            this.sheepStatusText.setText(sheep.name);
         }
     }
 

@@ -1,20 +1,11 @@
-import Player from './Player';
-import SheepHerd from './SheepHerd';
 import SheepPanel from './panels/sheep/SheepPanel';
-import Pickup from './pickups/Pickup';
-import HealthMushroom from './pickups/HealthMushroom';
-import PoisonMushroom from './pickups/PoisonMushroom';
 import depthIndex from './depthIndex.json';
-import Wolf from './Wolf';
-
-let player: Player;
-let herd: SheepHerd;
-let wolf: Wolf;
-let sheepPanel: SheepPanel;
-let pickups: Array<Pickup>;
-let cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+import World from './World';
 
 export default class MainScene extends Phaser.Scene {
+    private world: World;
+    private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    private sheepPanel: SheepPanel;
 
     constructor() {
         super('MainScene');
@@ -33,6 +24,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.loadAllAnimations(this);
 
         const map = this.make.tilemap({ key: "map" });
         const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
@@ -48,42 +40,150 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.width = worldLayer.width;
         this.physics.world.bounds.height = worldLayer.height;
 
-        player = new Player(this, 200, 100);
-        herd = new SheepHerd(this, 5);
-        wolf = new Wolf(this, 400, 200);
+        this.world = new World(this, map);
 
-        sheepPanel = new SheepPanel(this, herd);
-
-        pickups = [];
-        for (let index = 0; index < 50; index++) {
-            let mushroom: Pickup;
-            let mushroomIsPoison = index % 3 === 0;
-            if (mushroomIsPoison) {
-                mushroom = new PoisonMushroom(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
-            } else {
-                mushroom = new HealthMushroom(this, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
-            }
-            mushroom.addCollider(this, herd.getGroup());
-            pickups.push(mushroom);
-        }
+        this.sheepPanel = new SheepPanel(this, this.world.herd);
 
         const camera = this.cameras.main;
-        camera.startFollow(player);
+        camera.startFollow(this.world.player.sprite);
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-        cursors = this.input.keyboard.createCursorKeys();
+        this.cursors = this.input.keyboard.createCursorKeys();
 
-        player.addCollider(this, worldLayer);
-        herd.addCollider(this, worldLayer);
-        herd.addCollider(this, player);
-        wolf.addCollider(this, worldLayer);
-        wolf.addCollider(this, herd.getGroup());
+        this.world.player.addCollider(this, worldLayer);
+        this.world.herd.addCollider(this, worldLayer);
+        this.world.herd.addCollider(this, this.world.player.sprite);
+        this.world.wolf.addCollider(this, worldLayer);
+        this.world.wolf.addCollider(this, this.world.herd.getGroup());
     }
 
-    update(time: number) {
-        player.update(cursors);
-        herd.update(this, time, player.body.position, pickups);
-        wolf.update(this, time, herd);
-        sheepPanel.update(this, herd);
+    update() {
+        this.world.update(this.cursors);
+        this.sheepPanel.update(this, this.world.herd);
+    }
+
+    loadAllAnimations(scene: Phaser.Scene) {
+        scene.anims.create({
+            key: "player-down-walk",
+            frames: scene.anims.generateFrameNames("player", {
+                prefix: "player-down-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "player-right-walk",
+            frames: scene.anims.generateFrameNames("player", {
+                prefix: "player-right-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "player-left-walk",
+            frames: scene.anims.generateFrameNames("player", {
+                prefix: "player-left-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "player-up-walk",
+            frames: scene.anims.generateFrameNames("player", {
+                prefix: "player-up-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+
+        scene.anims.create({
+            key: "sheep-down-walk",
+            frames: scene.anims.generateFrameNames("sheep", {
+                prefix: "sheep-down-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "sheep-right-walk",
+            frames: scene.anims.generateFrameNames("sheep", {
+                prefix: "sheep-right-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "sheep-left-walk",
+            frames: scene.anims.generateFrameNames("sheep", {
+                prefix: "sheep-left-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "sheep-up-walk",
+            frames: scene.anims.generateFrameNames("sheep", {
+                prefix: "sheep-up-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+
+        scene.anims.create({
+            key: "wolf-down-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-down-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "wolf-right-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-right-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "wolf-left-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-left-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
+        scene.anims.create({
+            key: "wolf-up-walk",
+            frames: scene.anims.generateFrameNames("wolf", {
+                prefix: "wolf-up-walk-",
+                start: 0,
+                end: 11
+            }),
+            frameRate: 7,
+            repeat: -1
+        });
     }
 }
