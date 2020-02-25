@@ -13,7 +13,7 @@ export default class SheepAnimationComponent {
         let previousHealth = sheep.healthState;
         let life = Math.min(previousHealth.life + lifeDiff, previousHealth.maxLife);
         if (life <= 0) {
-            this.kill(sheep);
+            sheep.kill();
         } else {
             let healthState: SheepHealthState = { ...previousHealth, life };
             sheep.healthState = healthState;
@@ -24,9 +24,4 @@ export default class SheepAnimationComponent {
         sheep.healthState = { maxLife, life };
     }
 
-    private kill(sheep: Sheep) {
-        //TODO: Also remove sheep fromt list
-        todo
-        sheep.sprite.destroy();
-    }
 }

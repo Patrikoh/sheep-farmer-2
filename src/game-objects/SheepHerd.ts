@@ -27,6 +27,15 @@ export default class SheepHerd {
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, world: World) {
         let sheepSprites = this.sheepGroup.getChildren();
+
+        //TODO: This is really not how it should be done. The list and group should be linked in a better way.
+        if (this.sheepGroup.getLength() !== this.sheepList.length) {
+            let removedId = this.sheepList.find(sL => {
+                return this.sheepGroup.getChildren().find(sG => sG.getData('id') == sL.id) === undefined;
+            }).id;
+            this.sheepList = this.sheepList.filter(s => s.id != removedId);
+        }
+
         sheepSprites.forEach((sprite: Phaser.Physics.Arcade.Sprite, i) => {
             this.getSheepFromSprite(sprite).update(world, cursors);
         });

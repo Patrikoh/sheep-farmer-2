@@ -1,7 +1,7 @@
 import Pickup from './Pickup';
 import Sheep from "../sheep/Sheep";
 
-const LIFE_GAIN = -50;
+const LIFE_GAIN = -100;
 
 export default class PoisonMushroom extends Pickup {
     constructor(scene: Phaser.Scene, x: number, y: number) {

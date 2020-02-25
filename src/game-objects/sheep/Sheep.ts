@@ -60,4 +60,8 @@ export default class Sheep {
     changeLife(lifeDiff: number) {
         this.healthComponent.changeLife(this, lifeDiff);
     }
+
+    kill() {
+        this.sprite.destroy();
+    }
 }
