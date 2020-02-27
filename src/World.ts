@@ -4,16 +4,18 @@ import SheepHerd from './game-objects/SheepHerd';
 import Pickup from './game-objects/pickup/Pickup';
 import PoisonMushroom from './game-objects/pickup/PoisonMushroom';
 import HealthMushroom from './game-objects/pickup/HealthMushroom';
+import GameEventHandler from './events/GameEventHandler';
 
 export default class World {
-
     scene: Phaser.Scene;
     player: Player;
     herd: SheepHerd;
     wolf: Wolf;
     pickups: Array<Pickup>;
+    gameEventHandler: GameEventHandler;
 
     constructor(scene: Phaser.Scene, map: Phaser.Tilemaps.Tilemap) {
+        this.gameEventHandler = new GameEventHandler();
         this.scene = scene;
         this.player = new Player(this.scene, 200, 100);
         this.herd = new SheepHerd(this.scene, 5);
