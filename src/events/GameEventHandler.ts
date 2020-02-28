@@ -21,7 +21,7 @@ export default class GameEventHandler implements EventTarget {
         return this.dispatchEvent(customEvent);
     }
 
-    addGameEventListener(type: GameEventType, callback) {
+    addGameEventListener(type: GameEventType, callback: Function) {
         this.addEventListener(GameEventType[type], callback);
     }
 }
