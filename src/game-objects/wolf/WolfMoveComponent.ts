@@ -4,11 +4,12 @@ import MoveComponent from "../../components/MoveComponent";
 import World from "../../World";
 import SheepHerd from '../SheepHerd';
 
-export default class WolfMoveComponent implements MoveComponent {
+export default class WolfMoveComponent extends MoveComponent {
     private speed = 80;
     private searchForSheepDistance = 100;
 
     constructor(wolf: Wolf) {
+        super();
         this.setStandStillState(wolf, 0);
     }
 
