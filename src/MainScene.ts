@@ -12,7 +12,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("tiles", "assets/maps/sheep-farmer-tiles.png");
+        this.load.image("tiles", "assets/maps/sheep-farmer-tiles-extruded.png");
         this.load.tilemapTiledJSON("map", "assets/maps/sheep-farm.json");
         this.load.atlas("player", "assets/atlas/player/player.png", "assets/atlas/player/player.json");
         this.load.atlas("sheep", "assets/atlas/sheep/sheep.png", "assets/atlas/sheep/sheep.json");
@@ -27,11 +27,11 @@ export default class MainScene extends Phaser.Scene {
         this.loadAllAnimations(this);
 
         const map = this.make.tilemap({ key: "map" });
-        const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
+        const tileSet = map.addTilesetImage("sheep-farmer-tiles", "tiles");
 
-        const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
-        const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
-        const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
+        const belowLayer = map.createStaticLayer("Below Player", tileSet, 0, 0);
+        const worldLayer = map.createStaticLayer("World", tileSet, 0, 0);
+        const aboveLayer = map.createStaticLayer("Above Player", tileSet, 0, 0);
 
         worldLayer.setCollisionByProperty({ collides: true });
         aboveLayer.setDepth(depthIndex.WORLD);
