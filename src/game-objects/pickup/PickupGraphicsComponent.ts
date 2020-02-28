@@ -2,8 +2,9 @@ import Pickup from "./Pickup";
 import GraphicsComponent from "../../components/GraphicsComponent";
 import depthIndex from '../../depthIndex.json';
 
-export default class PickupGraphicsComponent implements GraphicsComponent {
+export default class PickupGraphicsComponent extends GraphicsComponent {
     constructor(pickup: Pickup, scene: Phaser.Scene, x: number, y: number) {
+        super();
         pickup.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "pickups");
         scene.add.existing(pickup.sprite);
         scene.physics.add.existing(pickup.sprite);

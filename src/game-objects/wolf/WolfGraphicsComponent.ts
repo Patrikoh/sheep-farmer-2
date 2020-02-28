@@ -1,12 +1,12 @@
 import GraphicsComponent from "../../components/GraphicsComponent";
 import Wolf from "./Wolf";
 import { WolfMovementTypes } from './WolfMovementTypes';
-import Sheep from "../sheep/Sheep";
 
 const LIFE_GAIN = -10;
 
-export default class WolfGraphicsComponent implements GraphicsComponent {
+export default class WolfGraphicsComponent extends GraphicsComponent {
     constructor(wolf: Wolf, scene: Phaser.Scene, x: number, y: number) {
+        super();
         wolf.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "wolf");
         scene.add.existing(wolf.sprite);
         scene.physics.add.existing(wolf.sprite);

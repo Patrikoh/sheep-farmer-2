@@ -8,8 +8,9 @@ function uuidv4() {
     });
 }
 
-export default class SheepGraphicsComponent implements GraphicsComponent {
+export default class SheepGraphicsComponent extends GraphicsComponent {
     constructor(sheep: Sheep, scene: Phaser.Scene, x: number, y: number) {
+        super();
         sheep.id = uuidv4();
         sheep.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "sheep");
         sheep.sprite.setData('id', sheep.id);
