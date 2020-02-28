@@ -22,6 +22,12 @@ export default class SheepPanelPlank extends Phaser.GameObjects.Sprite {
         }
     }
 
+    onToggle() {
+        this.setVisible(!this.visible);
+        this.sheepStatusText.setVisible(!this.sheepStatusText.visible);
+        this.lifeBar.onToggle();
+    }
+
     remove() {
         this.sheepStatusText.destroy(true);
         this.lifeBar.remove();

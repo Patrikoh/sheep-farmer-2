@@ -1,3 +1,3 @@
 export enum GameEventType {
-    SELECT_SHEEP
+    TOGGLE_SHEEP_PANEL
 };

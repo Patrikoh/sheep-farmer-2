@@ -24,6 +24,10 @@ export default class LifeBar {
         }
     }
 
+    onToggle() {
+        this.bar.forEach((b) => b.setVisible(!b.visible));
+    }
+
     remove() {
         for (let i = 0; i < this.bar.length; i++) {
             this.bar[i].destroy(true);

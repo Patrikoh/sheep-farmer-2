@@ -42,7 +42,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.world = new World(this, map);
 
-        this.sheepPanel = new SheepPanel(this, this.world.herd);
+        this.sheepPanel = new SheepPanel(this, this.world);
 
         const camera = this.cameras.main;
         camera.startFollow(this.world.player.sprite);
@@ -59,7 +59,7 @@ export default class MainScene extends Phaser.Scene {
 
     update() {
         this.world.update(this.cursors);
-        this.sheepPanel.update(this, this.world.herd);
+        this.sheepPanel.update(this, this.world);
     }
 
     loadAllAnimations(scene: Phaser.Scene) {
