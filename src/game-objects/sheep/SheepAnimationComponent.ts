@@ -1,25 +1,22 @@
-import Sheep from "./Sheep";
 import AnimationComponent from "../../components/AnimationComponent";
 
 export default class SheepAnimationComponent extends AnimationComponent {
-    update(sheep: Sheep) {
-        const prevVelocity = sheep.sprite.body.velocity.clone();
-
-        if (sheep.sprite.body.velocity.x < 0) {
-            sheep.sprite.anims.play("sheep-left-walk", true);
-        } else if (sheep.sprite.body.velocity.x > 0) {
-            sheep.sprite.anims.play("sheep-right-walk", true);
-        } else if (sheep.sprite.body.velocity.y < 0) {
-            sheep.sprite.anims.play("sheep-up-walk", true);
-        } else if (sheep.sprite.body.velocity.y > 0) {
-            sheep.sprite.anims.play("sheep-down-walk", true);
-        } else {
-            sheep.sprite.anims.stop();
-
-            if (prevVelocity.x < 0) sheep.sprite.setTexture("sheep", "sheep-left-idle-0");
-            else if (prevVelocity.x > 0) sheep.sprite.setTexture("sheep", "sheep-right-idle-0");
-            else if (prevVelocity.y < 0) sheep.sprite.setTexture("sheep", "sheep-up-idle-0");
-            else if (prevVelocity.y > 0) sheep.sprite.setTexture("sheep", "sheep-down-idle-0");
+    constructor() {
+        let animationSprite = {
+            texture: 'sheep',
+            walk: {
+                left: 'sheep-left-walk',
+                right: 'sheep-right-walk',
+                up: 'sheep-up-walk',
+                down: 'sheep-down-walk'
+            },
+            idle: {
+                left: 'sheep-left-idle-0',
+                right: 'sheep-right-idle-0',
+                up: 'sheep-up-idle-0',
+                down: 'sheep-down-idle-0'
+            }
         }
+        super(animationSprite);
     }
 }
