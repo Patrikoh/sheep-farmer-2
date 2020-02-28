@@ -27,11 +27,11 @@ export default class MainScene extends Phaser.Scene {
         this.loadAllAnimations(this);
 
         const map = this.make.tilemap({ key: "map" });
-        const tileSet = map.addTilesetImage("sheep-farmer-tiles", "tiles");
+        const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
 
-        const belowLayer = map.createStaticLayer("Below Player", tileSet, 0, 0);
-        const worldLayer = map.createStaticLayer("World", tileSet, 0, 0);
-        const aboveLayer = map.createStaticLayer("Above Player", tileSet, 0, 0);
+        const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
+        const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
+        const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
 
         worldLayer.setCollisionByProperty({ collides: true });
         aboveLayer.setDepth(depthIndex.WORLD);
