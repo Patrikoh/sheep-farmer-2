@@ -2,14 +2,10 @@ import Pickup from "./Pickup";
 import GraphicsComponent from "../../components/GraphicsComponent";
 import depthIndex from '../../depthIndex.json';
 
-export default class PickupGraphicsComponent implements GraphicsComponent {
+export default class PickupGraphicsComponent extends GraphicsComponent {
     constructor(pickup: Pickup, scene: Phaser.Scene, x: number, y: number) {
-        pickup.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "pickups");
-        scene.add.existing(pickup.sprite);
+        super(pickup, scene, x, y, depthIndex.WORLD + 1, 'pickups');
         scene.physics.add.existing(pickup.sprite);
-        pickup.sprite.setActive(true);
-        pickup.sprite.setImmovable();
-        pickup.sprite.setDepth(depthIndex.WORLD + 1);
     }
 
     addCollider(pickup: Pickup, scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {

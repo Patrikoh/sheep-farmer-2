@@ -1,5 +1,6 @@
 import GraphicsComponent from "../../components/GraphicsComponent";
 import Sheep from "./Sheep";
+import depthIndex from '../../depthIndex.json';
 
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -8,17 +9,14 @@ function uuidv4() {
     });
 }
 
-export default class SheepGraphicsComponent implements GraphicsComponent {
+export default class SheepGraphicsComponent extends GraphicsComponent {
     constructor(sheep: Sheep, scene: Phaser.Scene, x: number, y: number) {
+        super(sheep, scene, x, y, depthIndex.WORLD + 1, 'sheep');
         sheep.id = uuidv4();
-        sheep.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "sheep");
         sheep.sprite.setData('id', sheep.id);
         sheep.sprite.type = 'sheep';
         sheep.sprite.addListener('changeLife', (lifeDiff: number) => sheep.changeLife(lifeDiff));
-
-        scene.add.existing(sheep.sprite);
         scene.physics.add.existing(sheep.sprite);
-        sheep.sprite.setActive(true);
         sheep.sprite.setCollideWorldBounds(true);
     }
 

@@ -1,16 +1,14 @@
 import GraphicsComponent from "../../components/GraphicsComponent";
 import Wolf from "./Wolf";
 import { WolfMovementTypes } from './WolfMovementTypes';
-import Sheep from "../sheep/Sheep";
+import depthIndex from '../../depthIndex.json';
 
 const LIFE_GAIN = -10;
 
-export default class WolfGraphicsComponent implements GraphicsComponent {
+export default class WolfGraphicsComponent extends GraphicsComponent {
     constructor(wolf: Wolf, scene: Phaser.Scene, x: number, y: number) {
-        wolf.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "wolf");
-        scene.add.existing(wolf.sprite);
+        super(wolf, scene, x, y, depthIndex.WORLD + 1, 'wolf');
         scene.physics.add.existing(wolf.sprite);
-        wolf.sprite.setActive(true);
         wolf.sprite.setCollideWorldBounds(true);
     }
 

@@ -2,7 +2,7 @@ import Player from "./Player";
 import MoveComponent from "../../components/MoveComponent";
 import World from "../../World";
 
-export default class PlayerMoveComponent implements MoveComponent {
+export default class PlayerMoveComponent extends MoveComponent {
     private speed = 100;
     private runspeed = 200;
 

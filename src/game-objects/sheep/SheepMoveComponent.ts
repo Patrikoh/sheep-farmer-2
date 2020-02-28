@@ -4,9 +4,10 @@ import MoveComponent from "../../components/MoveComponent";
 import World from "../../World";
 import Pickup from "../pickup/Pickup";
 
-export default class SheepMoveComponent implements MoveComponent {
+export default class SheepMoveComponent extends MoveComponent {
 
     constructor(sheep: Sheep) {
+        super();
         this.setStandStillState(sheep, 0);
     }
 
