@@ -4,15 +4,11 @@ import depthIndex from '../../depthIndex.json';
 
 export default class PlayerGraphicsComponent extends GraphicsComponent {
     constructor(player: Player, scene: Phaser.Scene, x: number, y: number) {
-        super();
-        player.sprite = new Phaser.Physics.Arcade.Sprite(scene, x, y, "player");
-        scene.add.existing(player.sprite);
+        super(player, scene, x, y, depthIndex.PLAYER, 'player');
         scene.physics.add.existing(player.sprite);
-        player.sprite.setActive(true);
         player.sprite.setCollideWorldBounds(true);
         player.sprite.setImmovable();
         player.sprite.setSize(24, 30);
-        player.sprite.setDepth(depthIndex.PLAYER);
     }
 
     addCollider(player: Player, scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
