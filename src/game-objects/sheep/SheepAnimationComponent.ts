@@ -1,7 +1,7 @@
 import Sheep from "./Sheep";
 import AnimationComponent from "../../components/AnimationComponent";
 
-export default class SheepAnimationComponent implements AnimationComponent {
+export default class SheepAnimationComponent extends AnimationComponent {
     update(sheep: Sheep) {
         const prevVelocity = sheep.sprite.body.velocity.clone();
 

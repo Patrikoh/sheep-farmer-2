@@ -1,7 +1,7 @@
 import Player from "./Player";
 import AnimationComponent from "../../components/AnimationComponent";
 
-export default class PlayerAnimationComponent implements AnimationComponent {
+export default class PlayerAnimationComponent extends AnimationComponent {
     update(player: Player) {
         const prevVelocity = player.sprite.body.velocity.clone();
 
