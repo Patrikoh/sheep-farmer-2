@@ -1,8 +1,8 @@
-import AnimationComponent from "../../components/AnimationComponent";
+import AnimationComponent, { AnimationSprites } from "../../components/AnimationComponent";
 
 export default class PlayerAnimationComponent extends AnimationComponent {
     constructor() {
-        let animationSprite = {
+        let animationSprites: AnimationSprites = {
             texture: 'player',
             walk: {
                 left: 'player-left-walk',
@@ -17,6 +17,6 @@ export default class PlayerAnimationComponent extends AnimationComponent {
                 down: 'player-down-idle-0'
             }
         }
-        super(animationSprite);
+        super(animationSprites);
     }
 }

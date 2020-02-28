@@ -1,8 +1,8 @@
-import AnimationComponent from "../../components/AnimationComponent";
+import AnimationComponent, { AnimationSprites } from "../../components/AnimationComponent";
 
 export default class SheepAnimationComponent extends AnimationComponent {
     constructor() {
-        let animationSprite = {
+        let animationSprites: AnimationSprites = {
             texture: 'sheep',
             walk: {
                 left: 'sheep-left-walk',
@@ -17,6 +17,6 @@ export default class SheepAnimationComponent extends AnimationComponent {
                 down: 'sheep-down-idle-0'
             }
         }
-        super(animationSprite);
+        super(animationSprites);
     }
 }

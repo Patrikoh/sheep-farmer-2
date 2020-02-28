@@ -1,4 +1,4 @@
-export interface AnimationSprite {
+export interface AnimationSprites {
     texture: string,
     walk: {
         left: string,
@@ -15,9 +15,9 @@ export interface AnimationSprite {
 };
 
 export default abstract class AnimationComponent {
-    protected animationSprite: AnimationSprite;
+    protected animationSprite: AnimationSprites;
 
-    constructor(animationSprite: AnimationSprite) {
+    constructor(animationSprite: AnimationSprites) {
         this.animationSprite = animationSprite;
     }
 
