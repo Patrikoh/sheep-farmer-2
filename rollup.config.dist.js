@@ -4,6 +4,7 @@ import replace from '@rollup/plugin-replace';
 import { uglify } from 'rollup-plugin-uglify';
 import typescript from 'rollup-plugin-typescript2';
 import json from '@rollup/plugin-json';
+import execute from 'rollup-plugin-execute';
 
 export default {
 
@@ -58,6 +59,8 @@ export default {
         typescript(),
 
         json(),
+
+        execute('tile-extruder --tileWidth 32 --tileHeight 32 --input ./dist/assets/maps/sheep-farmer-tiles.png --output ./dist/assets/maps/sheep-farmer-tiles-extruded.png'),
 
         //  See https://www.npmjs.com/package/rollup-plugin-uglify for config options
         uglify({
