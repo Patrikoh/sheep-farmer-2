@@ -27,7 +27,7 @@ export default class MainScene extends Phaser.Scene {
         this.loadAllAnimations(this);
 
         const map = this.make.tilemap({ key: "map" });
-        const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles");
+        const tileset = map.addTilesetImage("sheep-farmer-tiles", "tiles", 32, 32, 1, 2);
 
         const belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
         const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
