@@ -1,7 +1,6 @@
 import Sheep from "./Sheep";
 import { SheepMovementTypes } from './SheepMovementTypes';
 import MoveComponent from "../../components/MoveComponent";
-import World from "../../World";
 import Pickup from "../pickup/Pickup";
 import MainScene from "../../MainScene";
 
@@ -12,7 +11,7 @@ export default class SheepMoveComponent extends MoveComponent {
         this.setStandStillState(sheep, 0);
     }
 
-    update(sheep: Sheep, scene: MainScene, _cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update(sheep: Sheep, scene: MainScene) {
         const speed = 60;
         const followDistance = 100;
         const searchForGrassDistance = 60;

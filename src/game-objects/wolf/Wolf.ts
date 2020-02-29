@@ -27,8 +27,8 @@ export default class Wolf {
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
     }
 
-    update(cursors, scene: MainScene) {
-        this.moveComponent.update(this, scene, cursors);
+    update(scene: MainScene) {
+        this.moveComponent.update(this, scene);
         this.animationComponent.update(this);
     }
 

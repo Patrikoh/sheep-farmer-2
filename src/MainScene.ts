@@ -4,7 +4,7 @@ import World from './World';
 
 export default class MainScene extends Phaser.Scene {
     world: World;
-    private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private sheepPanel: SheepPanel;
 
     constructor() {
@@ -54,7 +54,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update() {
-        this.world.update(this, this.cursors);
+        this.world.update(this);
         this.sheepPanel.update(this, this.world);
     }
 

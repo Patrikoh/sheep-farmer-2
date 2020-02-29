@@ -2,7 +2,6 @@ import GraphicsComponent from "../../components/GraphicsComponent";
 import Sheep from "./Sheep";
 import depthIndex from '../../depthIndex.json';
 import MainScene from "../../MainScene";
-import { GameEventType } from "../../events/GameEventType";
 
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

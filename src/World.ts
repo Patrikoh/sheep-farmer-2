@@ -46,9 +46,9 @@ export default class World {
         this.herd.addGameEventListeners(this.gameEventHandler);
     }
 
-    update(scene: MainScene, cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
-        this.player.update(cursors, scene);
-        this.herd.update(cursors, scene);
-        this.wolf.update(cursors, scene);
+    update(scene: MainScene): void {
+        this.player.update(scene);
+        this.herd.update(scene);
+        this.wolf.update(scene);
     }
 }

@@ -13,7 +13,7 @@ export default class WolfMoveComponent extends MoveComponent {
         this.setStandStillState(wolf, 0);
     }
 
-    update(wolf: Wolf, scene: MainScene, _cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update(wolf: Wolf, scene: MainScene) {
         const prevVelocity = wolf.sprite.body.velocity.clone();
 
         if (!wolf.movementState) wolf.movementState = { movementType: WolfMovementTypes.StandingStill, stopTime: 0 };

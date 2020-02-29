@@ -48,8 +48,8 @@ export default class Sheep {
         this.healthComponent.addGameEventListeners(this, gameEventHandler);
     }
 
-    update(scene: MainScene, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-        this.moveComponent.update(this, scene, cursors);
+    update(scene: MainScene) {
+        this.moveComponent.update(this, scene);
         this.animationComponent.update(this);
     }
 
