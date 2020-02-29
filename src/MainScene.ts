@@ -3,8 +3,8 @@ import depthIndex from './depthIndex.json';
 import World from './World';
 
 export default class MainScene extends Phaser.Scene {
-    private world: World;
-    private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+    world: World;
+    cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private sheepPanel: SheepPanel;
 
     constructor() {
@@ -41,24 +41,21 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.height = worldLayer.height;
 
         this.world = new World(this, map);
+        this.world.addGameEventListeners();
+        this.world.addColliders(this, worldLayer);
 
-        this.sheepPanel = new SheepPanel(this, this.world);
+        this.sheepPanel = new SheepPanel(this);
+        this.sheepPanel.addGameEventListeners(this);
 
         const camera = this.cameras.main;
         camera.startFollow(this.world.player.sprite);
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         this.cursors = this.input.keyboard.createCursorKeys();
-
-        this.world.player.addCollider(this, worldLayer);
-        this.world.herd.addCollider(this, worldLayer);
-        this.world.herd.addCollider(this, this.world.player.sprite);
-        this.world.wolf.addCollider(this, worldLayer);
-        this.world.wolf.addCollider(this, this.world.herd.getGroup());
     }
 
     update() {
-        this.world.update(this.cursors);
+        this.world.update(this);
         this.sheepPanel.update(this, this.world);
     }
 

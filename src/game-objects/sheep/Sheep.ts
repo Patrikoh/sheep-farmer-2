@@ -5,7 +5,8 @@ import MoveComponent from './SheepMoveComponent';
 import HealthComponent from './SheepHealthComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
 import { SheepHealthState } from './SheepHealthState';
-import World from '../../World';
+import MainScene from '../../MainScene';
+import GameEventHandler from '../../events/GameEventHandler';
 
 interface SheepMovementState {
     movementType: SheepMovementTypes,
@@ -15,7 +16,6 @@ interface SheepMovementState {
         y: number
     }
 };
-
 
 export default class Sheep {
     private moveComponent: MoveComponent;
@@ -29,7 +29,7 @@ export default class Sheep {
     name: string;
     id: string;
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    constructor(scene: MainScene, x: number, y: number) {
 
         this.moveComponent = new MoveComponent(this);
         this.animationComponent = new AnimationComponent();
@@ -44,8 +44,12 @@ export default class Sheep {
         });
     }
 
-    update(world: World, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-        this.moveComponent.update(this, world, cursors);
+    addGameEventListeners(gameEventHandler: GameEventHandler): void {
+        this.healthComponent.addGameEventListeners(this, gameEventHandler);
+    }
+
+    update(scene: MainScene) {
+        this.moveComponent.update(this, scene);
         this.animationComponent.update(this);
     }
 

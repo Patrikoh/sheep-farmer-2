@@ -1,8 +1,8 @@
 import Sheep from "./Sheep";
 import { SheepMovementTypes } from './SheepMovementTypes';
 import MoveComponent from "../../components/MoveComponent";
-import World from "../../World";
 import Pickup from "../pickup/Pickup";
+import MainScene from "../../MainScene";
 
 export default class SheepMoveComponent extends MoveComponent {
 
@@ -11,14 +11,14 @@ export default class SheepMoveComponent extends MoveComponent {
         this.setStandStillState(sheep, 0);
     }
 
-    update(sheep: Sheep, world: World, _cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update(sheep: Sheep, scene: MainScene) {
         const speed = 60;
         const followDistance = 100;
         const searchForGrassDistance = 60;
         const prevVelocity = sheep.sprite.body.velocity.clone();
 
-        let playerPosition = new Phaser.Math.Vector2(world.player.sprite.x, world.player.sprite.y);
-        let sheepSprites = world.herd.getSprites();
+        let playerPosition = new Phaser.Math.Vector2(scene.world.player.sprite.x, scene.world.player.sprite.y);
+        let sheepSprites = scene.world.herd.getSprites();
         let herdMedianX = sheepSprites.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.x + a), 0) / sheepSprites.length;
         let herdMedianY = sheepSprites.reduce((a, s: Phaser.Physics.Arcade.Sprite) => (s.body.position.y + a), 0) / sheepSprites.length;
         let positionX = (playerPosition.x + herdMedianX) / 2;
@@ -30,7 +30,7 @@ export default class SheepMoveComponent extends MoveComponent {
 
         sheep.sprite.setVelocity(0);
 
-        let time = world.scene.time.now;
+        let time = scene.time.now;
 
         switch (sheep.movementState.movementType) {
             case SheepMovementTypes.StandingStill: {
@@ -42,7 +42,7 @@ export default class SheepMoveComponent extends MoveComponent {
                 break;
             }
             case SheepMovementTypes.MovingToGrassPosition: {
-                const closestPickup = this.getClosestPickup(sheep, world.scene, world.pickups);
+                const closestPickup = this.getClosestPickup(sheep, scene, scene.world.pickups);
                 if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
                     sheep.sprite.setVelocityX(closestPickup.body.position.x - sheep.sprite.body.position.x);
                     sheep.sprite.setVelocityY(closestPickup.body.position.y - sheep.sprite.body.position.y);
@@ -52,7 +52,7 @@ export default class SheepMoveComponent extends MoveComponent {
                 break;
             }
             case SheepMovementTypes.MovingToFollowPosition: {
-                const closestPickup = this.getClosestPickup(sheep, world.scene, world.pickups);
+                const closestPickup = this.getClosestPickup(sheep, scene, scene.world.pickups);
                 if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
                     this.setMovingToGrassPositionState(sheep);
                 } else if (followPosition.distance(sheep.sprite.body.position) < followDistance) {
@@ -75,7 +75,7 @@ export default class SheepMoveComponent extends MoveComponent {
                 break;
             }
             case SheepMovementTypes.RandomWalking: {
-                const closestPickup = this.getClosestPickup(sheep, world.scene, world.pickups);
+                const closestPickup = this.getClosestPickup(sheep, scene, scene.world.pickups);
                 if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
                     this.setMovingToGrassPositionState(sheep);
                 } else if (time > sheep.movementState.stopTime) {
