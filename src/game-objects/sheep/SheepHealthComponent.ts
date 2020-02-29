@@ -1,12 +1,9 @@
 import Sheep from "./Sheep";
 import { SheepHealthState } from './SheepHealthState';
 
-export default class SheepAnimationComponent {
+export default class SheepHealthComponent {
     constructor(sheep: Sheep) {
         this.setHealthState(sheep, 100, 100);
-    }
-
-    update(sheep: Sheep) {
     }
 
     changeLife(sheep: Sheep, lifeDiff: number) {

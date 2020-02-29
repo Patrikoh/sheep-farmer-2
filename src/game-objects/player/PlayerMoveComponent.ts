@@ -6,7 +6,7 @@ export default class PlayerMoveComponent extends MoveComponent {
     private speed = 100;
     private runspeed = 200;
 
-    update(player: Player, _world: World, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update(player: Player, _scene: Phaser.Scene, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
         // Stop any previous movement from the last frame
         player.sprite.setVelocity(0);
 

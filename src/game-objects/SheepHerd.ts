@@ -1,5 +1,6 @@
 import Sheep from './sheep/Sheep';
 import World from '../World';
+import MainScene from '../MainScene';
 
 export default class SheepHerd {
     sheepGroup: Phaser.Physics.Arcade.Group;
@@ -25,7 +26,7 @@ export default class SheepHerd {
         this.sheepGroup.getChildren().forEach((s: Phaser.Physics.Arcade.Sprite) => s.setCollideWorldBounds(true));
     }
 
-    update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, world: World) {
+    update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, scene: MainScene) {
         let sheepSprites = this.sheepGroup.getChildren();
 
         //TODO: This is really not how it should be done. The list and group should be linked in a better way.
@@ -37,7 +38,7 @@ export default class SheepHerd {
         }
 
         sheepSprites.forEach((sprite: Phaser.Physics.Arcade.Sprite, i) => {
-            this.getSheepFromSprite(sprite).update(world, cursors);
+            this.getSheepFromSprite(sprite).update(scene, cursors);
         });
     }
 

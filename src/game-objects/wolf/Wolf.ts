@@ -3,6 +3,7 @@ import AnimationComponent from './WolfAnimationComponent';
 import GraphicsComponent from './WolfGraphicsComponent';
 import World from '../../World';
 import { WolfMovementTypes } from './WolfMovementTypes';
+import MainScene from '../../MainScene';
 
 interface WolfMovementState {
     movementType: WolfMovementTypes,
@@ -27,8 +28,8 @@ export default class Wolf {
         this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
     }
 
-    update(cursors, world: World) {
-        this.moveComponent.update(this, world, cursors);
+    update(cursors, scene: MainScene) {
+        this.moveComponent.update(this, scene, cursors);
         this.animationComponent.update(this);
     }
 

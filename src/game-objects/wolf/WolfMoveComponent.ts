@@ -1,8 +1,8 @@
 import Wolf from "./Wolf";
 import { WolfMovementTypes } from './WolfMovementTypes';
 import MoveComponent from "../../components/MoveComponent";
-import World from "../../World";
 import SheepHerd from '../SheepHerd';
+import MainScene from "../../MainScene";
 
 export default class WolfMoveComponent extends MoveComponent {
     private speed = 80;
@@ -13,14 +13,14 @@ export default class WolfMoveComponent extends MoveComponent {
         this.setStandStillState(wolf, 0);
     }
 
-    update(wolf: Wolf, world: World, _cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+    update(wolf: Wolf, scene: MainScene, _cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
         const prevVelocity = wolf.sprite.body.velocity.clone();
 
         if (!wolf.movementState) wolf.movementState = { movementType: WolfMovementTypes.StandingStill, stopTime: 0 };
 
         wolf.sprite.setVelocity(0);
 
-        let time = world.scene.time.now;
+        let time = scene.time.now;
 
         switch (wolf.movementState.movementType) {
             case WolfMovementTypes.StandingStill: {
@@ -30,7 +30,7 @@ export default class WolfMoveComponent extends MoveComponent {
                 break;
             }
             case WolfMovementTypes.MovingToSheepPosition: {
-                const closestSheep = this.getClosestSheep(wolf, world.scene, world.herd);
+                const closestSheep = this.getClosestSheep(wolf, scene, scene.world.herd);
                 let shouldMoveToSheep =
                     closestSheep &&
                     Phaser.Math.Distance.BetweenPoints(wolf.sprite.getCenter(), closestSheep.getCenter()) < this.searchForSheepDistance;
@@ -51,7 +51,7 @@ export default class WolfMoveComponent extends MoveComponent {
                 break;
             }
             case WolfMovementTypes.RandomWalking: {
-                const closestSheep = this.getClosestSheep(wolf, world.scene, world.herd);
+                const closestSheep = this.getClosestSheep(wolf, scene, scene.world.herd);
                 let shouldMoveToSheep =
                     closestSheep &&
                     Phaser.Math.Distance.BetweenPoints(wolf.sprite.getCenter(), closestSheep.getCenter()) < this.searchForSheepDistance;

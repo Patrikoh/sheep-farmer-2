@@ -6,6 +6,7 @@ import HealthComponent from './SheepHealthComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
 import { SheepHealthState } from './SheepHealthState';
 import World from '../../World';
+import MainScene from '../../MainScene';
 
 interface SheepMovementState {
     movementType: SheepMovementTypes,
@@ -44,8 +45,8 @@ export default class Sheep {
         });
     }
 
-    update(world: World, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-        this.moveComponent.update(this, world, cursors);
+    update(scene: MainScene, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
+        this.moveComponent.update(this, scene, cursors);
         this.animationComponent.update(this);
     }
 
