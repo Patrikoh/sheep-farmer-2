@@ -34,6 +34,14 @@ export default class World {
         }
     }
 
+    addColliders(scene: MainScene, worldLayer: Phaser.Tilemaps.StaticTilemapLayer) {
+        this.player.addCollider(scene, worldLayer);
+        this.herd.addCollider(scene, worldLayer);
+        this.herd.addCollider(scene, this.player.sprite);
+        this.wolf.addCollider(scene, worldLayer);
+        this.wolf.addCollider(scene, this.herd.getGroup());
+    }
+
     addGameEventListeners() {
         this.herd.addGameEventListeners(this.gameEventHandler);
     }

@@ -42,6 +42,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.world = new World(this, map);
         this.world.addGameEventListeners();
+        this.world.addColliders(this, worldLayer);
 
         this.sheepPanel = new SheepPanel(this, this.world);
 
@@ -50,12 +51,6 @@ export default class MainScene extends Phaser.Scene {
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
         this.cursors = this.input.keyboard.createCursorKeys();
-
-        this.world.player.addCollider(this, worldLayer);
-        this.world.herd.addCollider(this, worldLayer);
-        this.world.herd.addCollider(this, this.world.player.sprite);
-        this.world.wolf.addCollider(this, worldLayer);
-        this.world.wolf.addCollider(this, this.world.herd.getGroup());
     }
 
     update() {
