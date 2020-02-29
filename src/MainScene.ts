@@ -41,6 +41,7 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.height = worldLayer.height;
 
         this.world = new World(this, map);
+        this.world.addGameEventListeners();
 
         this.sheepPanel = new SheepPanel(this, this.world);
 

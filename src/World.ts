@@ -14,7 +14,7 @@ export default class World {
     pickups: Array<Pickup>;
     gameEventHandler: GameEventHandler;
 
-    constructor(scene: Phaser.Scene, map: Phaser.Tilemaps.Tilemap) {
+    constructor(scene: MainScene, map: Phaser.Tilemaps.Tilemap) {
         this.gameEventHandler = new GameEventHandler();
         this.player = new Player(scene, 200, 100);
         this.herd = new SheepHerd(scene, 5);
@@ -32,6 +32,10 @@ export default class World {
             mushroom.addCollider(scene, this.herd.getGroup());
             this.pickups.push(mushroom);
         }
+    }
+
+    addGameEventListeners() {
+        this.herd.addGameEventListeners(this.gameEventHandler);
     }
 
     update(scene: MainScene, cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {

@@ -1,7 +1,6 @@
 import MoveComponent from './WolfMoveComponent';
 import AnimationComponent from './WolfAnimationComponent';
 import GraphicsComponent from './WolfGraphicsComponent';
-import World from '../../World';
 import { WolfMovementTypes } from './WolfMovementTypes';
 import MainScene from '../../MainScene';
 
@@ -33,7 +32,7 @@ export default class Wolf {
         this.animationComponent.update(this);
     }
 
-    addCollider(scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
+    addCollider(scene: MainScene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
         this.grahipcsComponent.addCollider(this, scene, object);
     }
 }

@@ -5,8 +5,10 @@ import MoveComponent from './SheepMoveComponent';
 import HealthComponent from './SheepHealthComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
 import { SheepHealthState } from './SheepHealthState';
-import World from '../../World';
 import MainScene from '../../MainScene';
+import { GameEventType } from '../../events/GameEventType';
+import GameEventHandler from '../../events/GameEventHandler';
+import GameEvent from '../../events/GameEvent';
 
 interface SheepMovementState {
     movementType: SheepMovementTypes,
@@ -30,7 +32,7 @@ export default class Sheep {
     name: string;
     id: string;
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    constructor(scene: MainScene, x: number, y: number) {
 
         this.moveComponent = new MoveComponent(this);
         this.animationComponent = new AnimationComponent();
@@ -43,6 +45,17 @@ export default class Sheep {
             length: 2,
             style: 'capital'
         });
+    }
+
+    addGameEventListeners(gameEventHandler: GameEventHandler): void {
+        gameEventHandler.addGameEventListener(GameEventType.WOLF_ATTACK_SHEEP,
+            (event: GameEvent) => {
+                console.log(event.detail.sheepSprite.getData('id'));
+                if (event.detail.sheepSprite.getData('id') === this.id) {
+                    this.changeLife(event.detail.lifeGain);
+                }
+            }
+        );
     }
 
     update(scene: MainScene, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {

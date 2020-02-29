@@ -1,12 +1,13 @@
 import Sheep from './sheep/Sheep';
 import World from '../World';
 import MainScene from '../MainScene';
+import GameEventHandler from '../events/GameEventHandler';
 
 export default class SheepHerd {
     sheepGroup: Phaser.Physics.Arcade.Group;
     sheepList: Array<Sheep>;
 
-    constructor(scene: Phaser.Scene, numberOfSheep: integer) {
+    constructor(scene: MainScene, numberOfSheep: integer) {
         this.sheepGroup = scene.physics.add.group();
         this.sheepList = [];
 
@@ -24,6 +25,10 @@ export default class SheepHerd {
         // This is needed due to a bug in Phaser: 
         // https://www.html5gamedevs.com/topic/38972-solved-issue-with-world-bounds-collision/?do=findComment&comment=222837
         this.sheepGroup.getChildren().forEach((s: Phaser.Physics.Arcade.Sprite) => s.setCollideWorldBounds(true));
+    }
+
+    addGameEventListeners(gameEventHandler: GameEventHandler) {
+        this.sheepList.forEach(s => s.addGameEventListeners(gameEventHandler));
     }
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, scene: MainScene) {
