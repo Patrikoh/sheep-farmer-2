@@ -44,7 +44,8 @@ export default class MainScene extends Phaser.Scene {
         this.world.addGameEventListeners();
         this.world.addColliders(this, worldLayer);
 
-        this.sheepPanel = new SheepPanel(this, this.world);
+        this.sheepPanel = new SheepPanel(this);
+        this.sheepPanel.addGameEventListeners(this);
 
         const camera = this.cameras.main;
         camera.startFollow(this.world.player.sprite);
