@@ -6,9 +6,7 @@ import HealthComponent from './SheepHealthComponent';
 import { SheepMovementTypes } from './SheepMovementTypes';
 import { SheepHealthState } from './SheepHealthState';
 import MainScene from '../../MainScene';
-import { GameEventType } from '../../events/GameEventType';
 import GameEventHandler from '../../events/GameEventHandler';
-import GameEvent from '../../events/GameEvent';
 
 interface SheepMovementState {
     movementType: SheepMovementTypes,
@@ -18,7 +16,6 @@ interface SheepMovementState {
         y: number
     }
 };
-
 
 export default class Sheep {
     private moveComponent: MoveComponent;
@@ -48,14 +45,7 @@ export default class Sheep {
     }
 
     addGameEventListeners(gameEventHandler: GameEventHandler): void {
-        gameEventHandler.addGameEventListener(GameEventType.WOLF_ATTACK_SHEEP,
-            (event: GameEvent) => {
-                console.log(event.detail.sheepSprite.getData('id'));
-                if (event.detail.sheepSprite.getData('id') === this.id) {
-                    this.changeLife(event.detail.lifeGain);
-                }
-            }
-        );
+        this.healthComponent.addGameEventListeners(this, gameEventHandler);
     }
 
     update(scene: MainScene, cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
