@@ -1,7 +1,7 @@
 import MoveComponent from './PlayerMoveComponent';
 import AnimationComponent from './PlayerAnimationComponent';
 import GraphicsComponent from './PlayerGraphicsComponent';
-import World from '../../World';
+import MainScene from '../../MainScene';
 
 export default class Player {
     private moveComponent: MoveComponent;
@@ -15,8 +15,8 @@ export default class Player {
         this.graphicsComponent = new GraphicsComponent(this, scene, x, y);
     }
 
-    update(cursors: Phaser.Types.Input.Keyboard.CursorKeys, world: World) {
-        this.moveComponent.update(this, world, cursors);
+    update(scene: MainScene) {
+        this.moveComponent.update(this, scene);
         this.animationComponent.update(this);
     }
 
