@@ -18,7 +18,6 @@ export default class SheepGraphicsComponent extends GraphicsComponent {
         sheep.sprite.type = 'sheep';
         scene.physics.add.existing(sheep.sprite);
         sheep.sprite.setCollideWorldBounds(true);
-        sheep.sprite.addListener('changeLife', (lifeDiff: number) => sheep.changeLife(lifeDiff));
     }
 
     addCollider(sheep: Sheep, scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {

@@ -10,11 +10,11 @@ export default class SheepHealthComponent {
         this.setHealthState(sheep, 100, 100);
     }
 
-    changeLife(sheep: Sheep, lifeDiff: number) {
+    changeLife(sheep: Sheep, gameEventHandler: GameEventHandler, lifeDiff: number) {
         let previousHealth = sheep.healthState;
         let life = Math.min(previousHealth.life + lifeDiff, previousHealth.maxLife);
         if (life <= 0) {
-            sheep.kill();
+            sheep.kill(gameEventHandler);
         } else {
             let healthState: SheepHealthState = { ...previousHealth, life };
             sheep.healthState = healthState;
@@ -25,7 +25,14 @@ export default class SheepHealthComponent {
         gameEventHandler.addGameEventListener(GameEventType.WOLF_ATTACK_SHEEP,
             (event: GameEvent) => {
                 if (event.detail.sheepSprite.getData('id') === sheep.id) {
-                    sheep.changeLife(event.detail.lifeGain);
+                    sheep.changeLife(gameEventHandler, event.detail.lifeGain);
+                }
+            }
+        );
+        gameEventHandler.addGameEventListener(GameEventType.SHEEP_EAT_PICKUP,
+            (event: GameEvent) => {
+                if (event.detail.sheepSprite.getData('id') === sheep.id) {
+                    sheep.changeLife(gameEventHandler, event.detail.lifeGain);
                 }
             }
         );

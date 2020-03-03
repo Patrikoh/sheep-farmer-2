@@ -5,6 +5,15 @@
         "resolveJsonModule": true,
         "esModuleInterop": true
     },
+    "rules": {
+        "trailing-comma": [
+            true,
+            {
+                "multiline": "always",
+                "singleline": "never"
+            }
+        ]
+    },
     "include": [
         "./src/**/*"
     ]

@@ -7,6 +7,8 @@ import { SheepMovementTypes } from './SheepMovementTypes';
 import { SheepHealthState } from './SheepHealthState';
 import MainScene from '../../MainScene';
 import GameEventHandler from '../../events/GameEventHandler';
+import { GameEventType } from '../../events/GameEventType';
+import GameEvent from '../../events/GameEvent';
 
 interface SheepMovementState {
     movementType: SheepMovementTypes,
@@ -61,11 +63,15 @@ export default class Sheep {
         this.moveComponent.setWalkAwayState(this, time, x, y);
     }
 
-    changeLife(lifeDiff: number) {
-        this.healthComponent.changeLife(this, lifeDiff);
+    changeLife(gameEventHandler: GameEventHandler, lifeDiff: number) {
+        this.healthComponent.changeLife(this, gameEventHandler, lifeDiff);
     }
 
-    kill() {
-        this.sprite.destroy();
+    kill(gameEventHandler: GameEventHandler) {
+        let gameEvent: GameEvent = {
+            type: GameEventType.SHEEP_KILLED,
+            detail: { id: this.id }
+        }
+        gameEventHandler.dispatchGameEvent(gameEvent);
     }
 }
