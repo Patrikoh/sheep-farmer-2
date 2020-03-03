@@ -15,4 +15,4 @@ node_modules/
 
 /dist/game.js
 /dist/game.js.map
-dist/assets/maps/sheep-farmer-tiles-extruded.png
+/dist/assets/maps/sheep-farmer-tiles-extruded.png
