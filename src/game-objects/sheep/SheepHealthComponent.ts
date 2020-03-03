@@ -14,10 +14,10 @@ export default class SheepHealthComponent {
         let previousHealth = sheep.healthState;
         let life = Math.min(previousHealth.life + lifeDiff, previousHealth.maxLife);
         if (life <= 0) {
+            sheep.healthState = { ...previousHealth, life: 0 };
             sheep.kill(gameEventHandler);
         } else {
-            let healthState: SheepHealthState = { ...previousHealth, life };
-            sheep.healthState = healthState;
+            sheep.healthState = { ...previousHealth, life };
         }
     }
 

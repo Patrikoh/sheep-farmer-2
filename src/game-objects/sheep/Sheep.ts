@@ -70,7 +70,7 @@ export default class Sheep {
     kill(gameEventHandler: GameEventHandler) {
         let gameEvent: GameEvent = {
             type: GameEventType.SHEEP_KILLED,
-            detail: { id: this.id }
+            detail: { sheep: this }
         }
         gameEventHandler.dispatchGameEvent(gameEvent);
     }
