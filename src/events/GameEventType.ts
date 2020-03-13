@@ -1,4 +1,6 @@
 export enum GameEventType {
     TOGGLE_SHEEP_PANEL,
-    WOLF_ATTACK_SHEEP
+    WOLF_ATTACK_SHEEP,
+    SHEEP_EAT_PICKUP,
+    SHEEP_KILLED,
 };

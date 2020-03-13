@@ -1,6 +1,8 @@
 import Sheep from './sheep/Sheep';
 import MainScene from '../MainScene';
 import GameEventHandler from '../events/GameEventHandler';
+import { GameEventType } from '../events/GameEventType';
+import GameEvent from '../events/GameEvent';
 
 export default class SheepHerd {
     sheepGroup: Phaser.Physics.Arcade.Group;
@@ -28,20 +30,17 @@ export default class SheepHerd {
 
     addGameEventListeners(gameEventHandler: GameEventHandler) {
         this.sheepList.forEach(s => s.addGameEventListeners(gameEventHandler));
+        gameEventHandler.addGameEventListener(GameEventType.SHEEP_KILLED,
+            (event: GameEvent) => {
+                let sheep: Sheep = event.detail.sheep;
+                this.sheepList = this.sheepList.filter(s => s.id != sheep.id);
+                sheep.sprite.destroy();
+            }
+        );
     }
 
     update(scene: MainScene) {
-        let sheepSprites = this.sheepGroup.getChildren();
-
-        //TODO: This is really not how it should be done. The list and group should be linked in a better way.
-        if (this.sheepGroup.getLength() !== this.sheepList.length) {
-            let removedId = this.sheepList.find(sL => {
-                return this.sheepGroup.getChildren().find(sG => sG.getData('id') == sL.id) === undefined;
-            }).id;
-            this.sheepList = this.sheepList.filter(s => s.id != removedId);
-        }
-
-        sheepSprites.forEach((sprite: Phaser.Physics.Arcade.Sprite, i) => {
+        this.sheepGroup.getChildren().forEach((sprite: Phaser.Physics.Arcade.Sprite, i) => {
             this.getSheepFromSprite(sprite).update(scene);
         });
     }

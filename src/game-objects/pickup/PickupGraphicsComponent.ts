@@ -1,6 +1,7 @@
 import Pickup from "./Pickup";
 import GraphicsComponent from "../../components/GraphicsComponent";
 import depthIndex from '../../depthIndex.json';
+import MainScene from "../../MainScene";
 
 export default class PickupGraphicsComponent extends GraphicsComponent {
     constructor(pickup: Pickup, scene: Phaser.Scene, x: number, y: number) {
@@ -8,7 +9,7 @@ export default class PickupGraphicsComponent extends GraphicsComponent {
         scene.physics.add.existing(pickup.sprite);
     }
 
-    addCollider(pickup: Pickup, scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
-        scene.physics.add.overlap(pickup.sprite, object, (c: Phaser.Physics.Arcade.Sprite, c2) => pickup.onCollision(pickup, c2), null, scene);
+    addCollider(pickup: Pickup, scene: MainScene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
+        scene.physics.add.overlap(pickup.sprite, object, (c: Phaser.Physics.Arcade.Sprite, c2) => pickup.onCollision(pickup, c2, scene.world.gameEventHandler), null, scene.game);
     }
 }
