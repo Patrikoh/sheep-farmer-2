@@ -11,151 +11,181 @@
   <tile id="0">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="4">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="5">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="6">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="7">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="8">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="9">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="10">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="11">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="12">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="13">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="14">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="15">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="16">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="17">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="18">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="19">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="20">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="21">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="22">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="23">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="24">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="25">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="26">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="27">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="28">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="29">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="14.8349" y="-0.0421415" width="2.28533" height="21.3152"/>
@@ -168,6 +198,7 @@
   <tile id="30">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="17.3315" y="20.9303" width="2.5462" height="7.74958" rotation="-179.863"/>
@@ -181,6 +212,7 @@
   <tile id="31">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="4">
     <object id="3" x="14.7201" y="13.1005" width="2.5462" height="8.01087"/>
@@ -194,6 +226,7 @@
   <tile id="32">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="13.019" y="29.0326" width="5.90489" height="2.88043"/>
@@ -208,6 +241,7 @@
   <tile id="33">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="14.019" y="14.0598" width="1.04891" height="6.92391"/>
@@ -228,6 +262,7 @@
   <tile id="34">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="14.0027" y="14.1141" width="1.04891" height="6.92391"/>
@@ -246,6 +281,7 @@
   <tile id="35">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="13.9592" y="14.1114" width="1.04891" height="6.92391"/>
@@ -264,6 +300,7 @@
   <tile id="36">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="14.0462" y="14.0679" width="1.04891" height="6.92391"/>
@@ -285,6 +322,7 @@
   <tile id="37">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
    <objectgroup draworder="index" id="2">
     <object id="1" x="13.9755" y="14.0421" width="1.04891" height="6.92391"/>
@@ -305,56 +343,67 @@
   <tile id="38">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="39">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="40">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="41">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="42">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="43">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="44">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="45">
    <properties>
     <property name="collides" type="bool" value="true"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="46">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="47">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="48">
    <properties>
     <property name="collides" type="bool" value="false"/>
+    <property name="spawnsPickup" type="bool" value="false"/>
    </properties>
   </tile>
  </tileset>
@@ -365,20 +414,20 @@
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,9,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,24,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,17,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,19,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,18,16,16,16,16,16,16,16,16,16,16,16,19,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,16,16,16,12,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,17,16,16,16,16,16,16,16,17,19,16,4,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,17,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,5,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -414,7 +463,7 @@
 0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,41,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,39,0,0,0,0,0,0,0,0,0,0,0,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,39,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

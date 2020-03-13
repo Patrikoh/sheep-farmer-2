@@ -11,35 +11,38 @@ export default class World {
     player: Player;
     herd: SheepHerd;
     wolf: Wolf;
-    pickups: Array<Pickup>;
+    pickups: Array<Pickup> = [];
     gameEventHandler: GameEventHandler;
+    scene: MainScene;
 
-    constructor(scene: MainScene, map: Phaser.Tilemaps.Tilemap) {
+    constructor(scene: MainScene) {
         this.gameEventHandler = new GameEventHandler();
         this.player = new Player(scene, 200, 100);
         this.herd = new SheepHerd(scene, 5);
         this.wolf = new Wolf(scene, 400, 200);
+        this.scene = scene;
+    }
 
-        this.pickups = [];
-        for (let index = 0; index < 50; index++) {
+    addColliders(worldLayer: Phaser.Tilemaps.StaticTilemapLayer) {
+        this.player.addCollider(this.scene, worldLayer);
+        this.herd.addCollider(this.scene, worldLayer);
+        this.herd.addCollider(this.scene, this.player.sprite);
+        this.wolf.addCollider(this.scene, worldLayer);
+        this.wolf.addCollider(this.scene, this.herd.getGroup());
+    }
+
+    spawnPickups(spawnTiles: Array<Phaser.Tilemaps.Tile>, probability: number) {
+        spawnTiles.filter(() => Math.random() < probability).forEach((tile, index) => {
             let mushroom: Pickup;
             let mushroomIsPoison = index % 3 === 0;
             if (mushroomIsPoison) {
-                mushroom = new PoisonMushroom(scene, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
+                mushroom = new PoisonMushroom(this.scene, tile.pixelX + 16, tile.pixelY + 16);
             } else {
-                mushroom = new HealthMushroom(scene, Phaser.Math.Between(0, map.widthInPixels), Phaser.Math.Between(0, map.heightInPixels));
+                mushroom = new HealthMushroom(this.scene, tile.pixelX + 16, tile.pixelY + 16);
             }
-            mushroom.addCollider(scene, this.herd.getGroup());
+            mushroom.addCollider(this.scene, this.herd.getGroup());
             this.pickups.push(mushroom);
-        }
-    }
-
-    addColliders(scene: MainScene, worldLayer: Phaser.Tilemaps.StaticTilemapLayer) {
-        this.player.addCollider(scene, worldLayer);
-        this.herd.addCollider(scene, worldLayer);
-        this.herd.addCollider(scene, this.player.sprite);
-        this.wolf.addCollider(scene, worldLayer);
-        this.wolf.addCollider(scene, this.herd.getGroup());
+        });
     }
 
     addGameEventListeners() {
