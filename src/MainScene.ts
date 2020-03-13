@@ -42,9 +42,9 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.height = worldLayer.height;
 
         this.world = new World(this);
+        this.world.spawnMushrooms(belowLayer.filterTiles(tile => tile.properties.spawnsPickup), 0.05, 0.3);
         this.world.addGameEventListeners();
         this.world.addColliders(worldLayer);
-        this.world.spawnPickups(belowLayer.filterTiles(tile => tile.properties.spawnsPickup), 0.05);
 
         this.sheepPanel = new SheepPanel(this);
         this.sheepPanel.addGameEventListeners(this);

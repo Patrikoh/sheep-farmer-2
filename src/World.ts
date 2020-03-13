@@ -31,10 +31,10 @@ export default class World {
         this.wolf.addCollider(this.scene, this.herd.getGroup());
     }
 
-    spawnPickups(spawnTiles: Array<Phaser.Tilemaps.Tile>, probability: number) {
-        spawnTiles.filter(() => Math.random() < probability).forEach((tile, index) => {
+    spawnMushrooms(spawnTiles: Array<Phaser.Tilemaps.Tile>, spawnProbability: number, poisonMushroomProbability: number) {
+        spawnTiles.filter(() => Math.random() < spawnProbability).forEach(tile => {
             let mushroom: Pickup;
-            let mushroomIsPoison = index % 3 === 0;
+            let mushroomIsPoison = Math.random() < poisonMushroomProbability;
             if (mushroomIsPoison) {
                 mushroom = new PoisonMushroom(this.scene, tile.pixelX + 16, tile.pixelY + 16);
             } else {
