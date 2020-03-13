@@ -33,6 +33,7 @@ export default class MainScene extends Phaser.Scene {
         const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
         const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
 
+
         worldLayer.setCollisionByProperty({ collides: true });
         aboveLayer.setDepth(depthIndex.WORLD);
 
@@ -40,9 +41,10 @@ export default class MainScene extends Phaser.Scene {
         this.physics.world.bounds.width = worldLayer.width;
         this.physics.world.bounds.height = worldLayer.height;
 
-        this.world = new World(this, map);
+        this.world = new World(this);
         this.world.addGameEventListeners();
-        this.world.addColliders(this, worldLayer);
+        this.world.addColliders(worldLayer);
+        this.world.spawnPickups(belowLayer.filterTiles(tile => tile.properties.spawnsPickup), 0.05);
 
         this.sheepPanel = new SheepPanel(this);
         this.sheepPanel.addGameEventListeners(this);
