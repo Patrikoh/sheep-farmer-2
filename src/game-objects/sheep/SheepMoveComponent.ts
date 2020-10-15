@@ -141,7 +141,6 @@ export default class SheepMoveComponent extends MoveComponent {
         let activeSprites = activePickups.map(p => p.sprite);
         let closestSprite = scene.physics.closest(sheep.sprite, activeSprites);
 
-        console.log("CLOSEST", closestSprite)
         return closestSprite as Phaser.Physics.Arcade.Sprite;
     }
 }
