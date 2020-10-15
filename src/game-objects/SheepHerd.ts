@@ -23,7 +23,7 @@ export default class SheepHerd {
                 this.getSheepFromSprite(s1).onSheepCollision(scene.time.now, s2.body.position.x, s2.body.position.y);
             }, null, this);
 
-        // This is needed due to a bug in Phaser: 
+        // This is needed due to a bug in Phaser:
         // https://www.html5gamedevs.com/topic/38972-solved-issue-with-world-bounds-collision/?do=findComment&comment=222837
         this.sheepGroup.getChildren().forEach((s: Phaser.Physics.Arcade.Sprite) => s.setCollideWorldBounds(true));
     }
@@ -41,7 +41,10 @@ export default class SheepHerd {
 
     update(scene: MainScene) {
         this.sheepGroup.getChildren().forEach((sprite: Phaser.Physics.Arcade.Sprite, i) => {
-            this.getSheepFromSprite(sprite).update(scene);
+            const sheep = this.getSheepFromSprite(sprite);
+            if(sheep) {
+                sheep.update(scene);
+            }
         });
     }
 

@@ -43,26 +43,30 @@ export default class SheepMoveComponent extends MoveComponent {
             }
             case SheepMovementTypes.MovingToGrassPosition: {
                 const closestPickup = this.getClosestPickup(sheep, scene, scene.world.pickups);
-                if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
-                    sheep.sprite.setVelocityX(closestPickup.body.position.x - sheep.sprite.body.position.x);
-                    sheep.sprite.setVelocityY(closestPickup.body.position.y - sheep.sprite.body.position.y);
-                } else {
-                    this.setStandStillState(sheep, time);
+                if(closestPickup) {
+                    if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
+                        sheep.sprite.setVelocityX(closestPickup.body.position.x - sheep.sprite.body.position.x);
+                        sheep.sprite.setVelocityY(closestPickup.body.position.y - sheep.sprite.body.position.y);
+                    } else {
+                        this.setStandStillState(sheep, time);
+                    }
                 }
                 break;
             }
             case SheepMovementTypes.MovingToFollowPosition: {
                 const closestPickup = this.getClosestPickup(sheep, scene, scene.world.pickups);
-                if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
-                    this.setMovingToGrassPositionState(sheep);
-                } else if (followPosition.distance(sheep.sprite.body.position) < followDistance) {
-                    if (time > sheep.movementState.stopTime) {
-                        this.setStandStillState(sheep, time);
+                if(closestPickup) {
+                    if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
+                        this.setMovingToGrassPositionState(sheep);
+                    } else if (followPosition.distance(sheep.sprite.body.position) < followDistance) {
+                        if (time > sheep.movementState.stopTime) {
+                            this.setStandStillState(sheep, time);
+                        } else {
+                            sheep.sprite.setVelocity(prevVelocity.x, prevVelocity.y);
+                        }
                     } else {
-                        sheep.sprite.setVelocity(prevVelocity.x, prevVelocity.y);
+                        sheep.sprite.setVelocity(followPosition.x - sheep.sprite.body.x, followPosition.y - sheep.sprite.body.y);
                     }
-                } else {
-                    sheep.sprite.setVelocity(followPosition.x - sheep.sprite.body.x, followPosition.y - sheep.sprite.body.y);
                 }
                 break;
             }
@@ -76,14 +80,16 @@ export default class SheepMoveComponent extends MoveComponent {
             }
             case SheepMovementTypes.RandomWalking: {
                 const closestPickup = this.getClosestPickup(sheep, scene, scene.world.pickups);
-                if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
-                    this.setMovingToGrassPositionState(sheep);
-                } else if (time > sheep.movementState.stopTime) {
-                    this.setStandStillState(sheep, time);
-                } else if (prevVelocity.x === 0 && prevVelocity.y === 0) {
-                    sheep.sprite.setVelocity(Phaser.Math.Between(-speed, speed), Phaser.Math.Between(-speed, speed));
-                } else {
-                    sheep.sprite.setVelocity(prevVelocity.x, prevVelocity.y);
+                if(closestPickup) {
+                    if (Phaser.Math.Distance.BetweenPoints(sheep.sprite.getCenter(), closestPickup.getCenter()) < searchForGrassDistance) {
+                        this.setMovingToGrassPositionState(sheep);
+                    } else if (time > sheep.movementState.stopTime) {
+                        this.setStandStillState(sheep, time);
+                    } else if (prevVelocity.x === 0 && prevVelocity.y === 0) {
+                        sheep.sprite.setVelocity(Phaser.Math.Between(-speed, speed), Phaser.Math.Between(-speed, speed));
+                    } else {
+                        sheep.sprite.setVelocity(prevVelocity.x, prevVelocity.y);
+                    }
                 }
             }
             default:
@@ -135,6 +141,7 @@ export default class SheepMoveComponent extends MoveComponent {
         let activeSprites = activePickups.map(p => p.sprite);
         let closestSprite = scene.physics.closest(sheep.sprite, activeSprites);
 
+        console.log("CLOSEST", closestSprite)
         return closestSprite as Phaser.Physics.Arcade.Sprite;
     }
 }
