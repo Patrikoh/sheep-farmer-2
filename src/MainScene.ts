@@ -33,7 +33,6 @@ export default class MainScene extends Phaser.Scene {
         const worldLayer = map.createStaticLayer("World", tileset, 0, 0);
         const aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
 
-
         worldLayer.setCollisionByProperty({ collides: true });
         aboveLayer.setDepth(depthIndex.WORLD);
 
