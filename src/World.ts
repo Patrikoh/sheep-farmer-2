@@ -17,7 +17,7 @@ export default class World {
 
     constructor(scene: MainScene) {
         this.gameEventHandler = new GameEventHandler();
-        this.player = new Player(scene, 200, 100);
+        this.player = new Player(scene, 500, 200);
         this.herd = new SheepHerd(scene, 5);
         this.wolf = new Wolf(scene, 400, 200);
         this.scene = scene;

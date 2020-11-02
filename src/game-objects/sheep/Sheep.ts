@@ -22,7 +22,7 @@ interface SheepMovementState {
 export default class Sheep {
     private moveComponent: MoveComponent;
     private animationComponent: AnimationComponent;
-    private grahipcsComponent: GraphicsComponent;
+    private graphicsComponent: GraphicsComponent;
     private healthComponent: HealthComponent;
 
     movementState: SheepMovementState;
@@ -35,7 +35,7 @@ export default class Sheep {
 
         this.moveComponent = new MoveComponent(this);
         this.animationComponent = new AnimationComponent();
-        this.grahipcsComponent = new GraphicsComponent(this, scene, x, y);
+        this.graphicsComponent = new GraphicsComponent(this, scene, x, y);
         this.healthComponent = new HealthComponent(this);
 
         this.name = uniqueNamesGenerator({
@@ -56,7 +56,7 @@ export default class Sheep {
     }
 
     addCollider(scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]) {
-        this.grahipcsComponent.addCollider(this, scene, object);
+        this.graphicsComponent.addCollider(this, scene, object);
     }
 
     onSheepCollision(time: number, x: number, y: number) {
@@ -71,7 +71,7 @@ export default class Sheep {
         let gameEvent: GameEvent = {
             type: GameEventType.SHEEP_KILLED,
             detail: { sheep: this }
-        }
+        };
         gameEventHandler.dispatchGameEvent(gameEvent);
     }
 }

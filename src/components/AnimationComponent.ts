@@ -23,14 +23,15 @@ export default abstract class AnimationComponent {
 
     update(gameObject) {
         const prevVelocity = gameObject.sprite.body.velocity.clone();
+        const {velocity} = gameObject.sprite.body;
 
-        if (gameObject.sprite.body.velocity.x < 0) {
+        if (velocity.x < 0 && (Math.abs(velocity.x) > Math.abs(velocity.y))) {
             gameObject.sprite.anims.play(this.animationSprite.walk.left, true);
-        } else if (gameObject.sprite.body.velocity.x > 0) {
+        } else if (velocity.x > 0 && (Math.abs(velocity.x) > Math.abs(velocity.y))) {
             gameObject.sprite.anims.play(this.animationSprite.walk.right, true);
-        } else if (gameObject.sprite.body.velocity.y < 0) {
+        } else if (velocity.y < 0) {
             gameObject.sprite.anims.play(this.animationSprite.walk.up, true);
-        } else if (gameObject.sprite.body.velocity.y > 0) {
+        } else if (velocity.y > 0) {
             gameObject.sprite.anims.play(this.animationSprite.walk.down, true);
         } else {
             gameObject.sprite.anims.stop();
