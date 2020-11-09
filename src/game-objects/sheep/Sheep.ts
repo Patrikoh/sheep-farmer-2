@@ -3,6 +3,7 @@ import AnimationComponent from './SheepAnimationComponent';
 import GraphicsComponent from './SheepGraphicsComponent';
 import MoveComponent from './SheepMoveComponent';
 import HealthComponent from './SheepHealthComponent';
+import InteractionComponent from "./SheepInteractionComponent";
 import { SheepMovementTypes } from './SheepMovementTypes';
 import { SheepHealthState } from './SheepHealthState';
 import MainScene from '../../MainScene';
@@ -24,6 +25,7 @@ export default class Sheep {
     private animationComponent: AnimationComponent;
     private graphicsComponent: GraphicsComponent;
     private healthComponent: HealthComponent;
+    private interactionComponent: InteractionComponent;
 
     movementState: SheepMovementState;
     healthState: SheepHealthState;
@@ -32,11 +34,11 @@ export default class Sheep {
     id: string;
 
     constructor(scene: MainScene, x: number, y: number) {
-
         this.moveComponent = new MoveComponent(this);
         this.animationComponent = new AnimationComponent();
         this.graphicsComponent = new GraphicsComponent(this, scene, x, y);
         this.healthComponent = new HealthComponent(this);
+        this.interactionComponent = new InteractionComponent(this);
 
         this.name = uniqueNamesGenerator({
             dictionaries: [adjectives, names],

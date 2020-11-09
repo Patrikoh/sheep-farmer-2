@@ -13,7 +13,7 @@ export default class SheepHerd {
         this.sheepList = [];
 
         for (let index = 0; index < numberOfSheep; index++) {
-            let sheep = new Sheep(scene, 10 + index * 100, 10 + index * 100);
+            let sheep = new Sheep(scene, 300 + index * 10, 200 + index * 10);
             this.sheepGroup.add(sheep.sprite);
             this.sheepList.push(sheep);
         }

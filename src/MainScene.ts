@@ -52,7 +52,9 @@ export default class MainScene extends Phaser.Scene {
         camera.startFollow(this.world.player.sprite);
         camera.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
+
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.input.setDefaultCursor('url(assets/sprites/cursors/default.png), pointer' );
     }
 
     update() {
