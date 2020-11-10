@@ -7,5 +7,7 @@ export default abstract class GraphicsComponent {
         gameObject.sprite.setActive(true);
         gameObject.sprite.setDepth(depth);
     }
+
     abstract addCollider(gameObject, scene: Phaser.Scene, object: Phaser.GameObjects.GameObject | Phaser.GameObjects.GameObject[] | Phaser.GameObjects.Group | Phaser.GameObjects.Group[]): void;
+
 }

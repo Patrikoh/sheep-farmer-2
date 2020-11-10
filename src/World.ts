@@ -19,7 +19,7 @@ export default class World {
         this.gameEventHandler = new GameEventHandler();
         this.player = new Player(scene, 500, 200);
         this.herd = new SheepHerd(scene, 5);
-        this.wolf = new Wolf(scene, 400, 200);
+        this.wolf = new Wolf(scene, 400, 500);
         this.scene = scene;
     }
 
